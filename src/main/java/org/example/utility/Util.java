@@ -3,7 +3,7 @@ package org.example.utility;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class util {
+public class Util {
 
     private final String RESET = "\u001B[0m";
     private final String NEGRITO = "\u001B[1m";
@@ -90,5 +90,121 @@ public class util {
         for (int i = 0; i < 30; i++) {
             System.out.println();
         }
+    }
+
+    public String getRESET() {
+        return RESET;
+    }
+
+    public String getNEGRITO() {
+        return NEGRITO;
+    }
+
+    public String getSUBLINHADO() {
+        return SUBLINHADO;
+    }
+
+    public String getPRETO() {
+        return PRETO;
+    }
+
+    public String getVERMELHO() {
+        return VERMELHO;
+    }
+
+    public String getVERDE() {
+        return VERDE;
+    }
+
+    public String getAMARELO() {
+        return AMARELO;
+    }
+
+    public String getAZUL() {
+        return AZUL;
+    }
+
+    public String getROXO() {
+        return ROXO;
+    }
+
+    public String getCIANO() {
+        return CIANO;
+    }
+
+    public String getBRANCO() {
+        return BRANCO;
+    }
+
+    public String getPRETO_BRILHANTE() {
+        return PRETO_BRILHANTE;
+    }
+
+    public String getVERMELHO_BRILHANTE() {
+        return VERMELHO_BRILHANTE;
+    }
+
+    public String getVERDE_BRILHANTE() {
+        return VERDE_BRILHANTE;
+    }
+
+    public String getAMARELO_BRILHANTE() {
+        return AMARELO_BRILHANTE;
+    }
+
+    public String getAZUL_BRILHANTE() {
+        return AZUL_BRILHANTE;
+    }
+
+    public String getROXO_BRILHANTE() {
+        return ROXO_BRILHANTE;
+    }
+
+    public String getCIANO_BRILHANTE() {
+        return CIANO_BRILHANTE;
+    }
+
+    public String getBRANCO_BRILHANTE() {
+        return BRANCO_BRILHANTE;
+    }
+
+    public String getFUNDO_PRETO() {
+        return FUNDO_PRETO;
+    }
+
+    public String getFUNDO_VERMELHO() {
+        return FUNDO_VERMELHO;
+    }
+
+    public String getFUNDO_VERDE() {
+        return FUNDO_VERDE;
+    }
+
+    public String getFUNDO_AMARELO() {
+        return FUNDO_AMARELO;
+    }
+
+    public String getFUNDO_AZUL() {
+        return FUNDO_AZUL;
+    }
+
+    public String getFUNDO_ROXO() {
+        return FUNDO_ROXO;
+    }
+
+    public String getFUNDO_CIANO() {
+        return FUNDO_CIANO;
+    }
+
+    public String getFUNDO_BRANCO() {
+        return FUNDO_BRANCO;
+    }
+
+    public Scanner getSc() {
+        return sc;
+    }
+
+    public void setSc(Scanner sc) {
+        this.sc = sc;
     }
 }

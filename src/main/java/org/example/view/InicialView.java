@@ -1,25 +1,24 @@
 package org.example.view;
 
+import org.example.utility.Util;
+
 public class InicialView {
-    public static void mostraTelaInicial()
-    {
-        String RESET = "\u001B[0m";
-        String CIANO = "\u001B[36m";
-        String VERDE = "\u001B[32m";
-        String AMARELO = "\u001B[33m";
-        String NEGRITO = "\u001B[1m";
+    private final Util util = new Util();
+    private final java.util.Scanner scanner = new java.util.Scanner(System.in);
 
-        System.out.println(CIANO + "===============================================" + RESET);
-        System.out.println(CIANO + "||                                           ||" + RESET);
-        System.out.println(CIANO + "||   " + NEGRITO + AMARELO + "       Bem-vindo ao REemprende   " + RESET + CIANO + "       ||" + RESET);
-        System.out.println(CIANO + "||                                           ||" + RESET);
-        System.out.println(CIANO + "===============================================" + RESET);
+    public void mostraTelaInicial() {
+        System.out.println(util.getCIANO() + "==========================================================" + util.getRESET());
+        System.out.println(util.getCIANO() + "||                                                      ||" + util.getRESET());
+        System.out.println(util.getCIANO() + "|| " + util.getNEGRITO() + util.getAMARELO() + "             Bem-vindo ao REer                 " + util.getRESET() + util.getCIANO() + " ||" + util.getRESET());
+        System.out.println(util.getCIANO() + "||                                                      ||" + util.getRESET());
+        System.out.println(util.getCIANO() + "==========================================================" + util.getRESET());
 
-        System.out.println("\n" + NEGRITO + "Digite a opção desejada!" + RESET);
-        System.out.println("\n" + NEGRITO + "1 = Cadastro" + RESET);
-        System.out.println("\n" + NEGRITO + "2 = Login" + RESET);
-        System.out.println("\n" + NEGRITO + "3 = Sair" + RESET);
-        System.out.println("\n" + NEGRITO + "Resposta: " + RESET);
-        System.out.print("> ");
+        System.out.println("\n" + util.getNEGRITO() + "Digite a opção desejada!" + util.getRESET());
+        System.out.println(util.getNEGRITO() + "1 = Cadastro" + util.getRESET());
+        System.out.println(util.getNEGRITO() + "2 = Login" + util.getRESET());
+        System.out.println(util.getNEGRITO() + "3 = Sair" + util.getRESET());
+        System.out.print(util.getNEGRITO() + "Resposta: " + util.getRESET() + "> ");
+
+        String opcao = scanner.nextLine();
     }
 }
