@@ -11,7 +11,7 @@ public class InicialView {
 
         System.out.println(CIANO + "===============================================" + RESET);
         System.out.println(CIANO + "||                                           ||" + RESET);
-        System.out.println(CIANO + "||   " + NEGRITO + AMARELO + "Bem-vindo ao REemprende" + RESET + CIANO + "    ||" + RESET);
+        System.out.println(CIANO + "||   " + NEGRITO + AMARELO + "    Bem-vindo ao REemprende" + RESET + CIANO + "       ||" + RESET);
         System.out.println(CIANO + "||                                           ||" + RESET);
         System.out.println(CIANO + "===============================================" + RESET);
 
