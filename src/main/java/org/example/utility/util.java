@@ -1,0 +1,63 @@
+package org.example.utility;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class util {
+
+    private Scanner sc = new Scanner(System.in);
+
+    public String lString ()
+    {
+        return  sc.nextLine();
+    }
+
+    public double lDouble ()
+    {
+        try
+        {
+            return  sc.nextDouble();
+        }catch (InputMismatchException e)
+        {
+            System.err.println("Digite apenas números !");
+        }
+        return 0;
+    }
+
+    public double lInt ()
+    {
+        try
+        {
+            return  sc.nextInt();
+        }catch (InputMismatchException e)
+        {
+            System.err.println("Digite apenas números !");
+        }
+        return 0;
+    }
+
+    public void delay (int time)
+    {
+        try
+        {
+            Thread.sleep(time);
+        }catch (InterruptedException e)
+        {
+            System.err.println("Erro no Delay !");
+        }
+    }
+
+    public void cls (int quantityLines)
+    {
+        for (int i = 0; i < quantityLines; i++) {
+            System.out.println();
+        }
+    }
+
+    public void cls ()
+    {
+        for (int i = 0; i < 30; i++) {
+            System.out.println();
+        }
+    }
+}
