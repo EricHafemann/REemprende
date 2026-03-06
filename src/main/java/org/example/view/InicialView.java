@@ -16,7 +16,7 @@ public class InicialView {
         System.out.println(CIANO + "===============================================" + RESET);
 
         System.out.println("\n" + NEGRITO + "Digite a opção desejada!" + RESET);
-        System.out.println("\n" + NEGRITO + "1 = Cadastro:" + RESET);
+        System.out.println("\n" + NEGRITO + "1 = Cadastro" + RESET);
         System.out.println("\n" + NEGRITO + "2 = Login" + RESET);
         System.out.println("\n" + NEGRITO + "3 = Sair" + RESET);
         System.out.println("\n" + NEGRITO + "Resposta: " + RESET);
