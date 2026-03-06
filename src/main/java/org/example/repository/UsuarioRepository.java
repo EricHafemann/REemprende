@@ -39,4 +39,20 @@ public class UsuarioRepository
         }
     }
 
+    public void desatitvarUsuario(long idUsuario)
+    {
+        String querySql = "UPDATE Usuario SET status = ? WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();PreparedStatement stmt = connection.prepareStatement(querySql))
+        {
+            stmt.setInt(1,4);
+            stmt.setLong(2,idUsuario);
+            stmt.executeUpdate();
+        }
+
+        catch (SQLException e)
+        {
+            System.err.println("Erro na hora de destativar usuário: " + e);
+        }
+    }
 }
