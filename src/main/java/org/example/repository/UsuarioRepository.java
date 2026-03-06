@@ -2,6 +2,7 @@ package org.example.repository;
 
 import org.example.config.ConnectionFactory;
 import org.example.model.Usuario;
+import org.example.model.enums.Status;
 
 import java.sql.*;
 
@@ -54,5 +55,38 @@ public class UsuarioRepository
         {
             System.err.println("Erro na hora de desativar usuário: " + e);
         }
+    }
+
+    public Usuario findById(long id)
+    {
+        Usuario usuario = null;
+
+        String querySql = "SELECT * FROM Usuarios WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection(); PreparedStatement stmt = connection.prepareStatement(querySql))
+        {
+            stmt.setLong(1,id);
+
+            try (ResultSet resultSet = stmt.executeQuery())
+            {
+                if (resultSet.next())
+                {
+                    long idUsuario = resultSet.getLong("id");
+                    String senha = resultSet.getString("senha");
+                    String email = resultSet.getString("email");
+                    String nome = resultSet.getString("nome");
+                    int status = resultSet.getInt("status");
+
+                    usuario = new Usuario( id,  email,senha,  nome,  Status.fromCodigo(status));
+                }
+            }
+        }
+
+        catch (SQLException e)
+        {
+            System.err.println("Erro na hora de buscar usuario por id: " + e);
+        }
+
+        return usuario;
     }
 }
