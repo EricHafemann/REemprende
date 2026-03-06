@@ -8,13 +8,21 @@ public class Agendamento {
     private LocalDate dataInicio;
     private LocalDate dataFim;
     private String Observacao;
+    private Cliente cliente;
 
-    public Agendamento(long idAgendamento, LocalDate dataInicio,
-                       LocalDate dataFim, String observacao) {
+    public Agendamento(long idAgendamento, LocalDate dataInicio, LocalDate dataFim, String observacao, Cliente cliente) {
         this.idAgendamento = idAgendamento;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         Observacao = observacao;
+        this.cliente = cliente;
+    }
+
+    public Agendamento(LocalDate dataInicio, LocalDate dataFim, String observacao, Cliente cliente) {
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        Observacao = observacao;
+        this.cliente = cliente;
     }
 
     public long getIdAgendamento() {
@@ -48,4 +56,8 @@ public class Agendamento {
     public void setObservacao(String observacao) {
         Observacao = observacao;
     }
+
+    public Cliente getCliente() {return cliente;}
+
+    public void setCliente(Cliente cliente) {this.cliente = cliente;}
 }
