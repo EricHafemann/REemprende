@@ -2,9 +2,12 @@ package org.example.view;
 
 import org.example.utility.Cores;
 import org.example.utility.TextoUtil;
+import org.example.utility.Util;
 import org.example.view.interfaces.IInicialView;
 
 public class InicialView implements IInicialView {
+
+    private static final Util u = new Util();
 
     @Override
     public void mostrarTelaInicial()
@@ -22,6 +25,7 @@ public class InicialView implements IInicialView {
         System.out.println("\n" + Cores.NEGRITO + "0 ➤ Sair" + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + "Resposta: " + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + "SELECIONE UMA DAS OPÇÕES ACIMA ^ " + Cores.RESET);
-
+        System.out.print("➤ ");
+        u.lInt();
     }
 }
