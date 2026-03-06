@@ -2,8 +2,7 @@ package org.example.presenter;
 
 import org.example.model.Cliente;
 import org.example.model.Comerciante;
-import org.example.model.TipoUsuario;
-import org.example.model.Usuario;
+import org.example.model.enums.TipoUsuario;
 import org.example.service.UsuarioService;
 
 public class CadastroPresenter {
