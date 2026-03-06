@@ -11,11 +11,9 @@ public class InicialView {
 
         System.out.println(CIANO + "===============================================" + RESET);
         System.out.println(CIANO + "||                                           ||" + RESET);
-        System.out.println(CIANO + "||   " + NEGRITO + AMARELO + "      Bem-vindo ao REemprende  " + RESET + CIANO + "       ||" + RESET);
+        System.out.println(CIANO + "||   " + NEGRITO + AMARELO + "       Bem-vindo ao REemprende   " + RESET + CIANO + "       ||" + RESET);
         System.out.println(CIANO + "||                                           ||" + RESET);
         System.out.println(CIANO + "===============================================" + RESET);
-
-        System.out.println("\n" + VERDE + "  [✓] Conexão estabelecida com sucesso." + RESET);
 
         System.out.println("\n" + NEGRITO + "Digite a opção desejada!" + RESET);
         System.out.println("\n" + NEGRITO + "1 = Cadastro:" + RESET);
