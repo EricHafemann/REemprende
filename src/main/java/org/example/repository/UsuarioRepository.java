@@ -39,7 +39,7 @@ public class UsuarioRepository
         }
     }
 
-    public void desatitvarUsuario(long idUsuario)
+    public void disableUsuario(long idUsuario)
     {
         String querySql = "UPDATE Usuario SET status = ? WHERE id = ?";
 
@@ -52,7 +52,7 @@ public class UsuarioRepository
 
         catch (SQLException e)
         {
-            System.err.println("Erro na hora de destativar usuário: " + e);
+            System.err.println("Erro na hora de desativar usuário: " + e);
         }
     }
 }
