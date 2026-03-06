@@ -1,4 +1,5 @@
 package org.example.view.interfaces;
 
 public interface IInicialView {
+    void mostrarTelaInicial();
 }

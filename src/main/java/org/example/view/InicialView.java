@@ -1,24 +1,27 @@
 package org.example.view;
 
-import org.example.utility.Util;
+import org.example.utility.Cores;
+import org.example.utility.TextoUtil;
+import org.example.view.interfaces.IInicialView;
 
-public class InicialView {
-    private final Util util = new Util();
-    private final java.util.Scanner scanner = new java.util.Scanner(System.in);
+public class InicialView implements IInicialView {
 
-    public void mostraTelaInicial() {
-        System.out.println(util.getCIANO() + "==========================================================" + util.getRESET());
-        System.out.println(util.getCIANO() + "||                                                      ||" + util.getRESET());
-        System.out.println(util.getCIANO() + "|| " + util.getNEGRITO() + util.getAMARELO() + "             Bem-vindo ao REer                 " + util.getRESET() + util.getCIANO() + " ||" + util.getRESET());
-        System.out.println(util.getCIANO() + "||                                                      ||" + util.getRESET());
-        System.out.println(util.getCIANO() + "==========================================================" + util.getRESET());
+    @Override
+    public void mostrarTelaInicial()
+    {
+        System.out.println(Cores.VERDE + "              ██████╗ ███████╗███╗   ███╗      ██╗   ██╗██╗███╗   ██╗██████╗  ██████╗ " + Cores.RESET);
+        System.out.println(Cores.VERDE + "              ██╔══██╗██╔════╝████╗ ████║      ██║   ██║██║████╗  ██║██╔══██╗██╔═══██╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "              ██████╔╝█████╗  ██╔████╔██║ ━━━━ ██║   ██║██║██╔██╗ ██║██║  ██║██║   ██║" + Cores.RESET);
+        System.out.println(Cores.VERDE + "              ██╔══██╗██╔══╝  ██║╚██╔╝██║      ╚██╗ ██╔╝██║██║╚██╗██║██║  ██║██║   ██║" + Cores.RESET);
+        System.out.println(Cores.VERDE + "              ██████╔╝███████╗██║ ╚═╝ ██║       ╚████╔╝ ██║██║ ╚████║██████╔╝╚██████╔╝" + Cores.RESET);
+        System.out.println(Cores.VERDE + "              ╚═════╝ ╚══════╝╚═╝     ╚═╝        ╚═══╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ " + Cores.RESET);
 
-        System.out.println("\n" + util.getNEGRITO() + "Digite a opção desejada!" + util.getRESET());
-        System.out.println(util.getNEGRITO() + "1 = Cadastro" + util.getRESET());
-        System.out.println(util.getNEGRITO() + "2 = Login" + util.getRESET());
-        System.out.println(util.getNEGRITO() + "3 = Sair" + util.getRESET());
-        System.out.print(util.getNEGRITO() + "Resposta: " + util.getRESET() + "> ");
+        System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("Digite a opção desejada!") + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + "1 ➤ Cadastro:" + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + "2 ➤ Login" + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + "0 ➤ Sair" + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + "Resposta: " + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + "SELECIONE UMA DAS OPÇÕES ACIMA ^ " + Cores.RESET);
 
-        String opcao = scanner.nextLine();
     }
 }

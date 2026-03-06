@@ -7,7 +7,7 @@ import org.example.service.UsuarioService;
 
 public class CadastroPresenter {
 
-    private CadastroView cadastroView;
+    /*private CadastroView cadastroView;
     private UsuarioService usuarioService;
 
     public CadastroPresenter() {
@@ -26,7 +26,7 @@ public class CadastroPresenter {
 
         // voltar
     }
-
+*/
     public void validarInfo(String nome, String email, String senha) {
         if (nome == null || nome.length() < 2 || nome.length() > 1000) {
             // chamar erro view
