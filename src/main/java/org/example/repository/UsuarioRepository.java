@@ -9,14 +9,14 @@ public class UsuarioRepository
 {
     public void inserirUsuario(Usuario usuario)
     {
-        String querySql = "INSERT INTO Usuario (email,senha,nome) VALUES (?,?,?)";
+        String querySql = "INSERT INTO Usuario (email,senha,nome,status) VALUES (?,?,?,?)";
 
         try (Connection connection = ConnectionFactory.getConnection(); PreparedStatement stmt = connection.prepareStatement(querySql, Statement.RETURN_GENERATED_KEYS))
         {
-            stmt.setString(1, "email");
-            stmt.setString(2, "senha");
-            stmt.setString(3, "nome");
-
+            stmt.setString(1, usuario.getEmail());
+            stmt.setString(2, usuario.getSenha());
+            stmt.setString(3, usuario.getNome());
+            stmt.setInt(4, usuario.getStatus().getCodigo());
 
             int numLinhas = stmt.executeUpdate();
 
