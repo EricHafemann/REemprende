@@ -22,7 +22,6 @@ public enum Status {
         return descricao;
     }
 
-    // Método utilitário para buscar enum pelo código
     public static Status fromCodigo(int codigo) {
         for (Status s : Status.values()) {
             if (s.getCodigo() == codigo) {
