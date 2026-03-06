@@ -1,5 +1,5 @@
 package org.example.view.interfaces;
 
-public interface IInicialView {
+public interface IInicialView extends InterfaceView {
     void mostrarTelaInicial();
 }

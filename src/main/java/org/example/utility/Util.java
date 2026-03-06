@@ -20,11 +20,12 @@ public class Util {
         }catch (InputMismatchException e)
         {
             System.err.println("Digite apenas números !");
+            next();
         }
         return 0;
     }
 
-    public double lInt ()
+    public int lInt ()
     {
         try
         {
@@ -32,6 +33,7 @@ public class Util {
         }catch (InputMismatchException e)
         {
             System.err.println("Digite apenas números !");
+            next();
         }
         return 0;
     }
@@ -59,6 +61,10 @@ public class Util {
         for (int i = 0; i < 30; i++) {
             System.out.println();
         }
+    }
+
+    public void next() {
+        sc.next();
     }
 
     public Scanner getSc() {
