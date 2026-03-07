@@ -4,6 +4,7 @@ import org.example.model.Cliente;
 import org.example.model.Comerciante;
 import org.example.model.enums.TipoUsuario;
 import org.example.service.UsuarioService;
+import org.example.view.CadastroView;
 
 public class CadastroPresenter {
 

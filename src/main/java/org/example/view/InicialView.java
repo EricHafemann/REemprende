@@ -1,15 +1,13 @@
 package org.example.view;
 
-import org.example.presenter.CadastroPresenter;
 import org.example.utility.Cores;
 import org.example.utility.TextoUtil;
 import org.example.utility.Util;
-import org.example.view.interfaces.IInicialView;
+import org.example.view.interfaces.inicial.IInicialView;
 
 public class InicialView implements IInicialView {
 
     private static final Util u = new Util();
-    private final
 
     @Override
     public void mostrarTelaInicial()
