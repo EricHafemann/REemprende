@@ -1,6 +1,7 @@
 package org.example.model;
 
 import org.example.model.enums.Status;
+import org.example.model.enums.TipoUsuario;
 
 public class Usuario
 {
@@ -9,20 +10,23 @@ public class Usuario
     private String senha;
     private String nome;
     private Status status;
+    private TipoUsuario tipoUsuario;
 
-    public Usuario(long id, String email, String senha, String nome, Status status) {
+    public Usuario(long id, String email, String senha, String nome, Status status, TipoUsuario tipoUsuario) {
         this.id = id;
         this.email = email;
         this.senha = senha;
         this.nome = nome;
         this.status = status;
+        this.tipoUsuario = tipoUsuario;
     }
 
-    public Usuario(String email, String senha, String nome, Status status) {
+    public Usuario(String email, String senha, String nome, Status status, TipoUsuario tipoUsuario) {
         this.email = email;
         this.senha = senha;
         this.nome = nome;
         this.status = status;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public long getId()
@@ -71,5 +75,13 @@ public class Usuario
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 }
