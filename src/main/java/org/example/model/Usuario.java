@@ -3,7 +3,7 @@ package org.example.model;
 import org.example.model.enums.Status;
 import org.example.model.enums.TipoUsuario;
 
-public class Usuario
+public abstract class Usuario
 {
     private long id;
     private String email;
