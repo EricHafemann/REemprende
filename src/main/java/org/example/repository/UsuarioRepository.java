@@ -79,8 +79,9 @@ public class UsuarioRepository
                     String email = resultSet.getString("email");
                     String nome = resultSet.getString("nome");
                     int status = resultSet.getInt("status");
+                    int tipoUsuario = resultSet.getInt("tipoUsuario");
 
-                    usuario = new Usuario( id,  email,senha,  nome,  Status.fromCodigo(status));
+                    usuario = new Usuario( id,  email,senha,  nome,  Status.fromCodigo(status), TipoUsuario.fromCodigo(tipoUsuario));
                 }
             }
         }
