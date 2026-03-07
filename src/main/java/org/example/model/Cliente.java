@@ -1,18 +1,19 @@
 package org.example.model;
 
 import org.example.model.enums.Status;
+import org.example.model.enums.TipoUsuario;
 
 public class Cliente extends Usuario{
 
     private String cpf;
 
-    public Cliente(long id, String email, String senha, String nome, Status status, String cpf) {
-        super(id, email, senha, nome, status);
+    public Cliente(long id, String email, String senha, String nome, Status status, TipoUsuario tipoUsuario, String cpf) {
+        super(id, email, senha, nome, status, tipoUsuario);
         this.cpf = cpf;
     }
 
-    public Cliente(String email, String senha, String nome, Status status, String cpf) {
-        super(email, senha, nome, status);
+    public Cliente(String email, String senha, String nome, Status status, TipoUsuario tipoUsuario, String cpf) {
+        super(email, senha, nome, status, tipoUsuario);
         this.cpf = cpf;
     }
 
@@ -23,4 +24,6 @@ public class Cliente extends Usuario{
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+
 }
