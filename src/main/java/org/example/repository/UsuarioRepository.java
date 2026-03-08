@@ -1,8 +1,7 @@
 package org.example.repository;
 
 import org.example.config.ConnectionFactory;
-import org.example.model.Cliente;
-import org.example.model.Comerciante;
+import org.example.exception.RepositoryException;
 import org.example.model.Usuario;
 import org.example.model.enums.Status;
 import org.example.model.enums.TipoUsuario;
@@ -11,9 +10,8 @@ import java.sql.*;
 
 public class UsuarioRepository {
 
-    public void inserirUsuario(Usuario usuario) {
-
-        String sql = "INSERT INTO Usuario (email, senha, nome, status, tipoUsuario) VALUES (?, ?, ?, ?, ?)";
+    public Usuario insert(Usuario usuario) {
+        String sql = "INSERT INTO Usuarios (email, senha, nome, status, tipoUsuario) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -24,50 +22,23 @@ public class UsuarioRepository {
             stmt.setInt(4, usuario.getStatus().getCodigo());
             stmt.setInt(5, usuario.getTipoUsuario().getCodigo());
 
-            int linhas = stmt.executeUpdate();
+            stmt.executeUpdate();
 
-            if (linhas > 0) {
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        usuario.setId(rs.getLong(1));
-                    }
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    usuario.setId(generatedKeys.getLong(1));
                 }
             }
 
+            return usuario;
+
         } catch (SQLException e) {
-            System.err.println("Erro ao inserir usuario !");
+            throw new RepositoryException("Erro ao inserir usuário");
         }
     }
 
-    public void disableUsuario(long idUsuario) {
-
-        String sql = "UPDATE Usuario SET status = ? WHERE idUsuario = ?";
-
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-
-            stmt.setInt(1, Status.INATIVO.getCodigo());
-            stmt.setLong(2, idUsuario);
-
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao desativar usuário !");
-        }
-    }
-
-    public Usuario getById(long id) {
-
-        Usuario usuario = null;
-
-        String sql =
-                "SELECT U.idUsuario, U.email, U.senha, U.nome, U.status, U.tipoUsuario, " +
-                        "C.cpf, " +
-                        "Co.cnpj, Co.senhaAcesso " +
-                        "FROM Usuario U " +
-                        "LEFT JOIN Cliente C ON U.idUsuario = C.idUsuario " +
-                        "LEFT JOIN Comerciante Co ON U.idUsuario = Co.idUsuario " +
-                        "WHERE U.idUsuario = ?";
+    public Usuario findById(long id) {
+        String sql = "SELECT * FROM Usuarios WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -75,57 +46,173 @@ public class UsuarioRepository {
             stmt.setLong(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
-
                 if (rs.next()) {
-
-                    long idUsuario = rs.getLong("idUsuario");
-                    String email = rs.getString("email");
-                    String senha = rs.getString("senha");
-                    String nome = rs.getString("nome");
-
-                    Status status = Status.fromCodigo(rs.getInt("status"));
-                    TipoUsuario tipo = TipoUsuario.fromCodigo(rs.getInt("tipoUsuario"));
-
-                    switch (tipo) {
-
-                        case CLIENTE -> {
-                            String cpf = rs.getString("cpf");
-
-                            usuario = new Cliente(
-                                    idUsuario,
-                                    email,
-                                    senha,
-                                    nome,
-                                    status,
-                                    tipo,
-                                    cpf
-                            );
-                        }
-
-                        case COMERCIANTE -> {
-
-                            String cnpj = rs.getString("cnpj");
-                            String senhaAcesso = rs.getString("senhaAcesso");
-
-                            usuario = new Comerciante(
-                                    idUsuario,
-                                    email,
-                                    senha,
-                                    nome,
-                                    status,
-                                    tipo,
-                                    cnpj,
-                                    senhaAcesso
-                            );
-                        }
-                    }
+                    return mapResultSetToUsuario(rs);
                 }
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar usuario por id !");
+            throw new RepositoryException("Erro ao buscar usuário por ID");
         }
 
-        return usuario;
+        return null;
+    }
+
+    public Usuario findByEmail(String email) {
+        String sql = "SELECT * FROM Usuarios WHERE email = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToUsuario(rs);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao buscar usuário por email");
+        }
+
+        return null;
+    }
+
+    public boolean update(Usuario usuario) {
+        String sql = "UPDATE Usuarios SET email = ?, senha = ?, nome = ?, status = ?, tipoUsuario = ? WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, usuario.getEmail());
+            stmt.setString(2, usuario.getSenha());
+            stmt.setString(3, usuario.getNome());
+            stmt.setInt(4, usuario.getStatus().getCodigo());
+            stmt.setInt(5, usuario.getTipoUsuario().getCodigo());
+            stmt.setLong(6, usuario.getId());
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao atualizar usuário");
+        }
+    }
+
+    public boolean disable(long id) {
+        String sql = "UPDATE Usuarios SET status = ? WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, Status.INATIVO.getCodigo());
+            stmt.setLong(2, id);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao desativar usuário");
+        }
+    }
+
+    public boolean enable(long id) {
+        String sql = "UPDATE Usuarios SET status = ? WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, Status.ATIVO.getCodigo());
+            stmt.setLong(2, id);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao ativar usuário");
+        }
+    }
+
+    public boolean delete(long id) {
+        String sql = "DELETE FROM Usuarios WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao deletar usuário");
+        }
+    }
+
+    public boolean existsByEmail(String email) {
+        String sql = "SELECT 1 FROM Usuarios WHERE email = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao verificar existência de email");
+        }
+    }
+
+    public boolean existsById(long id) {
+        String sql = "SELECT 1 FROM Usuarios WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao verificar existência de usuário");
+        }
+    }
+
+    public Usuario login(String email, String senha) {
+        String sql = "SELECT * FROM Usuarios WHERE email = ? AND senha = ? AND status = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            stmt.setString(2, senha);
+            stmt.setInt(3, Status.ATIVO.getCodigo());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToUsuario(rs);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao fazer login");
+        }
+
+        return null;
+    }
+
+    private Usuario mapResultSetToUsuario(ResultSet rs) throws SQLException {
+        long id = rs.getLong("id");
+        String email = rs.getString("email");
+        String senha = rs.getString("senha");
+        String nome = rs.getString("nome");
+        Status status = Status.fromCodigo(rs.getInt("status"));
+        TipoUsuario tipo = TipoUsuario.fromCodigo(rs.getInt("tipoUsuario"));
+
+        // Retorna apenas o usuário base, sem dados específicos
+        return new Usuario(id, email, senha, nome, status, tipo) {
+            // Classe anônima só para instanciar o abstrato
+        };
     }
 }
