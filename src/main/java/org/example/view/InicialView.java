@@ -31,7 +31,7 @@ public class InicialView implements IInicialView {
         u.next();
 
         switch (opcao) {
-            case 1 -> cadastroPresenter.realizarCadastro();
+            //case 1 -> cadastroPresenter.realizarCadastro();
         }
     }
 

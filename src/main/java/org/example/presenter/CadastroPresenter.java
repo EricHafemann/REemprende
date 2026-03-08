@@ -7,7 +7,7 @@ import org.example.service.UsuarioService;
 import org.example.view.CadastroView;
 
 public class CadastroPresenter {
-
+/*
     private CadastroView cadastroView;
     private UsuarioService usuarioService;
 
@@ -47,4 +47,5 @@ public class CadastroPresenter {
             // chamar erro view
         }
     }
+ */
 }

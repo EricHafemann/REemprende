@@ -3,21 +3,21 @@ package org.example.model;
 public class Servico
 {
     private long idServico;
-    private String avalicao;
+    private String avaliacao;
     private String descricao;
     private double duracaoHoras;
     private Comerciante comerciante;
 
     public Servico(long idServico, String avalicao, String descricao, double duracaoHoras, Comerciante comerciante) {
         this.idServico = idServico;
-        this.avalicao = avalicao;
+        this.avaliacao = avalicao;
         this.descricao = descricao;
         this.duracaoHoras = duracaoHoras;
         this.comerciante = comerciante;
     }
 
     public Servico(String avalicao, String descricao, double duracaoHoras, Comerciante comerciante) {
-        this.avalicao = avalicao;
+        this.avaliacao = avalicao;
         this.descricao = descricao;
         this.duracaoHoras = duracaoHoras;
         this.comerciante = comerciante;
@@ -33,14 +33,14 @@ public class Servico
         this.idServico = idServico;
     }
 
-    public String getAvalicao()
+    public String getAvaliacao()
     {
-        return avalicao;
+        return avaliacao;
     }
 
-    public void setAvalicao(String avalicao)
+    public void setAvaliacao(String avalicao)
     {
-        this.avalicao = avalicao;
+        this.avaliacao = avalicao;
     }
 
     public String getDescricao()

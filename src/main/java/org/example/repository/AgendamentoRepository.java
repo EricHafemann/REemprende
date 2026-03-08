@@ -1,108 +1,267 @@
 package org.example.repository;
 
-import org.example.config.ConnectionFactory;
 import org.example.model.Agendamento;
 import org.example.model.Cliente;
+import org.example.model.enums.Status;
+import org.example.model.enums.TipoUsuario;
+import org.example.config.ConnectionFactory;
+import org.example.exception.RepositoryException;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AgendamentoRepository {
 
-    public void insertAgendamento (Agendamento agendamento)
-    {
-        String querySql = "INSERT INTO Usuario (dataInicio, dataFIm, observacao, idClient) VALUES (?,?,?,?)";
+    private Connection getConnection() {
+        try {
+            return ConnectionFactory.getConnection();
+        } catch (Exception e) {
+            throw new RepositoryException("Erro ao conectar ao banco de dados");
+        }
+    }
 
-        try (Connection connection = ConnectionFactory.getConnection(); PreparedStatement stmt = connection.prepareStatement(querySql, Statement.RETURN_GENERATED_KEYS))
-        {
-            stmt.setDate(1, java.sql.Date.valueOf(agendamento.getDataInicio()));
-            stmt.setDate(2, java.sql.Date.valueOf(agendamento.getDataFim()));
+    public Agendamento insert(Agendamento agendamento) {
+        String sql = "INSERT INTO Agendamentos (dataInicio, dataFim, observacao, idCliente) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = getConnection()
+                .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setTimestamp(1, Timestamp.valueOf(agendamento.getDataInicio()));
+            stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataFim()));
             stmt.setString(3, agendamento.getObservacao());
             stmt.setLong(4, agendamento.getCliente().getId());
 
-            int numLinhas = stmt.executeUpdate();
+            stmt.executeUpdate();
 
-            if (numLinhas > 0)
-            {
-                try (ResultSet resultSet = stmt.getGeneratedKeys())
-                {
-                    if (resultSet.next())
-                    {
-                        long idGerado = resultSet.getLong(1);
-                        agendamento.setIdAgendamento(idGerado);
-                    }
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    agendamento.setIdAgendamento(generatedKeys.getLong(1));
                 }
             }
-        }
 
-        catch (SQLException e)
-        {
-            System.err.println("Erro na hora de inserir agendamento ao banco !");
-        }
-    }
-
-    public void deleteAgendamento(long idAgendamento) {
-        String querySql = "DELETE FROM Usuario WHERE idAgendamento = ?";
-
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(querySql)) {
-
-            stmt.setLong(1, idAgendamento);
-
-            stmt.executeUpdate();
-
+            return agendamento;
         } catch (SQLException e) {
-            System.err.println("Erro ao excluir agendamento !");
-        }
-    }
-
-    public void updateAgendamento(Agendamento agendamento) {
-
-        String querySql = "UPDATE Usuario SET dataInicio = ?, dataFim = ?, observacao = ?, idClient = ? WHERE idAgendamento = ?";
-
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(querySql)) {
-
-            stmt.setDate(1, java.sql.Date.valueOf(agendamento.getDataInicio()));
-            stmt.setDate(2, java.sql.Date.valueOf(agendamento.getDataFim()));
-            stmt.setString(3, agendamento.getObservacao());
-            stmt.setLong(4, agendamento.getCliente().getId());
-
-            stmt.setLong(5, agendamento.getIdAgendamento());
-
-            stmt.executeUpdate();
-
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao atualizar agendamento !");
+            throw new RepositoryException("Erro ao inserir agendamento");
         }
     }
 
     public Agendamento findById(long id) {
-        String querySql = "SELECT * FROM Usuario WHERE idAgendamento = ?";
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(querySql)) {
+        String sql = "SELECT a.*, u.*, c.* " +
+                "FROM Agendamentos a " +
+                "INNER JOIN Clientes c ON a.idCliente = c.idCliente " +
+                "INNER JOIN Usuarios u ON c.idCliente = u.id " +
+                "WHERE a.idAgendamento = ?";
 
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setLong(1, id);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Cliente cliente = new Cliente();
-                    cliente.setId(rs.getLong("idClient"));
-
-                    return new Agendamento(
-                            rs.getLong("idAgendamento"),
-                            rs.getDate("dataInicio").toLocalDate(),
-                            rs.getDate("dataFim").toLocalDate(),
-                            rs.getString("observacao"),
-                            cliente
-                    );
+                    return mapResultSetToAgendamento(rs);
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar: " + e);
+            throw new RepositoryException("Erro ao buscar agendamento");
         }
         return null;
     }
 
+    public List<Agendamento> findAll() {
+        List<Agendamento> agendamentos = new ArrayList<>();
+        String sql = "SELECT a.*, u.*, c.* " +
+                "FROM Agendamentos a " +
+                "INNER JOIN Clientes c ON a.idCliente = c.idCliente " +
+                "INNER JOIN Usuarios u ON c.idCliente = u.id " +
+                "ORDER BY a.dataInicio DESC";
 
+        try (Statement stmt = getConnection().createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
+            while (rs.next()) {
+                agendamentos.add(mapResultSetToAgendamento(rs));
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao buscar agendamentos");
+        }
+        return agendamentos;
+    }
+
+    public boolean update(Agendamento agendamento) {
+        String sql = "UPDATE Agendamentos SET dataInicio = ?, dataFim = ?, observacao = ?, idCliente = ? " +
+                "WHERE idAgendamento = ?";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setTimestamp(1, Timestamp.valueOf(agendamento.getDataInicio()));
+            stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataFim()));
+            stmt.setString(3, agendamento.getObservacao());
+            stmt.setLong(4, agendamento.getCliente().getId());
+            stmt.setLong(5, agendamento.getIdAgendamento());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao atualizar agendamento");
+        }
+    }
+
+    public boolean delete(long id) {
+        String sql = "DELETE FROM Agendamentos WHERE idAgendamento = ?";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao deletar agendamento");
+        }
+    }
+
+    public List<Agendamento> findByClientId(long clientId) {
+        List<Agendamento> agendamentos = new ArrayList<>();
+        String sql = "SELECT a.*, u.*, c.* " +
+                "FROM Agendamentos a " +
+                "INNER JOIN Clientes c ON a.idCliente = c.idCliente " +
+                "INNER JOIN Usuarios u ON c.idCliente = u.id " +
+                "WHERE a.idCliente = ? " +
+                "ORDER BY a.dataInicio DESC";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setLong(1, clientId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    agendamentos.add(mapResultSetToAgendamento(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao buscar agendamentos do cliente");
+        }
+        return agendamentos;
+    }
+
+    public List<Agendamento> findByDate(LocalDateTime date) {
+        List<Agendamento> agendamentos = new ArrayList<>();
+        String sql = "SELECT a.*, u.*, c.* " +
+                "FROM Agendamentos a " +
+                "INNER JOIN Clientes c ON a.idCliente = c.idCliente " +
+                "INNER JOIN Usuarios u ON c.idCliente = u.id " +
+                "WHERE DATE(a.dataInicio) = DATE(?) " +
+                "ORDER BY a.dataInicio";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setTimestamp(1, Timestamp.valueOf(date));
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    agendamentos.add(mapResultSetToAgendamento(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao buscar agendamentos por data");
+        }
+        return agendamentos;
+    }
+
+    public boolean isAvailable(LocalDateTime startTime, LocalDateTime endTime) {
+        String sql = "SELECT COUNT(*) FROM Agendamentos WHERE " +
+                "(dataInicio < ? AND dataFim > ?) OR " +
+                "(dataInicio < ? AND dataFim > ?) OR " +
+                "(dataInicio >= ? AND dataFim <= ?)";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setTimestamp(1, Timestamp.valueOf(endTime));
+            stmt.setTimestamp(2, Timestamp.valueOf(startTime));
+            stmt.setTimestamp(3, Timestamp.valueOf(startTime));
+            stmt.setTimestamp(4, Timestamp.valueOf(startTime));
+            stmt.setTimestamp(5, Timestamp.valueOf(startTime));
+            stmt.setTimestamp(6, Timestamp.valueOf(endTime));
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) == 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao verificar disponibilidade");
+        }
+        return false;
+    }
+
+    public long countByClientId(long clientId) {
+        String sql = "SELECT COUNT(*) FROM Agendamentos WHERE idCliente = ?";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setLong(1, clientId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getLong(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao contar agendamentos do cliente");
+        }
+        return 0;
+    }
+
+    public List<Agendamento> findUpcoming() {
+        List<Agendamento> agendamentos = new ArrayList<>();
+        String sql = "SELECT a.*, u.*, c.* " +
+                "FROM Agendamentos a " +
+                "INNER JOIN Clientes c ON a.idCliente = c.idCliente " +
+                "INNER JOIN Usuarios u ON c.idCliente = u.id " +
+                "WHERE a.dataInicio > NOW() " +
+                "ORDER BY a.dataInicio";
+
+        try (Statement stmt = getConnection().createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                agendamentos.add(mapResultSetToAgendamento(rs));
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao buscar agendamentos futuros");
+        }
+        return agendamentos;
+    }
+
+    public List<Agendamento> findPast() {
+        List<Agendamento> agendamentos = new ArrayList<>();
+        String sql = "SELECT a.*, u.*, c.* " +
+                "FROM Agendamentos a " +
+                "INNER JOIN Clientes c ON a.idCliente = c.idCliente " +
+                "INNER JOIN Usuarios u ON c.idCliente = u.id " +
+                "WHERE a.dataFim < NOW() " +
+                "ORDER BY a.dataInicio DESC";
+
+        try (Statement stmt = getConnection().createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                agendamentos.add(mapResultSetToAgendamento(rs));
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao buscar agendamentos passados");
+        }
+        return agendamentos;
+    }
+
+    private Agendamento mapResultSetToAgendamento(ResultSet rs) throws SQLException {
+        Cliente cliente = new Cliente(
+                rs.getLong("idCliente"),
+                rs.getString("email"),
+                rs.getString("senha"),
+                rs.getString("nome"),
+                Status.fromCodigo(rs.getInt("status")),
+                TipoUsuario.fromCodigo(rs.getInt("tipoUsuario")),
+                rs.getString("cpf")
+        );
+
+        return new Agendamento(
+                rs.getLong("idAgendamento"),
+                rs.getTimestamp("dataInicio").toLocalDateTime(),
+                rs.getTimestamp("dataFim").toLocalDateTime(),
+                rs.getString("observacao"),
+                cliente
+        );
+    }
 }
