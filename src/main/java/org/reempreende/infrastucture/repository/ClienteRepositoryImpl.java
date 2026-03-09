@@ -1,5 +1,6 @@
 package org.reempreende.infrastucture.repository;
 
+import org.reempreende.domain.repository.ClienteRepository;
 import org.reempreende.infrastucture.config.ConnectionFactory;
 import org.reempreende.infrastucture.exception.RepositoryException;
 import org.reempreende.domain.entities.Cliente;
@@ -7,9 +8,11 @@ import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
 
 import java.sql.*;
+import java.util.Optional;
 
-public class ClienteRepository {
+public class ClienteRepositoryImpl implements ClienteRepository {
 
+    @Override
     public Cliente insert(Cliente cliente) {
         String sql = "INSERT INTO Clientes (idCliente, cpf) VALUES (?, ?)";
 
@@ -27,7 +30,8 @@ public class ClienteRepository {
         }
     }
 
-    public Cliente findById(long id) {
+    @Override
+    public Optional<Cliente> findById(long id) {
         String sql = "SELECT c.*, u.* FROM Clientes c " +
                 "INNER JOIN Usuarios u ON c.idCliente = u.id " +
                 "WHERE c.idCliente = ?";
@@ -39,7 +43,7 @@ public class ClienteRepository {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToCliente(rs);
+                    return Optional.of(mapResultSetToCliente(rs));
                 }
             }
 
@@ -47,9 +51,10 @@ public class ClienteRepository {
             throw new RepositoryException("Erro ao buscar cliente");
         }
 
-        return null;
+        return Optional.empty();
     }
 
+    @Override
     public boolean update(Cliente cliente) {
         String sql = "UPDATE Clientes SET cpf = ? WHERE idCliente = ?";
 
@@ -66,6 +71,7 @@ public class ClienteRepository {
         }
     }
 
+    @Override
     public boolean delete(long id) {
         String sql = "DELETE FROM Clientes WHERE idCliente = ?";
 
@@ -80,6 +86,7 @@ public class ClienteRepository {
         }
     }
 
+    @Override
     public boolean existsByCpf(String cpf) {
         String sql = "SELECT 1 FROM Clientes WHERE cpf = ?";
 

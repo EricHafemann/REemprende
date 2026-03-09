@@ -1,5 +1,6 @@
 package org.reempreende.infrastucture.repository;
 
+import org.reempreende.domain.repository.AgendamentoRepository;
 import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.entities.enums.Status;
@@ -11,21 +12,16 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class AgendamentoRepository {
+public class AgendamentoRepositoryImpl implements AgendamentoRepository {
 
-    private Connection getConnection() {
-        try {
-            return ConnectionFactory.getConnection();
-        } catch (Exception e) {
-            throw new RepositoryException("Erro ao conectar ao banco de dados");
-        }
-    }
 
+    @Override
     public Agendamento insert(Agendamento agendamento) {
         String sql = "INSERT INTO Agendamentos (dataInicio, dataFim, observacao, idCliente) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement stmt = getConnection()
+        try (PreparedStatement stmt = ConnectionFactory.getConnection()
                 .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setTimestamp(1, Timestamp.valueOf(agendamento.getDataInicio()));
             stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataFim()));
@@ -46,27 +42,30 @@ public class AgendamentoRepository {
         }
     }
 
-    public Agendamento findById(long id) {
+    @Override
+    public Optional<Agendamento> findById(long id) {
         String sql = "SELECT a.*, u.*, c.* " +
                 "FROM Agendamentos a " +
                 "INNER JOIN Clientes c ON a.idCliente = c.idCliente " +
                 "INNER JOIN Usuarios u ON c.idCliente = u.id " +
                 "WHERE a.idAgendamento = ?";
 
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection()
+                .prepareStatement(sql)) {
             stmt.setLong(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToAgendamento(rs);
+                    return Optional.of(mapResultSetToAgendamento(rs));
                 }
             }
         } catch (SQLException e) {
             throw new RepositoryException("Erro ao buscar agendamento");
         }
-        return null;
+        return Optional.empty();
     }
 
+    @Override
     public List<Agendamento> findAll() {
         List<Agendamento> agendamentos = new ArrayList<>();
         String sql = "SELECT a.*, u.*, c.* " +
@@ -75,7 +74,7 @@ public class AgendamentoRepository {
                 "INNER JOIN Usuarios u ON c.idCliente = u.id " +
                 "ORDER BY a.dataInicio DESC";
 
-        try (Statement stmt = getConnection().createStatement();
+        try (Statement stmt = ConnectionFactory.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -87,11 +86,12 @@ public class AgendamentoRepository {
         return agendamentos;
     }
 
+    @Override
     public boolean update(Agendamento agendamento) {
         String sql = "UPDATE Agendamentos SET dataInicio = ?, dataFim = ?, observacao = ?, idCliente = ? " +
                 "WHERE idAgendamento = ?";
 
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setTimestamp(1, Timestamp.valueOf(agendamento.getDataInicio()));
             stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataFim()));
             stmt.setString(3, agendamento.getObservacao());
@@ -104,10 +104,11 @@ public class AgendamentoRepository {
         }
     }
 
+    @Override
     public boolean delete(long id) {
         String sql = "DELETE FROM Agendamentos WHERE idAgendamento = ?";
 
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, id);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -115,6 +116,7 @@ public class AgendamentoRepository {
         }
     }
 
+    @Override
     public List<Agendamento> findByClientId(long clientId) {
         List<Agendamento> agendamentos = new ArrayList<>();
         String sql = "SELECT a.*, u.*, c.* " +
@@ -124,7 +126,7 @@ public class AgendamentoRepository {
                 "WHERE a.idCliente = ? " +
                 "ORDER BY a.dataInicio DESC";
 
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, clientId);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -138,6 +140,7 @@ public class AgendamentoRepository {
         return agendamentos;
     }
 
+    @Override
     public List<Agendamento> findByDate(LocalDateTime date) {
         List<Agendamento> agendamentos = new ArrayList<>();
         String sql = "SELECT a.*, u.*, c.* " +
@@ -147,7 +150,7 @@ public class AgendamentoRepository {
                 "WHERE DATE(a.dataInicio) = DATE(?) " +
                 "ORDER BY a.dataInicio";
 
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setTimestamp(1, Timestamp.valueOf(date));
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -161,13 +164,14 @@ public class AgendamentoRepository {
         return agendamentos;
     }
 
+    @Override
     public boolean isAvailable(LocalDateTime startTime, LocalDateTime endTime) {
         String sql = "SELECT COUNT(*) FROM Agendamentos WHERE " +
                 "(dataInicio < ? AND dataFim > ?) OR " +
                 "(dataInicio < ? AND dataFim > ?) OR " +
                 "(dataInicio >= ? AND dataFim <= ?)";
 
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setTimestamp(1, Timestamp.valueOf(endTime));
             stmt.setTimestamp(2, Timestamp.valueOf(startTime));
             stmt.setTimestamp(3, Timestamp.valueOf(startTime));
@@ -186,10 +190,11 @@ public class AgendamentoRepository {
         return false;
     }
 
+    @Override
     public long countByClientId(long clientId) {
         String sql = "SELECT COUNT(*) FROM Agendamentos WHERE idCliente = ?";
 
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, clientId);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -203,6 +208,7 @@ public class AgendamentoRepository {
         return 0;
     }
 
+    @Override
     public List<Agendamento> findUpcoming() {
         List<Agendamento> agendamentos = new ArrayList<>();
         String sql = "SELECT a.*, u.*, c.* " +
@@ -212,7 +218,7 @@ public class AgendamentoRepository {
                 "WHERE a.dataInicio > NOW() " +
                 "ORDER BY a.dataInicio";
 
-        try (Statement stmt = getConnection().createStatement();
+        try (Statement stmt = ConnectionFactory.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -224,6 +230,7 @@ public class AgendamentoRepository {
         return agendamentos;
     }
 
+    @Override
     public List<Agendamento> findPast() {
         List<Agendamento> agendamentos = new ArrayList<>();
         String sql = "SELECT a.*, u.*, c.* " +
@@ -233,7 +240,7 @@ public class AgendamentoRepository {
                 "WHERE a.dataFim < NOW() " +
                 "ORDER BY a.dataInicio DESC";
 
-        try (Statement stmt = getConnection().createStatement();
+        try (Statement stmt = ConnectionFactory.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {

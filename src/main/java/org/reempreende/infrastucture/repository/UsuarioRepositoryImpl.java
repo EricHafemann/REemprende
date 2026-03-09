@@ -1,5 +1,6 @@
 package org.reempreende.infrastucture.repository;
 
+import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.infrastucture.config.ConnectionFactory;
 import org.reempreende.infrastucture.exception.RepositoryException;
 import org.reempreende.domain.entities.Usuario;
@@ -7,9 +8,11 @@ import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
 
 import java.sql.*;
+import java.util.Optional;
 
-public class UsuarioRepository {
+public class UsuarioRepositoryImpl implements UsuarioRepository {
 
+    @Override
     public Usuario insert(Usuario usuario) {
         String sql = "INSERT INTO Usuarios (email, senha, nome, status, tipoUsuario) VALUES (?, ?, ?, ?, ?)";
 
@@ -37,7 +40,8 @@ public class UsuarioRepository {
         }
     }
 
-    public Usuario findById(long id) {
+    @Override
+    public Optional<Usuario> findById(long id) {
         String sql = "SELECT * FROM Usuarios WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
@@ -47,7 +51,7 @@ public class UsuarioRepository {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToUsuario(rs);
+                    return Optional.of(mapResultSetToUsuario(rs));
                 }
             }
 
@@ -55,10 +59,11 @@ public class UsuarioRepository {
             throw new RepositoryException("Erro ao buscar usuário por ID");
         }
 
-        return null;
+        return Optional.empty();
     }
 
-    public Usuario findByEmail(String email) {
+    @Override
+    public Optional<Usuario> findByEmail(String email) {
         String sql = "SELECT * FROM Usuarios WHERE email = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
@@ -68,7 +73,7 @@ public class UsuarioRepository {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToUsuario(rs);
+                    return Optional.of(mapResultSetToUsuario(rs));
                 }
             }
 
@@ -76,9 +81,10 @@ public class UsuarioRepository {
             throw new RepositoryException("Erro ao buscar usuário por email");
         }
 
-        return null;
+        return Optional.empty();
     }
 
+    @Override
     public boolean update(Usuario usuario) {
         String sql = "UPDATE Usuarios SET email = ?, senha = ?, nome = ?, status = ?, tipoUsuario = ? WHERE id = ?";
 
@@ -99,6 +105,7 @@ public class UsuarioRepository {
         }
     }
 
+    @Override
     public boolean disable(long id) {
         String sql = "UPDATE Usuarios SET status = ? WHERE id = ?";
 
@@ -115,6 +122,7 @@ public class UsuarioRepository {
         }
     }
 
+    @Override
     public boolean enable(long id) {
         String sql = "UPDATE Usuarios SET status = ? WHERE id = ?";
 
@@ -131,6 +139,7 @@ public class UsuarioRepository {
         }
     }
 
+    @Override
     public boolean delete(long id) {
         String sql = "DELETE FROM Usuarios WHERE id = ?";
 
@@ -145,6 +154,7 @@ public class UsuarioRepository {
         }
     }
 
+    @Override
     public boolean existsByEmail(String email) {
         String sql = "SELECT 1 FROM Usuarios WHERE email = ?";
 
@@ -162,6 +172,7 @@ public class UsuarioRepository {
         }
     }
 
+    @Override
     public boolean existsById(long id) {
         String sql = "SELECT 1 FROM Usuarios WHERE id = ?";
 
@@ -179,7 +190,8 @@ public class UsuarioRepository {
         }
     }
 
-    public Usuario login(String email, String senha) {
+    @Override
+    public Optional<Usuario> login(String email, String senha) {
         String sql = "SELECT * FROM Usuarios WHERE email = ? AND senha = ? AND status = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
@@ -191,7 +203,7 @@ public class UsuarioRepository {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToUsuario(rs);
+                    return Optional.of(mapResultSetToUsuario(rs));
                 }
             }
 
@@ -199,7 +211,7 @@ public class UsuarioRepository {
             throw new RepositoryException("Erro ao fazer login");
         }
 
-        return null;
+        return Optional.empty();
     }
 
     private Usuario mapResultSetToUsuario(ResultSet rs) throws SQLException {
@@ -210,7 +222,6 @@ public class UsuarioRepository {
         Status status = Status.fromCodigo(rs.getInt("status"));
         TipoUsuario tipo = TipoUsuario.fromCodigo(rs.getInt("tipoUsuario"));
 
-        // Retorna apenas o usuário base, sem dados específicos
         return new Usuario(id, email, senha, nome, status, tipo) {
             // Classe anônima só para instanciar o abstrato
         };

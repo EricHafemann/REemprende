@@ -1,5 +1,6 @@
 package org.reempreende.infrastucture.repository;
 
+import org.reempreende.domain.repository.ComercianteRepository;
 import org.reempreende.infrastucture.config.ConnectionFactory;
 import org.reempreende.infrastucture.exception.RepositoryException;
 import org.reempreende.domain.entities.Comerciante;
@@ -7,9 +8,11 @@ import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
 
 import java.sql.*;
+import java.util.Optional;
 
-public class ComercianteRepository {
+public class ComercianteRepositoryImpl implements ComercianteRepository {
 
+    @Override
     public Comerciante insert(Comerciante comerciante) {
         String sql = "INSERT INTO Comerciantes (idComerciante, cnpj, senhaAcesso) VALUES (?, ?, ?)";
 
@@ -28,7 +31,8 @@ public class ComercianteRepository {
         }
     }
 
-    public Comerciante findById(long id) {
+    @Override
+    public Optional<Comerciante> findById(long id) {
         String sql = "SELECT co.*, u.* FROM Comerciantes co " +
                 "INNER JOIN Usuarios u ON co.idComerciante = u.id " +
                 "WHERE co.idComerciante = ?";
@@ -40,7 +44,7 @@ public class ComercianteRepository {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToComerciante(rs);
+                    return Optional.of(mapResultSetToComerciante(rs));
                 }
             }
 
@@ -48,9 +52,10 @@ public class ComercianteRepository {
             throw new RepositoryException("Erro ao buscar comerciante");
         }
 
-        return null;
+        return Optional.empty();
     }
 
+    @Override
     public boolean update(Comerciante comerciante) {
         String sql = "UPDATE Comerciantes SET cnpj = ?, senhaAcesso = ? WHERE idComerciante = ?";
 
@@ -68,6 +73,7 @@ public class ComercianteRepository {
         }
     }
 
+    @Override
     public boolean delete(long id) {
         String sql = "DELETE FROM Comerciantes WHERE idComerciante = ?";
 
@@ -82,6 +88,7 @@ public class ComercianteRepository {
         }
     }
 
+    @Override
     public boolean existsByCnpj(String cnpj) {
         String sql = "SELECT 1 FROM Comerciantes WHERE cnpj = ?";
 

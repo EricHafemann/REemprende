@@ -1,5 +1,6 @@
 package org.reempreende.infrastucture.repository;
 
+import org.reempreende.domain.repository.ServicoAgendamentoRepository;
 import org.reempreende.infrastucture.config.ConnectionFactory;
 import org.reempreende.infrastucture.exception.RepositoryException;
 import org.reempreende.domain.entities.Agendamento;
@@ -10,8 +11,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServicoAgendamentoRepository {
+public class ServicoAgendamentoRepositoryImpl implements ServicoAgendamentoRepository {
 
+    @Override
     public ServicoAgendamento insert(ServicoAgendamento servicoAgendamento) {
         String sql = "INSERT INTO Servicos_Agendamentos (idServico, idAgendamento) VALUES (?, ?)";
 
@@ -36,6 +38,7 @@ public class ServicoAgendamentoRepository {
         }
     }
 
+    @Override
     public void insertAll(long idAgendamento, List<Servico> servicos) {
         String sql = "INSERT INTO Servicos_Agendamentos (idServico, idAgendamento) VALUES (?, ?)";
 
@@ -55,6 +58,7 @@ public class ServicoAgendamentoRepository {
         }
     }
 
+    @Override
     public List<Servico> findServicosByAgendamentoId(long idAgendamento) {
         List<Servico> servicos = new ArrayList<>();
         String sql = "SELECT s.* FROM Servicos_Agendamentos sa " +
@@ -86,6 +90,7 @@ public class ServicoAgendamentoRepository {
         return servicos;
     }
 
+    @Override
     public List<Agendamento> findAgendamentosByServicoId(long idServico) {
         List<Agendamento> agendamentos = new ArrayList<>();
         String sql = "SELECT a.* FROM Servicos_Agendamentos sa " +
@@ -117,6 +122,7 @@ public class ServicoAgendamentoRepository {
         return agendamentos;
     }
 
+    @Override
     public boolean deleteByAgendamentoId(long idAgendamento) {
         String sql = "DELETE FROM Servicos_Agendamentos WHERE idAgendamento = ?";
 
@@ -131,6 +137,7 @@ public class ServicoAgendamentoRepository {
         }
     }
 
+    @Override
     public boolean deleteByServicoId(long idServico) {
         String sql = "DELETE FROM Servicos_Agendamentos WHERE idServico = ?";
 
@@ -145,6 +152,7 @@ public class ServicoAgendamentoRepository {
         }
     }
 
+    @Override
     public boolean delete(long idServico, long idAgendamento) {
         String sql = "DELETE FROM Servicos_Agendamentos WHERE idServico = ? AND idAgendamento = ?";
 
@@ -160,6 +168,7 @@ public class ServicoAgendamentoRepository {
         }
     }
 
+    @Override
     public long countByAgendamentoId(long idAgendamento) {
         String sql = "SELECT COUNT(*) FROM Servicos_Agendamentos WHERE idAgendamento = ?";
 
@@ -181,6 +190,7 @@ public class ServicoAgendamentoRepository {
         return 0;
     }
 
+    @Override
     public long countByServicoId(long idServico) {
         String sql = "SELECT COUNT(*) FROM Servicos_Agendamentos WHERE idServico = ?";
 
@@ -202,6 +212,7 @@ public class ServicoAgendamentoRepository {
         return 0;
     }
 
+    @Override
     public boolean exists(long idServico, long idAgendamento) {
         String sql = "SELECT 1 FROM Servicos_Agendamentos WHERE idServico = ? AND idAgendamento = ?";
 
