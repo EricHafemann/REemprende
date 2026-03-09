@@ -7,21 +7,21 @@ public class Agendamento {
     private long idAgendamento;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
-    private String Observacao;
+    private String observacao;
     private Cliente cliente;
 
     public Agendamento(long idAgendamento, LocalDateTime dataInicio, LocalDateTime dataFim, String observacao, Cliente cliente) {
         this.idAgendamento = idAgendamento;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
-        Observacao = observacao;
+        this.observacao = observacao;
         this.cliente = cliente;
     }
 
     public Agendamento(LocalDateTime dataInicio, LocalDateTime dataFim, String observacao, Cliente cliente) {
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
-        Observacao = observacao;
+        this.observacao = observacao;
         this.cliente = cliente;
     }
 
@@ -34,11 +34,11 @@ public class Agendamento {
     }
 
     public String getObservacao() {
-        return Observacao;
+        return observacao;
     }
 
     public void setObservacao(String observacao) {
-        Observacao = observacao;
+        this.observacao = observacao;
     }
 
     public Cliente getCliente() {return cliente;}
