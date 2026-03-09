@@ -8,6 +8,8 @@ import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UsuarioRepositoryImpl implements UsuarioRepository {
@@ -61,6 +63,27 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
         return Optional.empty();
     }
+
+    @Override
+    public List<Usuario> findAll() {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT * FROM Usuarios ORDER BY nome";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                usuarios.add(mapResultSetToUsuario(rs));
+            }
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao buscar todos os usuários");
+        }
+
+        return usuarios;
+    }
+
 
     @Override
     public Optional<Usuario> findByEmail(String email) {

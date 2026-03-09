@@ -1,6 +1,6 @@
 package org.reempreende.application.dto.mapper;
 
-import org.reempreende.application.dto.exception.TipoUsuarioInvalidException;
+import org.reempreende.application.exception.TipoUsuarioInvalidException;
 import org.reempreende.domain.entities.Usuario;
 import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.entities.Comerciante;

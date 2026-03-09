@@ -1,4 +1,4 @@
-package org.reempreende.application.dto.exception;
+package org.reempreende.application.exception;
 
 public class TipoUsuarioInvalidException extends RuntimeException {
     public TipoUsuarioInvalidException(String message) {

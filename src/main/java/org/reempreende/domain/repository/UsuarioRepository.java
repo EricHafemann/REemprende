@@ -1,6 +1,8 @@
 package org.reempreende.domain.repository;
 
 import org.reempreende.domain.entities.Usuario;
+
+import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository {
@@ -8,6 +10,8 @@ public interface UsuarioRepository {
     Usuario insert(Usuario usuario);
 
     Optional<Usuario> findById(long id);
+
+    List<Usuario> findAll();
 
     Optional<Usuario> findByEmail(String email);
 
