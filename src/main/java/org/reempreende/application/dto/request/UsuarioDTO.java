@@ -1,22 +1,22 @@
 package org.reempreende.application.dto.request;
 
 public class UsuarioDTO {
+    // Campos comuns
     private String email;
     private String senha;
     private String nome;
     private Integer status;
     private Integer tipoUsuario;
 
+    // Campos específicos
+    private String cpf;
+    private String cnpj;
+    private String senhaAcesso;
+
+    // Construtores
     public UsuarioDTO() {}
 
-    public UsuarioDTO(String email, String senha, String nome, Integer status, Integer tipoUsuario) {
-        this.email = email;
-        this.senha = senha;
-        this.nome = nome;
-        this.status = status;
-        this.tipoUsuario = tipoUsuario;
-    }
-
+    // Getters e Setters de todos os campos
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
@@ -31,4 +31,13 @@ public class UsuarioDTO {
 
     public Integer getTipoUsuario() { return tipoUsuario; }
     public void setTipoUsuario(Integer tipoUsuario) { this.tipoUsuario = tipoUsuario; }
+
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; }
+
+    public String getCnpj() { return cnpj; }
+    public void setCnpj(String cnpj) { this.cnpj = cnpj; }
+
+    public String getSenhaAcesso() { return senhaAcesso; }
+    public void setSenhaAcesso(String senhaAcesso) { this.senhaAcesso = senhaAcesso; }
 }
