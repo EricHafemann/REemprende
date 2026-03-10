@@ -4,13 +4,14 @@ import org.reempreende.infrastucture.utility.Cores;
 import org.reempreende.infrastucture.utility.TextoUtil;
 import org.reempreende.infrastucture.utility.Util;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
+import org.reempreende.presentation.presenter.InicialPresenter;
 
 public class InicialView implements IInicialView {
 
     private static final Util u = new Util();
 
     @Override
-    public void mostrarTelaInicial()
+    public int mostrarTelaInicial()
     {
         System.out.println(Cores.VERDE + "              ██████╗ ███████╗███╗   ███╗      ██╗   ██╗██╗███╗   ██╗██████╗  ██████╗ " + Cores.RESET);
         System.out.println(Cores.VERDE + "              ██╔══██╗██╔════╝████╗ ████║      ██║   ██║██║████╗  ██║██╔══██╗██╔═══██╗" + Cores.RESET);
@@ -26,13 +27,7 @@ public class InicialView implements IInicialView {
         System.out.println("\n" + Cores.NEGRITO + "Resposta: " + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + "SELECIONE UMA DAS OPÇÕES ACIMA ^ " + Cores.RESET);
         System.out.print("➤ ");
-        int opcao = u.lInt();
-
-        u.next();
-
-        switch (opcao) {
-            //case 1 -> cadastroPresenter.realizarCadastro();
-        }
+        return u.lInt();
     }
 
     @Override
