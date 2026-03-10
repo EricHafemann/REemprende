@@ -2,7 +2,6 @@ package org.reempreende.presentation.presenter;
 
 import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
-import org.reempreende.presentation.view.CadastroView;
 
 public class InicialPresenter {
 

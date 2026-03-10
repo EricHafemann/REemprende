@@ -1,4 +1,4 @@
-package org.reempreende.presentation.view;
+package org.reempreende.presentation.view.cliente;
 
 import org.reempreende.presentation.interfaces.icliente.IClienteViewHistorico;
 

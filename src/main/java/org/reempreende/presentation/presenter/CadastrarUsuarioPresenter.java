@@ -9,48 +9,65 @@ import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.infrastucture.repository.UsuarioRepositoryImpl;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.exception.InvalidPasswordException;
+import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
+import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 
 public class CadastrarUsuarioPresenter {
 
     private ICadastroView iCadastroView;
+    private ICadastroComercianteView iCadastroComercianteView;
+    private ICadastroClienteView iCadastroClienteView;
     private UsuarioService usuarioService;
     private UsuarioDTO usuarioDTO;
 
     private final UsuarioRepository usuarioRepository = new UsuarioRepositoryImpl();
 
-    public CadastrarUsuarioPresenter(ICadastroView iCadastroView) {
+    public CadastrarUsuarioPresenter(ICadastroView iCadastroView, ICadastroClienteView iCadastroClienteView, ICadastroComercianteView iCadastroComercianteView) {
         this.iCadastroView = iCadastroView;
+        this.iCadastroClienteView = iCadastroClienteView;
+        this.iCadastroComercianteView = iCadastroComercianteView;
         this.usuarioService = new UsuarioService(usuarioRepository);
         this.usuarioDTO = new UsuarioDTO();
     }
 
     public void collectInfo() {
-        TipoUsuario tipoUsuario = null;
+        String cpf = null;
+        String cnpj = null;
+        String senhaAcesso = null;
 
         String nome = iCadastroView.pedirNome();
         String email = iCadastroView.pedirEmail();
         String senha = iCadastroView.pedirSenha();
-        int opcao = iCadastroView.pedirTipoUsuario();
+        int tipoUsuario = iCadastroView.pedirTipoUsuario();
+        int status = iCadastroView.pedirStatus();
 
-        switch (opcao) {
+        switch (tipoUsuario) {
             case 0 -> {
-
+                cpf = iCadastroClienteView.pedirCPF();
+            }
+            case 1 -> {
+                cnpj = iCadastroComercianteView.pedirCNPJ();
+                senhaAcesso = iCadastroComercianteView.pedirSenhaAcesso();
             }
         }
 
-        registerUser(nome, email, senha, tipoUsuario);
+        registerUser(nome, email, senha, TipoUsuario.fromCodigo(tipoUsuario), cpf, cnpj, status);
     }
 
-    public void registerUser(String nome, String email, String senha, TipoUsuario tipoUsuario) {
+    public void registerUser(String nome, String email, String senha, TipoUsuario tipoUsuario, String cpf, String cnpj, int status) {
         validateInfo(nome, email, senha);
 
+        usuarioDTO.setNome(nome);
+        usuarioDTO.setEmail(email);
+        usuarioDTO.setStatus(status);
+        usuarioDTO.setTipoUsuario(tipoUsuario.getCodigo());
+        usuarioDTO.setSenha(senha);
+
         if (tipoUsuario.getCodigo() == 0) {
-            usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCpf();
-
+            usuarioDTO.setCpf(cpf);
         } else {
-
+            usuarioDTO.setSenhaAcesso();
         }
 
         iCadastroView.exibirSucesso("DEU CERTO");

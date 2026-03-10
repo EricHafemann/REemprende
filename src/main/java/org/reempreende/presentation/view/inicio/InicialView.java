@@ -1,10 +1,9 @@
-package org.reempreende.presentation.view;
+package org.reempreende.presentation.view.inicio;
 
 import org.reempreende.infrastucture.utility.Cores;
 import org.reempreende.infrastucture.utility.TextoUtil;
 import org.reempreende.infrastucture.utility.Util;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
-import org.reempreende.presentation.presenter.InicialPresenter;
 
 public class InicialView implements IInicialView {
 

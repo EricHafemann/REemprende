@@ -8,10 +8,9 @@ public interface ICadastroView extends InterfaceView {
     String pedirEmail();
     String pedirSenha();
     int pedirTipoUsuario();
+    int pedirStatus();
 
-    // Cliente
-    String pedirCPF();
+    String pedirCNPJ();
 
-    // Comerciante
-
+    String pedirSenhaAcesso();
 }

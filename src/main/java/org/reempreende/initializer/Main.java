@@ -2,7 +2,7 @@ package org.reempreende.initializer;
 
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.presenter.InicialPresenter;
-import org.reempreende.presentation.view.InicialView;
+import org.reempreende.presentation.view.inicio.InicialView;
 
 public class Main {
 
