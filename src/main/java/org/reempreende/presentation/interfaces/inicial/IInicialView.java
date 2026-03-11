@@ -4,4 +4,5 @@ import org.reempreende.presentation.interfaces.InterfaceView;
 
 public interface IInicialView extends InterfaceView {
     int mostrarTelaInicial();
+    int selecionarTipoUsuario();
 }

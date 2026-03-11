@@ -1,5 +1,6 @@
 package org.reempreende.presentation.view.inicio;
 
+import org.reempreende.domain.entities.enums.TipoUsuario;
 import org.reempreende.infrastucture.utility.Cores;
 import org.reempreende.infrastucture.utility.TextoUtil;
 import org.reempreende.infrastucture.utility.Util;
@@ -26,6 +27,20 @@ public class InicialView implements IInicialView {
         System.out.println("\n" + Cores.NEGRITO + "Resposta: " + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + "SELECIONE UMA DAS OPÇÕES ACIMA ^ " + Cores.RESET);
         System.out.print("➤ ");
+        return u.lInt();
+    }
+
+    @Override
+    public int selecionarTipoUsuario() {
+        TipoUsuario[] tipoUsuario = TipoUsuario.values();
+
+        System.out.println("Selecione um dos tipos de Usuários:");
+
+        for (TipoUsuario t : tipoUsuario) {
+            System.out.printf("%n%s : %d", t.name(), t.ordinal());
+        }
+        System.out.print("➤ ");
+
         return u.lInt();
     }
 

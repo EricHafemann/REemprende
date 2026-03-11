@@ -1,55 +1,64 @@
 package org.reempreende.presentation.view.usuario;
 
+import org.reempreende.domain.entities.enums.Status;
+import org.reempreende.domain.entities.enums.TipoUsuario;
+import org.reempreende.infrastucture.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 
-public abstract class CadastroBaseView implements ICadastroView {
+public class CadastroBaseView implements ICadastroView {
+    private final Util u = new Util();
+
     @Override
     public String pedirNome() {
-        return "";
+        System.out.println("Digite o seu nome:");
+        System.out.print("➤ ");
+        return u.lString();
     }
 
     @Override
     public String pedirEmail() {
-        return "";
+        System.out.println("Digite o seu e-mail:");
+        System.out.print("➤ ");
+        return u.lString();
     }
 
     @Override
     public String pedirSenha() {
-        return "";
+        System.out.println("(8 dígitos, com no mínimo uma letra maiúscula, minúscula e carácter especial)");
+        System.out.println("Crie uma senha:");
+        System.out.print("➤ ");
+        return u.lString();
     }
 
-    @Override
-    public int pedirTipoUsuario() {
-        return 0;
-    }
 
     @Override
     public int pedirStatus() {
-        return 0;
-    }
+        Status[] status = Status.values();
 
-    @Override
-    public String pedirCNPJ() {
-        return "";
-    }
+        System.out.println("Selecione um dos estados:");
 
-    @Override
-    public String pedirSenhaAcesso() {
-        return "";
+        for (Status s : status) {
+            System.out.printf("%n%s : %d", s.name(), s.ordinal());
+        }
+        System.out.print("➤ ");
+
+        return u.lInt();
     }
 
     @Override
     public void exibirErro(String mensagem) {
-
+        throw new RuntimeException(mensagem);
     }
 
     @Override
     public void exibirSucesso(String mensagem) {
-
+        System.out.println(mensagem);
     }
 
     @Override
     public void sair(String mensagem) {
-
+        System.out.println("Saindo...");
+        u.delay(2000);
     }
+
 }

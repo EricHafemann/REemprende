@@ -2,6 +2,7 @@ package org.reempreende.initializer;
 
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.presenter.InicialPresenter;
+import org.reempreende.presentation.router.AppRouter;
 import org.reempreende.presentation.view.inicio.InicialView;
 
 public class Main {
@@ -9,10 +10,9 @@ public class Main {
     private static final InicialView inicial = new InicialView();
 
     public static void main(String[] args) {
-        IInicialView inicialView = new InicialView();
-        InicialPresenter inicialPresenter = new InicialPresenter(inicialView);
+        AppRouter appRouter = new AppRouter();
 
-        inicialPresenter.iniciar();
+        appRouter.iniciarSistema();
     }
 
 }

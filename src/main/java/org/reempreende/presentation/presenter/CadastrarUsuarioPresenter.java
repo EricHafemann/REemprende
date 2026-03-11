@@ -2,60 +2,63 @@ package org.reempreende.presentation.presenter;
 
 import org.reempreende.application.dto.request.UsuarioDTO;
 import org.reempreende.application.service.UsuarioService;
-import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.entities.Usuario;
 import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.infrastucture.repository.UsuarioRepositoryImpl;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.exception.InvalidPasswordException;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
-import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
+import org.reempreende.presentation.interfaces.inicial.IInicialView;
+import org.reempreende.presentation.router.AppRouter;
+import org.reempreende.presentation.view.usuario.CadastroBaseView;
 
 public class CadastrarUsuarioPresenter {
 
-    private ICadastroView iCadastroView;
     private ICadastroComercianteView iCadastroComercianteView;
     private ICadastroClienteView iCadastroClienteView;
     private UsuarioService usuarioService;
     private UsuarioDTO usuarioDTO;
 
-    private final UsuarioRepository usuarioRepository = new UsuarioRepositoryImpl();
+    private final CadastroBaseView cadastroBaseView;
+    private final ClientePresenter clientePresenter;
+    private final ComerciantePresenter comerciantePresenter;
+    private final IInicialView inicialView;
+    private final AppRouter appRouter;
 
-    public CadastrarUsuarioPresenter(ICadastroView iCadastroView, ICadastroClienteView iCadastroClienteView, ICadastroComercianteView iCadastroComercianteView) {
-        this.iCadastroView = iCadastroView;
-        this.iCadastroClienteView = iCadastroClienteView;
-        this.iCadastroComercianteView = iCadastroComercianteView;
-        this.usuarioService = new UsuarioService(usuarioRepository);
+    public CadastrarUsuarioPresenter(AppRouter appRouter, IInicialView inicialView, CadastroBaseView cadastroBaseView, ClientePresenter clientePresenter,
+                                     ComerciantePresenter comerciantePresenter) {
+        this.appRouter = appRouter;
+        this.inicialView = inicialView;
+        this.cadastroBaseView = cadastroBaseView;
+        this.clientePresenter = clientePresenter;
+        this.comerciantePresenter = comerciantePresenter;
         this.usuarioDTO = new UsuarioDTO();
     }
 
     public void collectInfo() {
-        String cpf = null;
-        String cnpj = null;
-        String senhaAcesso = null;
+        int tipoUsuario = inicialView.selecionarTipoUsuario();
 
-        String nome = iCadastroView.pedirNome();
-        String email = iCadastroView.pedirEmail();
-        String senha = iCadastroView.pedirSenha();
-        int tipoUsuario = iCadastroView.pedirTipoUsuario();
-        int status = iCadastroView.pedirStatus();
+        String nome = cadastroBaseView.pedirNome();
+        String email = cadastroBaseView.pedirEmail();
+        String senha = cadastroBaseView.pedirSenha();
 
-        switch (tipoUsuario) {
+        registerUser(nome, email, senha, TipoUsuario.fromCodigo(tipoUsuario), 1);
+
+        /*switch (tipoUsuario) {
             case 0 -> {
-                cpf = iCadastroClienteView.pedirCPF();
+                clientePresenter.iniciarCadastro();
             }
             case 1 -> {
-                cnpj = iCadastroComercianteView.pedirCNPJ();
-                senhaAcesso = iCadastroComercianteView.pedirSenhaAcesso();
+                comerciantePresenter.getClass();
             }
-        }
+        }*/
 
-        registerUser(nome, email, senha, TipoUsuario.fromCodigo(tipoUsuario), cpf, cnpj, status);
+        UsuarioRepositoryImpl usuarioRepository = new UsuarioRepositoryImpl();
+
     }
 
-    public void registerUser(String nome, String email, String senha, TipoUsuario tipoUsuario, String cpf, String cnpj, int status) {
+    public void registerUser(String nome, String email, String senha, TipoUsuario tipoUsuario, int status) {
         validateInfo(nome, email, senha);
 
         usuarioDTO.setNome(nome);
@@ -64,13 +67,14 @@ public class CadastrarUsuarioPresenter {
         usuarioDTO.setTipoUsuario(tipoUsuario.getCodigo());
         usuarioDTO.setSenha(senha);
 
-        if (tipoUsuario.getCodigo() == 0) {
-            usuarioDTO.setCpf(cpf);
+        /*if (tipoUsuario.getCodigo() == 0) {
+            usuarioDTO.setCpf();
         } else {
             usuarioDTO.setSenhaAcesso();
-        }
+        }*/
 
-        iCadastroView.exibirSucesso("DEU CERTO");
+
+        inicialView.exibirErro("DEU CERTO INICIAL SUCESSO");
     }
 
     public void validateInfo(String nome, String email, String senha) {

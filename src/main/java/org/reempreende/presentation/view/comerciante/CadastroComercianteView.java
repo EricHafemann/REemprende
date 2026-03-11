@@ -22,25 +22,8 @@ public class CadastroComercianteView implements ICadastroView {
     }
 
     @Override
-    public int pedirTipoUsuario() {
-        return 0;
-    }
-
-    @Override
     public int pedirStatus() {
         return 0;
-    }
-
-    @Override
-    public String pedirCNPJ() {
-        System.out.println("Digite o seu CNPJ");
-        System.out.print("➤ ");
-        return u.lString();
-    }
-
-    @Override
-    public String pedirSenhaAcesso() {
-        return "";
     }
 
     @Override
