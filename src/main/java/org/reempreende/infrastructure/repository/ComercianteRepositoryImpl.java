@@ -1,8 +1,8 @@
-package org.reempreende.infrastucture.repository;
+package org.reempreende.infrastructure.repository;
 
 import org.reempreende.domain.repository.ComercianteRepository;
-import org.reempreende.infrastucture.config.ConnectionFactory;
-import org.reempreende.infrastucture.exception.RepositoryException;
+import org.reempreende.infrastructure.config.ConnectionFactory;
+import org.reempreende.infrastructure.exception.RepositoryException;
 import org.reempreende.domain.entities.Comerciante;
 import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;

@@ -2,9 +2,8 @@ package org.reempreende.presentation.presenter;
 
 import org.reempreende.application.dto.request.UsuarioDTO;
 import org.reempreende.application.service.UsuarioService;
-import org.reempreende.domain.entities.Usuario;
 import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.infrastucture.repository.UsuarioRepositoryImpl;
+import org.reempreende.infrastructure.repository.UsuarioRepositoryImpl;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.exception.InvalidPasswordException;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;

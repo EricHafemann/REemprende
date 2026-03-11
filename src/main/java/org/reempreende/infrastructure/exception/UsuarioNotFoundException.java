@@ -1,4 +1,4 @@
-package org.reempreende.infrastucture.exception;
+package org.reempreende.infrastructure.exception;
 
 public class UsuarioNotFoundException extends RuntimeException {
     public UsuarioNotFoundException(String message) {

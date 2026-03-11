@@ -1,8 +1,7 @@
 package org.reempreende.presentation.view.usuario;
 
 import org.reempreende.domain.entities.enums.Status;
-import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.infrastucture.utility.Util;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 
 public class CadastroBaseView implements ICadastroView {

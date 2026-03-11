@@ -1,4 +1,4 @@
-package org.reempreende.infrastucture.config;
+package org.reempreende.infrastructure.config;
 
 import java.io.IOException;
 import java.io.InputStream;

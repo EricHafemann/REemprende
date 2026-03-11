@@ -1,4 +1,4 @@
-package org.reempreende.infrastucture.utility;
+package org.reempreende.infrastructure.utility;
 
 public class TextoUtil {
     public static String transformar(String texto) {

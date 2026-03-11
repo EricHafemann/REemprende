@@ -1,6 +1,6 @@
 package org.reempreende.presentation.view.comerciante;
 
-import org.reempreende.infrastucture.utility.Util;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 
 public class CadastroComercianteView implements ICadastroView {

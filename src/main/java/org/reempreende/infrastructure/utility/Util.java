@@ -1,4 +1,4 @@
-package org.reempreende.infrastucture.utility;
+package org.reempreende.infrastructure.utility;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

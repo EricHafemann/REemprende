@@ -1,9 +1,9 @@
 package org.reempreende.presentation.view.inicio;
 
 import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.infrastucture.utility.Cores;
-import org.reempreende.infrastucture.utility.TextoUtil;
-import org.reempreende.infrastucture.utility.Util;
+import org.reempreende.infrastructure.utility.Cores;
+import org.reempreende.infrastructure.utility.TextoUtil;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 
 public class InicialView implements IInicialView {

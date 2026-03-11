@@ -1,12 +1,12 @@
-package org.reempreende.infrastucture.repository;
+package org.reempreende.infrastructure.repository;
 
 import org.reempreende.domain.repository.AgendamentoRepository;
 import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.infrastucture.config.ConnectionFactory;
-import org.reempreende.infrastucture.exception.RepositoryException;
+import org.reempreende.infrastructure.config.ConnectionFactory;
+import org.reempreende.infrastructure.exception.RepositoryException;
 
 import java.sql.*;
 import java.time.LocalDateTime;

@@ -2,7 +2,7 @@ package org.reempreende.presentation.presenter;
 
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.domain.entities.Agendamento;
-import org.reempreende.infrastucture.utility.Cores;
+import org.reempreende.infrastructure.utility.Cores;
 import org.reempreende.presentation.exception.InvalidDateException;
 import org.reempreende.presentation.exception.ObjectNullException;
 import org.reempreende.presentation.interfaces.iagendamento.IAgendamentoView;

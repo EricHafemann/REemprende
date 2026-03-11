@@ -1,8 +1,8 @@
-package org.reempreende.infrastucture.repository;
+package org.reempreende.infrastructure.repository;
 
 import org.reempreende.domain.repository.ServicoAgendamentoRepository;
-import org.reempreende.infrastucture.config.ConnectionFactory;
-import org.reempreende.infrastucture.exception.RepositoryException;
+import org.reempreende.infrastructure.config.ConnectionFactory;
+import org.reempreende.infrastructure.exception.RepositoryException;
 import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.entities.Servico;
 import org.reempreende.domain.entities.ServicoAgendamento;

@@ -1,4 +1,4 @@
-package org.reempreende.infrastucture.utility;
+package org.reempreende.infrastructure.utility;
 
 public class Cores {
     public static final String RESET = "\u001B[0m";
