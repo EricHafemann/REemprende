@@ -37,7 +37,7 @@ public class CadastroBaseView implements ICadastroView {
         System.out.println("Selecione um dos estados:");
 
         for (Status s : status) {
-            System.out.printf("%n%s : %d", s.name(), s.ordinal());
+            System.out.printf("%n%s : %d", s.name(), s.getCodigo());
         }
         System.out.print("➤ ");
 

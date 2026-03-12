@@ -1,6 +1,12 @@
 package org.reempreende.presentation.router;
 
+import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.service.UsuarioService;
+import org.reempreende.domain.repository.UsuarioRepository;
+import org.reempreende.infrastructure.repository.UsuarioRepositoryImpl;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
+import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
+import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.presenter.CadastrarUsuarioPresenter;
 import org.reempreende.presentation.presenter.ClientePresenter;
@@ -18,18 +24,31 @@ public class AppRouter {
         inicialPresenter.iniciar();
     }
 
-    public void cadastroUsuario() {
+    public void registerUser() {
         IInicialView inicialView = new InicialView();
-        ComerciantePresenter comerciantePresenter = new ComerciantePresenter();
-
-        ICadastroClienteView cadastroClienteView = new CadastroClienteView();
-        ClientePresenter clientePresenter = new ClientePresenter(this, cadastroClienteView);
 
         CadastroBaseView cadastroBaseView = new CadastroBaseView();
 
-        CadastrarUsuarioPresenter cadastrarUsuarioPresenter = new CadastrarUsuarioPresenter(this, inicialView, cadastroBaseView, clientePresenter,
-                comerciantePresenter);
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+
+        UsuarioRepository usuarioRepository = new UsuarioRepositoryImpl();
+        UsuarioService usuarioService = new UsuarioService(usuarioRepository);
+
+        CadastrarUsuarioPresenter cadastrarUsuarioPresenter = new CadastrarUsuarioPresenter(this, inicialView, cadastroBaseView,
+                usuarioDTO ,usuarioService);
 
         cadastrarUsuarioPresenter.collectInfo();
     }
+
+    public void registerClient(UsuarioDTO usuarioDTO) {
+        ICadastroClienteView cadastroClienteView = new CadastroClienteView();
+
+        UsuarioRepository usuarioRepository = new UsuarioRepositoryImpl();
+        UsuarioService usuarioService = new UsuarioService(usuarioRepository);
+
+        ClientePresenter clientePresenter = new ClientePresenter(this, cadastroClienteView, usuarioService);
+
+        clientePresenter.iniciarCadastro(usuarioDTO);
+    }
+
 }

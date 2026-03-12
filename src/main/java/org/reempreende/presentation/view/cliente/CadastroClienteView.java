@@ -1,12 +1,17 @@
 package org.reempreende.presentation.view.cliente;
 
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.view.usuario.CadastroBaseView;
 
 public class CadastroClienteView extends CadastroBaseView implements ICadastroClienteView {
+    private final Util u = new Util();
+
     @Override
     public String pedirCPF() {
-        return "";
+        System.out.println("Digite o seu CPF:");
+        System.out.print("➤ ");
+        return u.lString();
     }
 
 }

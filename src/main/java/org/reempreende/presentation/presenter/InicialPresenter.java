@@ -1,6 +1,5 @@
 package org.reempreende.presentation.presenter;
 
-import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.router.AppRouter;
 
@@ -19,7 +18,7 @@ public class InicialPresenter {
 
         switch (opcao) {
             case 1 -> {
-                appRouter.cadastroUsuario();
+                appRouter.registerUser();
             }
         }
     }

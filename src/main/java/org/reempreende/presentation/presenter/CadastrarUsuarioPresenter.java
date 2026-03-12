@@ -3,6 +3,7 @@ package org.reempreende.presentation.presenter;
 import org.reempreende.application.dto.request.UsuarioDTO;
 import org.reempreende.application.service.UsuarioService;
 import org.reempreende.domain.entities.enums.TipoUsuario;
+import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.infrastructure.repository.UsuarioRepositoryImpl;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.exception.InvalidPasswordException;
@@ -13,26 +14,21 @@ import org.reempreende.presentation.router.AppRouter;
 import org.reempreende.presentation.view.usuario.CadastroBaseView;
 
 public class CadastrarUsuarioPresenter {
-
-    private ICadastroComercianteView iCadastroComercianteView;
-    private ICadastroClienteView iCadastroClienteView;
     private UsuarioService usuarioService;
     private UsuarioDTO usuarioDTO;
 
     private final CadastroBaseView cadastroBaseView;
-    private final ClientePresenter clientePresenter;
-    private final ComerciantePresenter comerciantePresenter;
     private final IInicialView inicialView;
+
     private final AppRouter appRouter;
 
-    public CadastrarUsuarioPresenter(AppRouter appRouter, IInicialView inicialView, CadastroBaseView cadastroBaseView, ClientePresenter clientePresenter,
-                                     ComerciantePresenter comerciantePresenter) {
+    public CadastrarUsuarioPresenter(AppRouter appRouter, IInicialView inicialView, CadastroBaseView cadastroBaseView,
+                                     UsuarioDTO usuarioDTO, UsuarioService usuarioService) {
         this.appRouter = appRouter;
         this.inicialView = inicialView;
         this.cadastroBaseView = cadastroBaseView;
-        this.clientePresenter = clientePresenter;
-        this.comerciantePresenter = comerciantePresenter;
-        this.usuarioDTO = new UsuarioDTO();
+        this.usuarioDTO = usuarioDTO;
+        this.usuarioService = usuarioService;
     }
 
     public void collectInfo() {
@@ -41,23 +37,22 @@ public class CadastrarUsuarioPresenter {
         String nome = cadastroBaseView.pedirNome();
         String email = cadastroBaseView.pedirEmail();
         String senha = cadastroBaseView.pedirSenha();
+        int status = cadastroBaseView.pedirStatus();
 
-        registerUser(nome, email, senha, TipoUsuario.fromCodigo(tipoUsuario), 1);
+        registerUserDto(nome, email, senha, TipoUsuario.fromCodigo(tipoUsuario), status);
 
-        /*switch (tipoUsuario) {
+        switch (tipoUsuario) {
             case 0 -> {
-                clientePresenter.iniciarCadastro();
+                appRouter.registerClient(usuarioDTO);
             }
             case 1 -> {
-                comerciantePresenter.getClass();
+                //comerciantePresenter.getClass();
             }
-        }*/
-
-        UsuarioRepositoryImpl usuarioRepository = new UsuarioRepositoryImpl();
+        }
 
     }
 
-    public void registerUser(String nome, String email, String senha, TipoUsuario tipoUsuario, int status) {
+    public UsuarioDTO registerUserDto(String nome, String email, String senha, TipoUsuario tipoUsuario, int status) {
         validateInfo(nome, email, senha);
 
         usuarioDTO.setNome(nome);
@@ -66,14 +61,7 @@ public class CadastrarUsuarioPresenter {
         usuarioDTO.setTipoUsuario(tipoUsuario.getCodigo());
         usuarioDTO.setSenha(senha);
 
-        /*if (tipoUsuario.getCodigo() == 0) {
-            usuarioDTO.setCpf();
-        } else {
-            usuarioDTO.setSenhaAcesso();
-        }*/
-
-
-        inicialView.exibirErro("DEU CERTO INICIAL SUCESSO");
+        return usuarioDTO;
     }
 
     public void validateInfo(String nome, String email, String senha) {
