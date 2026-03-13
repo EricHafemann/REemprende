@@ -1,5 +1,6 @@
 package org.reempreende.presentation.presenter;
 
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.router.AppRouter;
 
@@ -14,11 +15,22 @@ public class InicialPresenter {
     }
 
     public void iniciar() {
-        int opcao = inicialView.mostrarTelaInicial();
+        boolean continuar = true;
 
-        switch (opcao) {
-            case 1 -> {
-                appRouter.registerUser();
+        while (continuar) {
+            int opcao = inicialView.mostrarTelaInicial();
+
+            switch (opcao) {
+                case 1 -> {
+                    appRouter.registerUser();
+                }
+                case 0 -> {
+                    inicialView.sair("Saindo do sistema...");
+                    System.exit(0);
+                }
+                default -> {
+                    inicialView.exibirErro("Opção inválida! Tente novamente:");
+                }
             }
         }
     }

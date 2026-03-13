@@ -1,6 +1,7 @@
 package org.reempreende.presentation.view.usuario;
 
 import org.reempreende.domain.entities.enums.Status;
+import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 
@@ -58,6 +59,11 @@ public class CadastroBaseView implements ICadastroView {
     public void sair(String mensagem) {
         System.out.println("Saindo...");
         u.delay(2000);
+    }
+
+    @Override
+    public void exibirMensagem(String mensagem) {
+        System.out.println(TextoUtil.transformar(mensagem));
     }
 
 }

@@ -2,6 +2,7 @@ package org.reempreende.presentation.presenter;
 
 import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.UsuarioService;
+import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.exception.InvalidPasswordException;
@@ -33,16 +34,18 @@ public class CadastrarUsuarioPresenter {
         String nome = cadastroBaseView.pedirNome();
         String email = cadastroBaseView.pedirEmail();
         String senha = cadastroBaseView.pedirSenha();
-        int status = cadastroBaseView.pedirStatus();
 
-        registerUserDto(nome, email, senha, TipoUsuario.fromCodigo(tipoUsuario), status);
+        registerUserDto(nome, email, senha, TipoUsuario.fromCodigo(tipoUsuario), Status.ATIVO.getCodigo());
 
         switch (tipoUsuario) {
             case 0 -> {
                 appRouter.registerClient(usuarioRequestDTO);
             }
             case 1 -> {
-                //comerciantePresenter.getClass();
+                appRouter.registerComerciante(usuarioRequestDTO);
+            }
+            default -> {
+                inicialView.exibirErro("Opção inválida! Tente novamente:");
             }
         }
 

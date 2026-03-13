@@ -1,43 +1,33 @@
 package org.reempreende.presentation.view.comerciante;
 
+import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.infrastructure.utility.Util;
+import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
+import org.reempreende.presentation.view.usuario.CadastroBaseView;
 
-public class CadastroComercianteView implements ICadastroView {
+public class CadastroComercianteView extends CadastroBaseView implements ICadastroComercianteView {
     private final Util u = new Util();
 
+
     @Override
-    public String pedirNome() {
-        return "";
+    public String pedirCNPJ() {
+        System.out.println("Digite o seu CNPJ:");
+        System.out.print("➤ ");
+
+        return u.lString();
     }
 
     @Override
-    public String pedirEmail() {
-        return "";
+    public String pedirSenhaAcesso() {
+        System.out.println("Crie uma senha de Acesso:");
+        System.out.print("➤ ");
+
+        return u.lString();
     }
 
     @Override
-    public String pedirSenha() {
-        return "";
-    }
-
-    @Override
-    public int pedirStatus() {
-        return 0;
-    }
-
-    @Override
-    public void exibirErro(String mensagem) {
-
-    }
-
-    @Override
-    public void exibirSucesso(String mensagem) {
-
-    }
-
-    @Override
-    public void sair(String mensagem) {
-
+    public void exibirMensagem(String mensagem) {
+        System.out.println(TextoUtil.transformar(mensagem));
     }
 }
