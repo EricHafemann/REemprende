@@ -4,6 +4,8 @@ import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.router.AppRouter;
 
+import java.util.OptionalInt;
+
 public class InicialPresenter {
 
     private final IInicialView inicialView;
@@ -18,7 +20,9 @@ public class InicialPresenter {
         boolean continuar = true;
 
         while (continuar) {
-            int opcao = inicialView.mostrarTelaInicial();
+            OptionalInt opcaoCaixa = inicialView.mostrarTela();
+
+            int opcao = opcaoCaixa.orElse(-1);
 
             switch (opcao) {
                 case 1 -> {

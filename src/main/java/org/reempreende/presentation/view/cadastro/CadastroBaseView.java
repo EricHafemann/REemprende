@@ -1,9 +1,11 @@
-package org.reempreende.presentation.view.usuario;
+package org.reempreende.presentation.view.cadastro;
 
 import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
+
+import java.util.OptionalInt;
 
 public class CadastroBaseView implements ICadastroView {
     private final Util u = new Util();
@@ -43,6 +45,11 @@ public class CadastroBaseView implements ICadastroView {
         System.out.print("➤ ");
 
         return u.lInt();
+    }
+
+    @Override
+    public OptionalInt mostrarTela() {
+        return OptionalInt.empty();
     }
 
     @Override

@@ -3,8 +3,9 @@ package org.reempreende.presentation.view.comerciante;
 import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
-import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
-import org.reempreende.presentation.view.usuario.CadastroBaseView;
+import org.reempreende.presentation.view.cadastro.CadastroBaseView;
+
+import java.util.OptionalInt;
 
 public class CadastroComercianteView extends CadastroBaseView implements ICadastroComercianteView {
     private final Util u = new Util();
@@ -24,6 +25,11 @@ public class CadastroComercianteView extends CadastroBaseView implements ICadast
         System.out.print("➤ ");
 
         return u.lString();
+    }
+
+    @Override
+    public OptionalInt mostrarTela() {
+        return OptionalInt.empty();
     }
 
     @Override

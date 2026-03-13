@@ -8,7 +8,7 @@ import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.exception.InvalidPasswordException;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.router.AppRouter;
-import org.reempreende.presentation.view.usuario.CadastroBaseView;
+import org.reempreende.presentation.view.cadastro.CadastroBaseView;
 
 public class CadastrarUsuarioPresenter {
     private UsuarioService usuarioService;

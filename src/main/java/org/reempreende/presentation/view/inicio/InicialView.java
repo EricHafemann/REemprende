@@ -6,12 +6,14 @@ import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 
+import java.util.OptionalInt;
+
 public class InicialView implements IInicialView {
 
     private static final Util u = new Util();
 
     @Override
-    public int mostrarTelaInicial()
+    public OptionalInt mostrarTela()
     {
         System.out.println(Cores.VERDE + "              ██████╗ ███████╗███╗   ███╗      ██╗   ██╗██╗███╗   ██╗██████╗  ██████╗ " + Cores.RESET);
         System.out.println(Cores.VERDE + "              ██╔══██╗██╔════╝████╗ ████║      ██║   ██║██║████╗  ██║██╔══██╗██╔═══██╗" + Cores.RESET);
@@ -25,7 +27,7 @@ public class InicialView implements IInicialView {
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("0 ➤ Sair") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA ^ ") + Cores.RESET);
         System.out.print("➤ ");
-        return u.lInt();
+        return OptionalInt.of(u.lInt());
 
     }
 
