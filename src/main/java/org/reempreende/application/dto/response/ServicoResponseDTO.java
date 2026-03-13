@@ -1,5 +1,7 @@
 package org.reempreende.application.dto.response;
 
+import org.reempreende.domain.entities.Servico;
+
 public class ServicoResponseDTO {
 
     private long idServico;
@@ -17,6 +19,15 @@ public class ServicoResponseDTO {
         this.descricao = descricao;
         this.duracaoHoras = duracaoHoras;
         this.idComerciante = idComerciante;
+    }
+
+    public ServicoResponseDTO(Servico servico) {
+        this.idServico = servico.getIdServico();
+        this.avaliacao = servico.getAvaliacao();
+        this.descricao = servico.getDescricao();
+        this.duracaoHoras = servico.getDuracaoHoras();
+        this.idComerciante = servico.getComerciante().getId();
+
     }
 
     public long getIdServico() {return idServico;}
