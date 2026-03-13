@@ -1,4 +1,32 @@
 package org.reempreende.presentation.view.comerciante;
 
-public class ComercianteView {
+import org.reempreende.domain.entities.enums.TipoUsuario;
+import org.reempreende.infrastructure.utility.Cores;
+import org.reempreende.infrastructure.utility.TextoUtil;
+import org.reempreende.infrastructure.utility.Util;
+import org.reempreende.presentation.interfaces.icomerciante.IComercianteView;
+
+
+public class ComercianteView implements IComercianteView
+{
+    private static final Util u = new Util();
+
+    public int mostraMenuComerciante()
+    {
+        System.out.println(Cores.VERDE + "             ██████╗  ██████╗ ███╗   ███╗███████╗██████╗  ██████╗██╗ █████╗ ███╗   ██╗███████╗███████╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██╔════╝ ██╔═══██╗████╗ ████║██╔════╝██╔══██╗██╔════╝██║██╔══██╗████╗  ██║╚══██╔══╝██╔════╝" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║      ██║   ██║██╔████╔██║█████╗  ██████╔╝██║     ██║███████║██╔██╗ ██║   ██║   █████╗ " + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║      ██║   ██║██║╚██╔╝██║██╔══╝  ██╔══██╗██║     ██║██╔══██║██║╚██╗██║   ██║   ██╔══╝  " + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ╚██████╗ ╚██████╔╝██║ ╚═╝ ██║███████╗██║  ██║╚██████╗██║██║  ██║██║ ╚████║   ██║   ███████╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "             ╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝" + Cores.RESET);
+        System.out.println("\n" + TextoUtil.transformar("Digite a opção desejada!"));
+        System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("1 ➤ Cadastrar horário de trabalho") + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("2 ➤ Cadastrar serviço") + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("0 ➤ Sair") + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA ^ ") + Cores.RESET);
+        System.out.print("➤ ");
+        return u.lInt();
+    }
+
+
 }
