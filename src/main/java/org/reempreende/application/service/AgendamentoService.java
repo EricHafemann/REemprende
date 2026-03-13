@@ -1,16 +1,21 @@
 package org.reempreende.application.service;
 
 import org.reempreende.application.dto.mapper.AgendamentoMapper;
+import org.reempreende.application.dto.mapper.UsuarioMapper;
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Agendamento;
+import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.repository.AgendamentoRepository;
+
+import java.util.Optional;
 
 public class AgendamentoService
 {
 
    private final AgendamentoRepository agendamentoRepository;
+    private long d;
 
     public AgendamentoService(AgendamentoRepository agendamentoRepository)
    {
@@ -48,5 +53,12 @@ public class AgendamentoService
        Agendamento agendamentoSalvo = agendamentoRepository.insert(agendamento);
 
        return AgendamentoMapper.toResponseDTO(agendamentoSalvo);
+   }
+
+   public AgendamentoResponseDTO findById(long id)
+   {
+       Agendamento agendamento = agendamentoRepository.findById(id)
+               .orElseThrow(() -> new BusinessException("Agendamento não encontrado"));
+       return AgendamentoMapper.toResponseDTO(agendamento);
    }
 }
