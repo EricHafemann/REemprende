@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class AgendamentoMapper {
 
-    public static Agendamento toEntity(AgendamentoRequestDTO dto, Cliente cliente) {
+    public static Agendamento toEntityCliente(AgendamentoRequestDTO dto, Cliente cliente) {
         if (dto == null) return null;
         return new Agendamento(
                 dto.getDataInicio(),
@@ -18,6 +18,17 @@ public class AgendamentoMapper {
                 cliente
         );
     }
+
+    public static Agendamento toEntityComerciante(AgendamentoRequestDTO dto) {
+        if (dto == null) return null;
+        return new Agendamento(
+                dto.getDataInicio(),
+                dto.getDataFim(),
+                dto.getObservacao(),
+                null
+        );
+    }
+
 
     public static AgendamentoResponseDTO toResponseDTO(Agendamento agendamento) {
         if (agendamento == null) return null;
