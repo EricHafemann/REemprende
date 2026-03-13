@@ -1,6 +1,6 @@
 package org.reempreende.application.dto.request;
 
-public class UsuarioDTO {
+public class UsuarioRequestDTO {
     // Campos comuns
     private String email;
     private String senha;
@@ -14,7 +14,7 @@ public class UsuarioDTO {
     private String senhaAcesso;
 
     // Construtores
-    public UsuarioDTO() {}
+    public UsuarioRequestDTO() {}
 
     // Getters e Setters de todos os campos
     public String getEmail() { return email; }

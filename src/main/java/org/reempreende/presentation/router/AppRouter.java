@@ -1,16 +1,13 @@
 package org.reempreende.presentation.router;
 
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.UsuarioService;
 import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.infrastructure.repository.UsuarioRepositoryImpl;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
-import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
-import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.presenter.CadastrarUsuarioPresenter;
 import org.reempreende.presentation.presenter.ClientePresenter;
-import org.reempreende.presentation.presenter.ComerciantePresenter;
 import org.reempreende.presentation.presenter.InicialPresenter;
 import org.reempreende.presentation.view.cliente.CadastroClienteView;
 import org.reempreende.presentation.view.inicio.InicialView;
@@ -29,18 +26,18 @@ public class AppRouter {
 
         CadastroBaseView cadastroBaseView = new CadastroBaseView();
 
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        UsuarioRequestDTO usuarioRequestDTO = new UsuarioRequestDTO();
 
         UsuarioRepository usuarioRepository = new UsuarioRepositoryImpl();
         UsuarioService usuarioService = new UsuarioService(usuarioRepository);
 
         CadastrarUsuarioPresenter cadastrarUsuarioPresenter = new CadastrarUsuarioPresenter(this, inicialView, cadastroBaseView,
-                usuarioDTO ,usuarioService);
+                usuarioRequestDTO,usuarioService);
 
         cadastrarUsuarioPresenter.collectInfo();
     }
 
-    public void registerClient(UsuarioDTO usuarioDTO) {
+    public void registerClient(UsuarioRequestDTO usuarioRequestDTO) {
         ICadastroClienteView cadastroClienteView = new CadastroClienteView();
 
         UsuarioRepository usuarioRepository = new UsuarioRepositoryImpl();
@@ -48,7 +45,7 @@ public class AppRouter {
 
         ClientePresenter clientePresenter = new ClientePresenter(this, cadastroClienteView, usuarioService);
 
-        clientePresenter.iniciarCadastro(usuarioDTO);
+        clientePresenter.iniciarCadastro(usuarioRequestDTO);
     }
 
 }

@@ -1,21 +1,17 @@
 package org.reempreende.presentation.presenter;
 
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.UsuarioService;
 import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.domain.repository.UsuarioRepository;
-import org.reempreende.infrastructure.repository.UsuarioRepositoryImpl;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.exception.InvalidPasswordException;
-import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
-import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.router.AppRouter;
 import org.reempreende.presentation.view.usuario.CadastroBaseView;
 
 public class CadastrarUsuarioPresenter {
     private UsuarioService usuarioService;
-    private UsuarioDTO usuarioDTO;
+    private UsuarioRequestDTO usuarioRequestDTO;
 
     private final CadastroBaseView cadastroBaseView;
     private final IInicialView inicialView;
@@ -23,11 +19,11 @@ public class CadastrarUsuarioPresenter {
     private final AppRouter appRouter;
 
     public CadastrarUsuarioPresenter(AppRouter appRouter, IInicialView inicialView, CadastroBaseView cadastroBaseView,
-                                     UsuarioDTO usuarioDTO, UsuarioService usuarioService) {
+                                     UsuarioRequestDTO usuarioRequestDTO, UsuarioService usuarioService) {
         this.appRouter = appRouter;
         this.inicialView = inicialView;
         this.cadastroBaseView = cadastroBaseView;
-        this.usuarioDTO = usuarioDTO;
+        this.usuarioRequestDTO = usuarioRequestDTO;
         this.usuarioService = usuarioService;
     }
 
@@ -43,7 +39,7 @@ public class CadastrarUsuarioPresenter {
 
         switch (tipoUsuario) {
             case 0 -> {
-                appRouter.registerClient(usuarioDTO);
+                appRouter.registerClient(usuarioRequestDTO);
             }
             case 1 -> {
                 //comerciantePresenter.getClass();
@@ -52,16 +48,16 @@ public class CadastrarUsuarioPresenter {
 
     }
 
-    public UsuarioDTO registerUserDto(String nome, String email, String senha, TipoUsuario tipoUsuario, int status) {
+    public UsuarioRequestDTO registerUserDto(String nome, String email, String senha, TipoUsuario tipoUsuario, int status) {
         validateInfo(nome, email, senha);
 
-        usuarioDTO.setNome(nome);
-        usuarioDTO.setEmail(email);
-        usuarioDTO.setStatus(status);
-        usuarioDTO.setTipoUsuario(tipoUsuario.getCodigo());
-        usuarioDTO.setSenha(senha);
+        usuarioRequestDTO.setNome(nome);
+        usuarioRequestDTO.setEmail(email);
+        usuarioRequestDTO.setStatus(status);
+        usuarioRequestDTO.setTipoUsuario(tipoUsuario.getCodigo());
+        usuarioRequestDTO.setSenha(senha);
 
-        return usuarioDTO;
+        return usuarioRequestDTO;
     }
 
     public void validateInfo(String nome, String email, String senha) {

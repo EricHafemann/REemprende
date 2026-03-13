@@ -6,7 +6,7 @@ import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.entities.Comerciante;
 import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class UsuarioMapper {
 
-    public static Usuario toEntity(UsuarioDTO dto) {
+    public static Usuario toEntity(UsuarioRequestDTO dto) {
         if (dto == null) return null;
 
         TipoUsuario tipo = TipoUsuario.fromCodigo(dto.getTipoUsuario());
@@ -73,7 +73,7 @@ public class UsuarioMapper {
                 .collect(Collectors.toList());
     }
 
-    public static void updateEntityFromDTO(UsuarioDTO dto, Usuario usuario) {
+    public static void updateEntityFromDTO(UsuarioRequestDTO dto, Usuario usuario) {
         if (dto == null || usuario == null) return;
 
         usuario.setEmail(dto.getEmail());

@@ -6,14 +6,12 @@ import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.entities.Comerciante;
 import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.dto.mapper.UsuarioMapper;
 import org.reempreende.application.exception.BusinessException;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class UsuarioService {
 
@@ -23,7 +21,7 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public UsuarioResponseDTO criarUsuario(UsuarioDTO dto) {
+    public UsuarioResponseDTO criarUsuario(UsuarioRequestDTO dto) {
         // Validar email único
         if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new BusinessException("Email já cadastrado");
@@ -71,7 +69,7 @@ public class UsuarioService {
         return UsuarioMapper.toResponseDTOList(usuarios);
     }
 
-    public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioDTO dto) {
+    public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioRequestDTO dto) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 

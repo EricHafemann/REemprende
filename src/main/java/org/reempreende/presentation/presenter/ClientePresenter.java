@@ -1,6 +1,6 @@
 package org.reempreende.presentation.presenter;
 
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.UsuarioService;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.router.AppRouter;
@@ -15,11 +15,11 @@ public class ClientePresenter {
         this.usuarioService = usuarioService;
     }
 
-    public void iniciarCadastro(UsuarioDTO usuarioDTO) {
+    public void iniciarCadastro(UsuarioRequestDTO usuarioRequestDTO) {
         String cpf = cadastroView.pedirCPF();
 
-        usuarioDTO.setCpf(cpf);
+        usuarioRequestDTO.setCpf(cpf);
 
-        usuarioService.criarUsuario(usuarioDTO);
+        usuarioService.criarUsuario(usuarioRequestDTO);
     }
 }

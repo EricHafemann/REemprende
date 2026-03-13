@@ -6,7 +6,7 @@ import org.reempreende.domain.entities.Usuario;
 import org.reempreende.domain.entities.Comerciante;
 import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.dto.mapper.UsuarioMapper;
 import org.reempreende.application.exception.BusinessException;
@@ -21,7 +21,7 @@ public class ComercianteService {
         this.comercianteRepository = comercianteRepository;
     }
 
-    public UsuarioResponseDTO cadastrar(UsuarioDTO dto) {
+    public UsuarioResponseDTO cadastrar(UsuarioRequestDTO dto) {
         dto.setTipoUsuario(TipoUsuario.COMERCIANTE.getCodigo());
         dto.setStatus(Status.ATIVO.getCodigo());
 
@@ -56,7 +56,7 @@ public class ComercianteService {
         return UsuarioMapper.toResponseDTO(comerciante);
     }
 
-    public UsuarioResponseDTO atualizar(Long id, UsuarioDTO dto) {
+    public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
         Comerciante comerciante = comercianteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Comerciante não encontrado"));
 

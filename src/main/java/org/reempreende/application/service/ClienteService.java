@@ -6,7 +6,7 @@ import org.reempreende.domain.entities.Usuario;
 import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.dto.mapper.UsuarioMapper;
 import org.reempreende.application.exception.BusinessException;
@@ -21,7 +21,7 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public UsuarioResponseDTO cadastrar(UsuarioDTO dto) {
+    public UsuarioResponseDTO cadastrar(UsuarioRequestDTO dto) {
         dto.setTipoUsuario(TipoUsuario.CLIENTE.getCodigo());
         dto.setStatus(Status.ATIVO.getCodigo());
 
@@ -52,7 +52,7 @@ public class ClienteService {
         return UsuarioMapper.toResponseDTO(cliente);
     }
 
-    public UsuarioResponseDTO atualizar(Long id, UsuarioDTO dto) {
+    public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente não encontrado"));
 
