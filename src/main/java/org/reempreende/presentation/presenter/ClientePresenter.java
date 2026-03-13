@@ -1,6 +1,6 @@
 package org.reempreende.presentation.presenter;
 
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.ClienteService;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.router.AppRouter;
@@ -18,7 +18,7 @@ public class ClientePresenter {
         this.clienteService = clienteService;
     }
 
-    public void registerClient(UsuarioDTO usuarioDTO) {
+    public void registerClient(UsuarioRequestDTO usuarioDTO) {
         String cpf = cadastroView.pedirCPF();
 
         usuarioDTO.setCpf(cpf);

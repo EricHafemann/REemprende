@@ -1,6 +1,6 @@
 package org.reempreende.presentation.router;
 
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.ClienteService;
 import org.reempreende.application.service.ComercianteService;
 import org.reempreende.application.service.UsuarioService;
@@ -40,7 +40,7 @@ public class AppRouter {
 
         CadastroBaseView cadastroBaseView = new CadastroBaseView();
 
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        UsuarioRequestDTO usuarioDTO = new UsuarioRequestDTO();
 
         CadastrarUsuarioPresenter cadastrarUsuarioPresenter = new CadastrarUsuarioPresenter(this, inicialView, cadastroBaseView,
                 usuarioDTO ,usuarioService);
@@ -48,7 +48,7 @@ public class AppRouter {
         cadastrarUsuarioPresenter.collectInfo();
     }
 
-    public void registerClient(UsuarioDTO usuarioDTO) {
+    public void registerClient(UsuarioRequestDTO usuarioDTO) {
         ICadastroClienteView cadastroClienteView = new CadastroClienteView();
 
         ClientePresenter clientePresenter = new ClientePresenter(this, cadastroClienteView, clienteService);
@@ -56,7 +56,7 @@ public class AppRouter {
         clientePresenter.registerClient(usuarioDTO);
     }
 
-    public void registerComerciante(UsuarioDTO usuarioDTO) {
+    public void registerComerciante(UsuarioRequestDTO usuarioDTO) {
         ICadastroComercianteView cadastroComercianteView = new CadastroComercianteView();
 
         ComerciantePresenter comerciantePresenter = new ComerciantePresenter(this, comercianteService,

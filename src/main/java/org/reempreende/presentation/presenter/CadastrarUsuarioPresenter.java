@@ -42,7 +42,7 @@ public class CadastrarUsuarioPresenter {
                 appRouter.registerClient(usuarioRequestDTO);
             }
             case 1 -> {
-                appRouter.registerComerciante(usuarioDTO);
+                appRouter.registerComerciante(usuarioRequestDTO);
             }
             default -> {
                 inicialView.exibirErro("Opção inválida! Tente novamente:");

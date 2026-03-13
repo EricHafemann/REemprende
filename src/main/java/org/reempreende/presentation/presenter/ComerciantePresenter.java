@@ -1,6 +1,6 @@
 package org.reempreende.presentation.presenter;
 
-import org.reempreende.application.dto.request.UsuarioDTO;
+import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.ComercianteService;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
 import org.reempreende.presentation.router.AppRouter;
@@ -18,7 +18,7 @@ public class ComerciantePresenter {
         this.cadastroComercianteView = cadastroComercianteView;
     }
 
-    public void registerComerciante(UsuarioDTO usuarioDTO) {
+    public void registerComerciante(UsuarioRequestDTO usuarioDTO) {
         String cnpj = cadastroComercianteView.pedirCNPJ();
         String senhaAcesso = cadastroComercianteView.pedirSenhaAcesso();
 
