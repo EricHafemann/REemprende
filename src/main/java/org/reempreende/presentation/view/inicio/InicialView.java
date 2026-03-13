@@ -19,7 +19,6 @@ public class InicialView implements IInicialView {
         System.out.println(Cores.VERDE + "              ██╔══██╗██╔══╝  ██║╚██╔╝██║      ╚██╗ ██╔╝██║██║╚██╗██║██║  ██║██║   ██║" + Cores.RESET);
         System.out.println(Cores.VERDE + "              ██████╔╝███████╗██║ ╚═╝ ██║       ╚████╔╝ ██║██║ ╚████║██████╔╝╚██████╔╝" + Cores.RESET);
         System.out.println(Cores.VERDE + "              ╚═════╝ ╚══════╝╚═╝     ╚═╝        ╚═══╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ " + Cores.RESET);
-
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("Digite a opção desejada!") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + "1 ➤ Cadastro:" + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + "2 ➤ Login" + Cores.RESET);
@@ -28,6 +27,7 @@ public class InicialView implements IInicialView {
         System.out.println("\n" + Cores.NEGRITO + "SELECIONE UMA DAS OPÇÕES ACIMA ^ " + Cores.RESET);
         System.out.print("➤ ");
         return u.lInt();
+
     }
 
     @Override
@@ -44,20 +44,4 @@ public class InicialView implements IInicialView {
         return u.lInt();
     }
 
-    @Override
-    public void exibirErro(String mensagem) {
-        System.out.println(Cores.VERDE_BRILHANTE + mensagem + Cores.RESET);
-    }
-
-    @Override
-    public void exibirSucesso(String mensagem) {
-        System.out.println(Cores.VERMELHO + mensagem + Cores.RESET);
-    }
-
-    @Override
-    public void sair(String mensagem) {
-        System.out.println(Cores.AMARELO + mensagem + Cores.RESET);
-        u.delay(1000);
-        System.exit(0);
-    }
 }
