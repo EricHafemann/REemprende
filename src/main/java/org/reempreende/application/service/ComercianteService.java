@@ -21,7 +21,7 @@ public class ComercianteService {
         this.comercianteRepository = comercianteRepository;
     }
 
-    public UsuarioResponseDTO cadastrar(UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO insert(UsuarioRequestDTO dto) {
         dto.setTipoUsuario(TipoUsuario.COMERCIANTE.getCodigo());
         dto.setStatus(Status.ATIVO.getCodigo());
 
@@ -50,13 +50,13 @@ public class ComercianteService {
         return UsuarioMapper.toResponseDTO(usuarioSalvo);
     }
 
-    public UsuarioResponseDTO buscarPorId(Long id) {
+    public UsuarioResponseDTO findById(Long id) {
         Comerciante comerciante = comercianteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Comerciante não encontrado"));
         return UsuarioMapper.toResponseDTO(comerciante);
     }
 
-    public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO update(Long id, UsuarioRequestDTO dto) {
         Comerciante comerciante = comercianteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Comerciante não encontrado"));
 
@@ -88,7 +88,7 @@ public class ComercianteService {
         return UsuarioMapper.toResponseDTO(comerciante);
     }
 
-    public void deletar(Long id) {
+    public void delete(Long id) {
         Comerciante comerciante = comercianteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Comerciante não encontrado"));
 
@@ -96,7 +96,7 @@ public class ComercianteService {
         usuarioRepository.delete(id);
     }
 
-    public void desativar(Long id) {
+    public void deactivate(Long id) {
         Comerciante comerciante = comercianteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Comerciante não encontrado"));
 
@@ -107,7 +107,7 @@ public class ComercianteService {
         usuarioRepository.disable(id);
     }
 
-    public void ativar(Long id) {
+    public void activate(Long id) {
         Comerciante comerciante = comercianteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Comerciante não encontrado"));
 

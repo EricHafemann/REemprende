@@ -21,7 +21,7 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public UsuarioResponseDTO criarUsuario(UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO insertUsuario(UsuarioRequestDTO dto) {
         // Validar email único
         if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new BusinessException("Email já cadastrado");
@@ -49,14 +49,14 @@ public class UsuarioService {
         return UsuarioMapper.toResponseDTO(usuarioSalvo);
     }
 
-    public UsuarioResponseDTO buscarPorId(Long id) {
+    public UsuarioResponseDTO findById(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 
         return UsuarioMapper.toResponseDTO(usuario);
     }
 
-    public UsuarioResponseDTO buscarPorEmail(String email) {
+    public UsuarioResponseDTO findByEmail(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 
@@ -64,12 +64,12 @@ public class UsuarioService {
     }
 
     // Listar todos os usuários
-    public List<UsuarioResponseDTO> listarTodos() {
+    public List<UsuarioResponseDTO> findAll() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         return UsuarioMapper.toResponseDTOList(usuarios);
     }
 
-    public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO updateUser(Long id, UsuarioRequestDTO dto) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 
@@ -97,7 +97,7 @@ public class UsuarioService {
         return UsuarioMapper.toResponseDTO(usuario);
     }
 
-    public void alterarSenha(Long id, String senhaAtual, String novaSenha) {
+    public void switchPassword(Long id, String senhaAtual, String novaSenha) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 
@@ -110,7 +110,7 @@ public class UsuarioService {
     }
 
     // Desativar usuário
-    public void desativarUsuario(Long id) {
+    public void deactivateUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 
@@ -121,7 +121,7 @@ public class UsuarioService {
         usuarioRepository.disable(id);
     }
 
-    public void ativarUsuario(Long id) {
+    public void activateUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 
@@ -132,7 +132,7 @@ public class UsuarioService {
         usuarioRepository.enable(id);
     }
 
-    public void deletarUsuario(Long id) {
+    public void deleteUsuario(Long id) {
         if (!usuarioRepository.existsById(id)) {
             throw new BusinessException("Usuário não encontrado");
         }

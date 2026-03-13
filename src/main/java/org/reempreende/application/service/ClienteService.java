@@ -21,7 +21,7 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public UsuarioResponseDTO cadastrar(UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO insert(UsuarioRequestDTO dto) {
         dto.setTipoUsuario(TipoUsuario.CLIENTE.getCodigo());
         dto.setStatus(Status.ATIVO.getCodigo());
 
@@ -46,13 +46,13 @@ public class ClienteService {
         return UsuarioMapper.toResponseDTO(usuarioSalvo);
     }
 
-    public UsuarioResponseDTO buscarPorId(Long id) {
+    public UsuarioResponseDTO findById(Long id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente não encontrado"));
         return UsuarioMapper.toResponseDTO(cliente);
     }
 
-    public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO update(Long id, UsuarioRequestDTO dto) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente não encontrado"));
 
@@ -81,7 +81,7 @@ public class ClienteService {
         return UsuarioMapper.toResponseDTO(cliente);
     }
 
-    public void deletar(Long id) {
+    public void delete(Long id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente não encontrado"));
 
@@ -89,7 +89,7 @@ public class ClienteService {
         usuarioRepository.delete(id);
     }
 
-    public void desativar(Long id) {
+    public void deactivate(Long id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente não encontrado"));
 
@@ -100,7 +100,7 @@ public class ClienteService {
         usuarioRepository.disable(id);
     }
 
-    public void ativar(Long id) {
+    public void activate(Long id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente não encontrado"));
 
