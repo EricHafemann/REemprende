@@ -1,51 +1,34 @@
 package org.reempreende.application.dto.response;
 
-import org.reempreende.domain.entities.Agendamento;
-import org.reempreende.domain.entities.Servico;
 import org.reempreende.domain.entities.ServicoAgendamento;
 
 public class ServicoAgendamentoResponseDTO {
 
-    private long idServicosAgendamentos;
-    private Servico servico;
-    private Agendamento agendamento;
+    private Long idServicosAgendamentos;
+    private Long idServico;
+    private Long idAgendamento;
 
-    public ServicoAgendamentoResponseDTO() {
-    }
+    public ServicoAgendamentoResponseDTO() {}
 
-    public ServicoAgendamentoResponseDTO(long idServicosAgendamentos, Servico servico, Agendamento agendamento) {
+    public ServicoAgendamentoResponseDTO(Long idServicosAgendamentos, Long idServico, Long idAgendamento) {
         this.idServicosAgendamentos = idServicosAgendamentos;
-        this.servico = servico;
-        this.agendamento = agendamento;
+        this.idServico = idServico;
+        this.idAgendamento = idAgendamento;
     }
 
     public ServicoAgendamentoResponseDTO(ServicoAgendamento servicoAgendamento) {
         this.idServicosAgendamentos = servicoAgendamento.getIdServicosAgendamentos();
-        this.servico = servicoAgendamento.getServico();
-        this.agendamento = servicoAgendamento.getAgendamento();
+        this.idServico = servicoAgendamento.getServico().getIdServico();
+        this.idAgendamento = servicoAgendamento.getAgendamento().getIdAgendamento();
     }
 
-    public long getIdServicosAgendamentos() {
-        return idServicosAgendamentos;
-    }
 
-    public void setIdServicosAgendamentos(long idServicosAgendamentos) {
-        this.idServicosAgendamentos = idServicosAgendamentos;
-    }
+    public Long getIdServicosAgendamentos() { return idServicosAgendamentos; }
+    public void setIdServicosAgendamentos(Long idServicosAgendamentos) { this.idServicosAgendamentos = idServicosAgendamentos; }
 
-    public Servico getServico() {
-        return servico;
-    }
+    public Long getIdServico() { return idServico; }
+    public void setIdServico(Long idServico) { this.idServico = idServico; }
 
-    public void setServico(Servico servico) {
-        this.servico = servico;
-    }
-
-    public Agendamento getAgendamento() {
-        return agendamento;
-    }
-
-    public void setAgendamento(Agendamento agendamento) {
-        this.agendamento = agendamento;
-    }
+    public Long getIdAgendamento() { return idAgendamento; }
+    public void setIdAgendamento(Long idAgendamento) { this.idAgendamento = idAgendamento; }
 }
