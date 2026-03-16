@@ -63,7 +63,6 @@ public class UsuarioService {
         return UsuarioMapper.toResponseDTO(usuario);
     }
 
-    // Listar todos os usuários
     public List<UsuarioResponseDTO> findAll() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         return UsuarioMapper.toResponseDTOList(usuarios);
