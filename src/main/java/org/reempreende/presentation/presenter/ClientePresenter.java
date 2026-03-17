@@ -23,8 +23,13 @@ public class ClientePresenter {
 
         usuarioDTO.setCpf(cpf);
 
-        clienteService.cadastrar(usuarioDTO);
-        cadastroView.exibirErro("Cliente cadastrado com sucesso no sistema!");
+        try {
+            clienteService.insert(usuarioDTO);
+        } catch (IllegalArgumentException e) {
+            cadastroView.exibirErro(e.getMessage());
+        }
+
+        cadastroView.exibirSucesso("Cliente cadastrado com sucesso no sistema!");
 
         appRouter.iniciarSistema();
     }

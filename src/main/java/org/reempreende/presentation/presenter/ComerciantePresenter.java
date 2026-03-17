@@ -25,7 +25,7 @@ public class ComerciantePresenter {
         usuarioDTO.setCnpj(cnpj);
         usuarioDTO.setSenhaAcesso(senhaAcesso);
 
-        comercianteService.cadastrar(usuarioDTO);
+        comercianteService.insert(usuarioDTO);
         cadastroComercianteView.exibirSucesso("Comerciante cadastrado com sucesso!");
     }
 }

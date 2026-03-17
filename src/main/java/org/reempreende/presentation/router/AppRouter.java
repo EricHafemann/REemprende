@@ -7,17 +7,16 @@ import org.reempreende.application.service.UsuarioService;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
 import org.reempreende.presentation.interfaces.icliente.IClienteView;
+import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
-import org.reempreende.presentation.presenter.CadastrarUsuarioPresenter;
-import org.reempreende.presentation.presenter.ClientePresenter;
-import org.reempreende.presentation.presenter.ComerciantePresenter;
-import org.reempreende.presentation.presenter.InicialPresenter;
+import org.reempreende.presentation.presenter.*;
 import org.reempreende.presentation.view.cliente.CadastroClienteView;
 import org.reempreende.presentation.view.cliente.ClienteView;
 import org.reempreende.presentation.view.cliente.ClienteViewHistorico;
 import org.reempreende.presentation.view.comerciante.CadastroComercianteView;
 import org.reempreende.presentation.view.inicio.InicialView;
 import org.reempreende.presentation.view.cadastro.CadastroBaseView;
+import org.reempreende.presentation.view.login.LoginView;
 
 public class AppRouter {
     private final UsuarioService usuarioService;
@@ -72,6 +71,15 @@ public class AppRouter {
         IClienteView clienteView = new ClienteView();
 
         clienteView.mostrarTela();
+    }
+
+    public void login() {
+        ILoginUsuario loginUsuario = new LoginView();
+        IClienteView clienteView = new ClienteView();
+
+        LoginPresenter loginPresenter = new LoginPresenter(this, loginUsuario, usuarioService, comercianteService ,clienteView);
+
+        loginPresenter.login();
     }
 
 }

@@ -6,6 +6,8 @@ import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteView;
 
+import java.util.OptionalInt;
+
 
 public class ComercianteView implements IComercianteView
 {
@@ -29,4 +31,28 @@ public class ComercianteView implements IComercianteView
     }
 
 
+    @Override
+    public OptionalInt mostrarTela() {
+        return OptionalInt.empty();
+    }
+
+    @Override
+    public void exibirErro(String mensagem) {
+        IComercianteView.super.exibirErro(mensagem);
+    }
+
+    @Override
+    public void exibirSucesso(String mensagem) {
+        IComercianteView.super.exibirSucesso(mensagem);
+    }
+
+    @Override
+    public void sair(String mensagem) {
+        IComercianteView.super.sair(mensagem);
+    }
+
+    @Override
+    public void exibirMensagem(String mensagem) {
+        IComercianteView.super.exibirMensagem(mensagem);
+    }
 }

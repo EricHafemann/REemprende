@@ -28,6 +28,9 @@ public class InicialPresenter {
                 case 1 -> {
                     appRouter.registerUser();
                 }
+                case 2 -> {
+                    appRouter.login();
+                }
                 case 0 -> {
                     inicialView.sair("Saindo do sistema...");
                     System.exit(0);
