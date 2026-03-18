@@ -70,12 +70,7 @@ public class AgendamentoService
            throw new BusinessException("Não agendamentos para listar");
        }
 
-       List<AgendamentoResponseDTO> dtos = new ArrayList<>();
-
-       for(Agendamento agendamento : agendamentos)
-       {
-           dtos.add(AgendamentoMapper.toResponseDTO(agendamento));
-       }
+       List<AgendamentoResponseDTO> dtos = AgendamentoMapper.toResponseDTOList(agendamentos);
 
         return dtos;
    }
