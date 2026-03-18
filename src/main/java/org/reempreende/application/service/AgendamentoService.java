@@ -15,7 +15,6 @@ public class AgendamentoService
 {
 
    private final AgendamentoRepository agendamentoRepository;
-    private long d;
 
     public AgendamentoService(AgendamentoRepository agendamentoRepository)
    {
