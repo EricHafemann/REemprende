@@ -8,6 +8,8 @@ import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.repository.AgendamentoRepository;
+import org.reempreende.infrastructure.exception.RepositoryException;
+import org.reempreende.infrastructure.exception.UsuarioNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,5 +99,33 @@ public class AgendamentoService
        }
 
        agendamentoRepository.delete(id);
+   }
+
+   public List<AgendamentoResponseDTO> findByClientId(long id)
+   {
+       if(id <= 0)
+       {
+           throw new BusinessException("Id de cliente inválido");
+       }
+
+       try
+       {
+           List<Agendamento> agendamentos = agendamentoRepository.findByClientId(id);
+
+           if(agendamentos.isEmpty())
+           {
+               throw new BusinessException("Nenhum agendamento com esse id foi encontrado");
+           }
+
+           List<AgendamentoResponseDTO> dtos = AgendamentoMapper.toResponseDTOList(agendamentos);
+
+           return dtos;
+
+       }
+
+       catch (RepositoryException e)
+       {
+           throw new BusinessException("Erro ao buscar agendamento do cliente: " + e);
+       }
    }
 }
