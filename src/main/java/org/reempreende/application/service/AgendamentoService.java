@@ -88,4 +88,14 @@ public class AgendamentoService
 
         return AgendamentoMapper.toResponseDTO(agendamento);
    }
+
+   public void delete(long id)
+   {
+       if(agendamentoRepository.findById(id).isEmpty())
+       {
+           throw new BusinessException("Nenhum agendamento com esse id foi encontrado");
+       }
+
+       agendamentoRepository.delete(id);
+   }
 }
