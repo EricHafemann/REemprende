@@ -6,6 +6,7 @@ import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 
+import java.util.InputMismatchException;
 import java.util.OptionalInt;
 
 public class InicialView implements IInicialView {
@@ -27,7 +28,13 @@ public class InicialView implements IInicialView {
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("0 ➤ Sair") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA ^ ") + Cores.RESET);
         System.out.print("➤ ");
-        return OptionalInt.of(u.lInt());
+
+        try {
+            return OptionalInt.of(u.lInt());
+        } catch (InputMismatchException e) {
+            u.next();
+            return OptionalInt.empty();
+        }
 
     }
 

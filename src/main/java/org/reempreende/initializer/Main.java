@@ -9,8 +9,6 @@ import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.infrastructure.repository.ClienteRepositoryImpl;
 import org.reempreende.infrastructure.repository.ComercianteRepositoryImpl;
 import org.reempreende.infrastructure.repository.UsuarioRepositoryImpl;
-import org.reempreende.presentation.interfaces.inicial.IInicialView;
-import org.reempreende.presentation.presenter.InicialPresenter;
 import org.reempreende.presentation.router.AppRouter;
 import org.reempreende.presentation.view.inicio.InicialView;
 
@@ -30,7 +28,7 @@ public class Main {
 
         AppRouter appRouter = new AppRouter(usuarioService, clienteService, comercianteService);
 
-        appRouter.iniciarSistema();
+        appRouter.startSystem();
     }
 
 }
