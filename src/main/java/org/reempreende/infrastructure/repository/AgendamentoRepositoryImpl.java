@@ -43,6 +43,23 @@ public class AgendamentoRepositoryImpl implements AgendamentoRepository {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        String sql = "SELECT 1 FROM Agendamentos WHERE idAgendamento = ?";
+
+        try (PreparedStatement stmt = ConnectionFactory.getConnection()
+                .prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Erro ao verificar existência do agendamento");
+        }
+    }
+
+    @Override
     public Optional<Agendamento> findById(long id) {
         String sql = "SELECT a.*, u.*, c.* " +
                 "FROM Agendamentos a " +

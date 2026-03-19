@@ -6,6 +6,7 @@ import org.reempreende.application.dto.response.ServicoResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Comerciante;
 import org.reempreende.domain.entities.Servico;
+import org.reempreende.domain.repository.ServicoAgendamentoRepository;
 import org.reempreende.domain.repository.ServicoRepository;
 
 import java.util.List;
@@ -13,9 +14,13 @@ import java.util.List;
 public class ServicoService {
 
     private final ServicoRepository servicoRepository;
+    private final ServicoAgendamentoRepository servicoAgendamentoRepository;
+    private final AgendamentoService agendamentoService;
 
-    public ServicoService(ServicoRepository servicoRepository) {
+    public ServicoService(ServicoRepository servicoRepository, ServicoAgendamentoRepository servicoAgendamentoRepository, AgendamentoService agendamentoService) {
         this.servicoRepository = servicoRepository;
+        this.servicoAgendamentoRepository = servicoAgendamentoRepository;
+        this.agendamentoService = agendamentoService;
     }
 
     public ServicoResponseDTO insertServico(ServicoRequestDTO dto, Comerciante comerciante) {
@@ -71,13 +76,21 @@ public class ServicoService {
         return ServicoMapper.toResponseDTO(servico);
     }
 
-    public void deleteServico(Long id)
+    public void deleteServico(Long idServico, Long idAgendamento)
     {
-        if(servicoRepository.existsById(id))
+        if(servicoRepository.existsById(idServico))
         {
             throw new BusinessException("Serviço não encontrado com esse Id !");
         }
 
-        servicoRepository.delete(id);
+        if(agendamentoService.existById(idAgendamento))
+        {
+            throw new BusinessException("Serviço não encontrado com esse Id !");
+        }
+
+        servicoAgendamentoRepository.deleteByAgendamentoId(idAgendamento);
+        agendamentoService.delete(idAgendamento);
+
+        servicoRepository.delete(idServico);
     }
 }

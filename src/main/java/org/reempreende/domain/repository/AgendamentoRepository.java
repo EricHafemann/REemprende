@@ -9,6 +9,8 @@ public interface AgendamentoRepository {
 
     Agendamento insert(Agendamento agendamento);
 
+    boolean existsById (Long id);
+
     Optional<Agendamento> findById(long id);
 
     List<Agendamento> findAll();
