@@ -76,6 +76,18 @@ public class ServicoService {
         return ServicoMapper.toResponseDTO(servico);
     }
 
+    public List<ServicoResponseDTO> findByComercianteId (Long idComerciante)
+    {
+        if(idComerciante <= 0)
+        {
+            throw new BusinessException("ID do Comerciante não pode ser menor ou igual a 0");
+        }
+
+        List<Servico> listServicos = servicoRepository.findByComercianteId(idComerciante);
+
+        return ServicoMapper.toResponseDTOList(listServicos);
+    }
+
     public void deleteServico(Long idServico, Long idAgendamento)
     {
         if(servicoRepository.existsById(idServico))
