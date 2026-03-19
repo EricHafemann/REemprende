@@ -9,6 +9,7 @@ import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.repository.AgendamentoRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +87,18 @@ public class AgendamentoService
 
         return dtos;
    }
+
+    public boolean isAvailable(LocalDateTime startTime, LocalDateTime endTime) {
+        if (startTime == null || endTime == null) {
+            throw new BusinessException("A Data não pode ser nula");
+        }
+
+        if (startTime.isBefore(LocalDateTime.now().minusMinutes(10))) {
+            throw new BusinessException("A Data já passou do prazo");
+        }
+
+        return agendamentoRepository.isAvailable(startTime, endTime);
+    }
 
    public AgendamentoResponseDTO update(Long id, AgendamentoRequestDTO dto)
    {
