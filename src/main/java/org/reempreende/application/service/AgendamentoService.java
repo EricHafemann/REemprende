@@ -11,6 +11,7 @@ import org.reempreende.domain.repository.AgendamentoRepository;
 import org.reempreende.infrastructure.exception.RepositoryException;
 import org.reempreende.infrastructure.exception.UsuarioNotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +66,16 @@ public class AgendamentoService
        return AgendamentoMapper.toResponseDTO(agendamento);
    }
 
+   public long countAgendamentosByIdClient (long idClient)
+   {
+       if(idClient <= 0)
+       {
+           throw new IllegalArgumentException("ID do cliente não pode ser negativo ou igual a 0");
+       }
+
+       return agendamentoRepository.countByClientId(idClient);
+   }
+
    public List<AgendamentoResponseDTO> findAll()
    {
        List<Agendamento> agendamentos = agendamentoRepository.findAll();
@@ -78,6 +89,18 @@ public class AgendamentoService
 
         return dtos;
    }
+
+    public boolean isAvailable(LocalDateTime startTime, LocalDateTime endTime) {
+        if (startTime == null || endTime == null) {
+            throw new BusinessException("A Data não pode ser nula");
+        }
+
+        if (startTime.isBefore(LocalDateTime.now().minusMinutes(10))) {
+            throw new BusinessException("A Data já passou do prazo");
+        }
+
+        return agendamentoRepository.isAvailable(startTime, endTime);
+    }
 
    public AgendamentoResponseDTO update(Long id, AgendamentoRequestDTO dto)
    {

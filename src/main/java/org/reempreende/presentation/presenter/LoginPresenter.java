@@ -36,9 +36,9 @@ public class LoginPresenter {
                     (usuarioResponseDTO.getId(),senhaAcesso);
 
             if (isValido) {
-                // start comerciante view
+                appRouter.startComercianteView();
             } else {
-                // exibir erro
+                clienteView.exibirErro("err");
             }
         } else if (usuarioResponseDTO.getTipoUsuario().equals("CLIENTE")) {
             appRouter.startClientView();
