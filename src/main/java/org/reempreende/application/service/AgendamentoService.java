@@ -63,6 +63,16 @@ public class AgendamentoService
        return AgendamentoMapper.toResponseDTO(agendamento);
    }
 
+   public long countAgendamentosByIdClient (long idClient)
+   {
+       if(idClient <= 0)
+       {
+           throw new IllegalArgumentException("ID do cliente não pode ser negativo ou igual a 0");
+       }
+
+       return agendamentoRepository.countByClientId(idClient);
+   }
+
    public List<AgendamentoResponseDTO> findAll()
    {
        List<Agendamento> agendamentos = agendamentoRepository.findAll();
