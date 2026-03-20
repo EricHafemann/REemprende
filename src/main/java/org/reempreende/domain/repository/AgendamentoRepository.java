@@ -19,6 +19,8 @@ public interface AgendamentoRepository {
 
     boolean delete(long id);
 
+    boolean deleteAgendamentoByClienteId(Long idAgendamento);
+
     List<Agendamento> findByClientId(long clientId);
 
     List<Agendamento> findByDate(LocalDateTime date);

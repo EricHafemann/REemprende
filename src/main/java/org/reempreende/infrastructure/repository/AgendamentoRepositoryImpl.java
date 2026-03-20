@@ -134,6 +134,20 @@ public class AgendamentoRepositoryImpl implements AgendamentoRepository {
     }
 
     @Override
+    public boolean deleteAgendamentoByClienteId(Long idAgendamento) {
+        String sql = "DELETE FROM Agendamentos WHERE idCliente = ?";
+
+        try(PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql))
+        {
+            stmt.setLong(1, idAgendamento);
+            return stmt.executeUpdate() > 0;
+        }catch (SQLException e)
+        {
+            throw new RepositoryException("Erro ao deletar agendamento");
+        }
+    }
+
+    @Override
     public List<Agendamento> findByClientId(long clientId) {
         List<Agendamento> agendamentos = new ArrayList<>();
         String sql = "SELECT a.*, u.*, c.* " +
