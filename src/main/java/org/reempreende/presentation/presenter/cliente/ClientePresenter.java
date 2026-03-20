@@ -29,6 +29,7 @@ public class ClientePresenter {
                 case 3 -> appRouter.clientViewHistory();
                 case 0 -> {
                     view.exibirMensagem("Voltando...");
+                    appRouter.logout();
                     continuar = false;
                 }
                 default -> {

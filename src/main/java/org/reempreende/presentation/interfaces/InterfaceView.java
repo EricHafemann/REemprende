@@ -23,4 +23,5 @@ public interface InterfaceView {
     default void exibirMensagem(String mensagem) {
         System.out.println(Cores.AZUL_BRILHANTE + TextoUtil.transformar(mensagem) + Cores.RESET);
     }
+
 }

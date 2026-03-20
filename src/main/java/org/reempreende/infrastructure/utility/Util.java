@@ -38,6 +38,18 @@ public class Util {
         return 0;
     }
 
+    public long lLong() {
+        try
+        {
+            return  sc.nextLong();
+        }catch (InputMismatchException e)
+        {
+            System.err.println("Digite apenas números!");
+            next();
+        }
+        return 0L;
+    }
+
     public void delay (int time)
     {
         try

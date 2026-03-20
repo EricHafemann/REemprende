@@ -4,6 +4,8 @@ import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 
+import java.util.OptionalInt;
+
 public class LoginView implements ILoginUsuario {
     private Util u = new Util();
 
@@ -30,4 +32,10 @@ public class LoginView implements ILoginUsuario {
 
         return u.lString();
     }
+
+    @Override
+    public OptionalInt mostrarTela() {
+        return OptionalInt.empty();
+    }
+
 }

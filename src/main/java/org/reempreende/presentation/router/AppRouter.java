@@ -1,9 +1,11 @@
 package org.reempreende.presentation.router;
 
 import org.reempreende.application.dto.request.UsuarioRequestDTO;
+import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.application.service.ClienteService;
 import org.reempreende.application.service.ComercianteService;
 import org.reempreende.application.service.UsuarioService;
+import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
 import org.reempreende.presentation.interfaces.icliente.IClienteView;
@@ -14,8 +16,7 @@ import org.reempreende.presentation.interfaces.icomerciante.IComercianteView;
 import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.presenter.*;
-import org.reempreende.presentation.presenter.cliente.ClienteCadastroPresenter;
-import org.reempreende.presentation.presenter.cliente.ClientePresenter;
+import org.reempreende.presentation.presenter.cliente.*;
 import org.reempreende.presentation.view.cliente.*;
 import org.reempreende.presentation.view.comerciante.CadastroComercianteView;
 import org.reempreende.presentation.view.comerciante.ComercianteView;
@@ -27,12 +28,17 @@ public class AppRouter {
     private final UsuarioService usuarioService;
     private final ClienteService clienteService;
     private final ComercianteService comercianteService;
+    private final AgendamentoService agendamentoService;
+    private final Sessao sessao;
 
     public AppRouter(UsuarioService usuarioService, ClienteService clienteService,
-                     ComercianteService comercianteService) {
+                     ComercianteService comercianteService, AgendamentoService agendamentoService,
+                     Sessao sessao) {
         this.usuarioService = usuarioService;
         this.clienteService = clienteService;
         this.comercianteService = comercianteService;
+        this.agendamentoService = agendamentoService;
+        this.sessao = sessao;
     }
 
     public void startSystem() {
@@ -81,32 +87,38 @@ public class AppRouter {
     }
 
     public void clientViewHorarios() {
-        //todo
         IClienteViewHorarios viewHorarios = new ClienteViewHorarios();
 
-        viewHorarios.mostrarTela();
+        ClienteHorariosPresenter clienteHorariosPresenter = new ClienteHorariosPresenter(this, viewHorarios, agendamentoService);
+
+        clienteHorariosPresenter.showHorarios();
     }
 
     public void clientAgendarHorarioDisponivel() {
-        //todo
+        IClienteViewHorarios clienteViewHorarios = new ClienteViewHorarios();
         IClienteViewAgendarDisponivel agendarDisponivelView = new ClienteViewAgendarDisponivel();
 
-        agendarDisponivelView.exibirHorariosDisponiveis();
-        agendarDisponivelView.mostrarTela();
+        ClienteHorariosPresenter clienteHorariosPresenter = new ClienteHorariosPresenter(this, clienteViewHorarios, agendamentoService);
+
+        ClienteAgendarPresenter clienteAgendarPresenter = new ClienteAgendarPresenter(this, agendarDisponivelView, agendamentoService,
+                this.sessao, clienteHorariosPresenter);
+
+        clienteAgendarPresenter.schedule();
     }
 
     public void clientViewHistory() {
-        //todo
-        IClienteViewHistorico clienteViewHistorico = new ClienteViewHistorico();
+        IClienteViewHistorico viewHistorico = new ClienteViewHistorico();
 
-        clienteViewHistorico.verHistoricoAgendamentos();
+        ClienteHistoricoPresenter clienteHistoricoPresenter = new ClienteHistoricoPresenter(this, viewHistorico, agendamentoService, this.sessao);
+
+        clienteHistoricoPresenter.showHistory();
     }
 
     public void login() {
         ILoginUsuario loginUsuario = new LoginView();
         IClienteView clienteView = new ClienteView();
 
-        LoginPresenter loginPresenter = new LoginPresenter(this, loginUsuario, usuarioService, comercianteService, clienteView);
+        LoginPresenter loginPresenter = new LoginPresenter(this, loginUsuario, usuarioService, comercianteService, this.sessao);
 
         loginPresenter.login();
     }
@@ -115,6 +127,10 @@ public class AppRouter {
         IComercianteView comercianteView = new ComercianteView();
 
         comercianteView.exibirSucesso("Comerciante View");
+    }
+
+    public void logout() {
+        this.sessao.logout();
     }
 
 }

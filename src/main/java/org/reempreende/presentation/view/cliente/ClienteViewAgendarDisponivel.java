@@ -1,19 +1,34 @@
 package org.reempreende.presentation.view.cliente;
 
 import org.reempreende.infrastructure.utility.TextoUtil;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewAgendarDisponivel;
 
 import java.util.OptionalInt;
 
 public class ClienteViewAgendarDisponivel implements IClienteViewAgendarDisponivel {
-    @Override
-    public void exibirHorariosDisponiveis() {
+    private Util u = new Util();
 
+    @Override
+    public void exibirHorariosDisponiveis(String mensagem) {
+        System.out.println(mensagem);
+    }
+
+    @Override
+    public void exibirMensagemTela() {
+        System.out.println("             █████╗  ██████╗ ███████╗███╗   ██╗██████╗  █████╗ ██████╗ ");
+        System.out.println("            ██╔══██╗██╔════╝ ██╔════╝████╗  ██║██╔══██╗██╔══██╗██╔══██╗");
+        System.out.println("            ███████║██║  ███╗█████╗  ██╔██╗ ██║██║  ██║███████║██████╔╝");
+        System.out.println("            ██╔══██║██║   ██║██╔══╝  ██║╚██╗██║██║  ██║██╔══██║██╔══██╗");
+        System.out.println("            ██║  ██║╚██████╔╝███████╗██║ ╚████║██████╔╝██║  ██║██║  ██║");
+        System.out.println("            ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝");
     }
 
     @Override
     public OptionalInt mostrarTela() {
-        return OptionalInt.empty();
+        System.out.println("Selecione uma das IDs dos agendamentos acima para agendar: ");
+
+        return OptionalInt.of(u.l());
     }
 
     @Override

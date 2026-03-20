@@ -61,13 +61,4 @@ public class Agendamento {
         this.dataFim = dataFim;
     }
 
-    @Override
-    public String toString() {
-        return "Agendamento{" +
-                "dataFim=" + dataFim +
-                ", observacao='" + observacao + '\'' +
-                ", dataInicio=" + dataInicio +
-                ", idAgendamento=" + idAgendamento +
-                '}';
-    }
 }
