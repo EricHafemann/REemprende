@@ -117,12 +117,12 @@ public class AgendamentoService
 
     public boolean existById (long idAgendamento)
     {
-        if(id <= 0)
+        if(idAgendamento <= 0)
         {
-            throw new BusinessException("ID do Agendamento não pode ser negativo ou igual a 0\"");
+            throw new BusinessException("ID do Agendamento não pode ser negativo ou igual a 0 !");
         }
 
-        agendamentoRepository.existsById(idAgendamento);
+        return agendamentoRepository.existsById(idAgendamento);
     }
 
    public void delete(long id)
