@@ -185,4 +185,18 @@ public class AgendamentoService
 
        return dtos;
    }
+
+   public List<AgendamentoResponseDTO> findPast()
+   {
+       List<Agendamento> agendamentos = agendamentoRepository.findPast();
+
+       if(agendamentos.isEmpty())
+       {
+           throw new BusinessException("Nenhum agendamento passado encontrado");
+       }
+
+       List<AgendamentoResponseDTO> dtos = AgendamentoMapper.toResponseDTOList(agendamentos);
+
+       return dtos;
+   }
 }
