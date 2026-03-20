@@ -10,6 +10,13 @@ public class AgendamentoRequestDTO {
 
     public AgendamentoRequestDTO() {}
 
+    public AgendamentoRequestDTO(LocalDateTime dataInicio, LocalDateTime dataFim, String observacao, Long idCliente) {
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.observacao = observacao;
+        this.idCliente = idCliente;
+    }
+
     public LocalDateTime getDataInicio() { return dataInicio; }
     public void setDataInicio(LocalDateTime dataInicio) { this.dataInicio = dataInicio; }
 

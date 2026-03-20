@@ -4,6 +4,8 @@ import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.entities.Cliente;
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +31,16 @@ public class AgendamentoMapper {
         );
     }
 
+    public static AgendamentoRequestDTO toRequestDTO(AgendamentoResponseDTO response) {
+        if (response == null) return null;
+
+        return new AgendamentoRequestDTO(
+                LocalDateTime.parse(response.getDataInicio()),
+                LocalDateTime.parse(response.getDataFim()),
+                response.getObservacao(),
+                response.getIdCliente()
+        );
+    }
 
     public static AgendamentoResponseDTO toResponseDTO(Agendamento agendamento) {
         if (agendamento == null) return null;
