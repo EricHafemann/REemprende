@@ -46,13 +46,11 @@ public class AgendamentoResponseDTO {
 
     private static final Util u = new Util();
 
-    public void exibirInfo ()
-    {
-        System.out.println(Cores.VERDE + TextoUtil.transformar("   Inoformações do Agendamento   " )+ Cores.RESET);
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Id              - " + getIdAgendamento()) + Cores.RESET);
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Data de início  - " + getDataInicio()) + Cores.RESET );
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Data de fim     - " + getDataFim()) + Cores.RESET );
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Observação      - " + getObservacao()) + Cores.RESET);
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Nome do cliente - " + getNomeCliente()) + Cores.RESET );
+    public String exibirInfo() {
+        return  "   -  Infomações do Agendamento  -  " +
+                " \nId             - " + idAgendamento +
+                ",Data de ínicio - " + dataInicio + '\'' +
+                ",Data de fim    - " + dataFim + '\'' +
+                ",Observacao     - " + observacao + '\'';
     }
 }
