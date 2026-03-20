@@ -8,6 +8,7 @@ import org.reempreende.domain.entities.Comerciante;
 import org.reempreende.domain.entities.Servico;
 import org.reempreende.domain.repository.ServicoAgendamentoRepository;
 import org.reempreende.domain.repository.ServicoRepository;
+import org.reempreende.presentation.exception.InvalidFieldException;
 
 import java.util.List;
 
@@ -74,6 +75,18 @@ public class ServicoService {
         servicoRepository.update(servico);
 
         return ServicoMapper.toResponseDTO(servico);
+    }
+
+    public Long countByComercianteId (Long idComerciante)
+    {
+        if(idComerciante < 0)
+        {
+            throw new InvalidFieldException("O ID não pode ser nulo ou menor que 0");
+        }
+
+        Long countByComercianteId = servicoRepository.countByComercianteId(idComerciante);
+
+        return countByComercianteId;
     }
 
     public List<ServicoResponseDTO> findByComercianteId (Long idComerciante)
