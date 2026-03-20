@@ -1,6 +1,8 @@
 package org.reempreende.application.dto.response;
 
 import org.reempreende.domain.entities.Servico;
+import org.reempreende.infrastructure.utility.Cores;
+import org.reempreende.infrastructure.utility.TextoUtil;
 
 public class ServicoResponseDTO {
 
@@ -64,5 +66,15 @@ public class ServicoResponseDTO {
 
     public void setIdComerciante(long idComerciante) {
         this.idComerciante = idComerciante;
+    }
+
+    public void exibirInfo ()
+    {
+        System.out.println(Cores.VERDE + TextoUtil.transformar("   Inoformações do Serviço   " )+ Cores.RESET);
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Id                - " + getIdServico()) + Cores.RESET);
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Avaliação         - " + getAvaliacao()) + Cores.RESET );
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Descrição         - " + getDescricao()) + Cores.RESET );
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Duração           - " + getDuracaoHoras()) + Cores.RESET);
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Id do comerciante - " + getIdComerciante()) + Cores.RESET );
     }
 }
