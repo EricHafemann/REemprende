@@ -47,10 +47,12 @@ public class AgendamentoResponseDTO {
     private static final Util u = new Util();
 
     public String exibirInfo() {
-        return  "   -  Infomações do Agendamento  -  " +
-                " \nId             - " + idAgendamento +
-                ",Data de ínicio - " + dataInicio + '\'' +
-                ",Data de fim    - " + dataFim + '\'' +
-                ",Observacao     - " + observacao + '\'';
+        return
+                "  ──────────────────────────────────  \n" +
+                "  ➜ ID        : " + idAgendamento + "\n" +
+                "  ➜ Início    : " + dataInicio + "\n" +
+                "  ➜ Fim       : " + dataFim + "\n" +
+                "  ➜ Obs       : " + observacao + "\n" +
+                "  ──────────────────────────────────\n";
     }
 }
