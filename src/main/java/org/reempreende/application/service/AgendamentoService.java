@@ -115,16 +115,6 @@ public class AgendamentoService
         return AgendamentoMapper.toResponseDTO(agendamento);
    }
 
-    public boolean existById (long idAgendamento)
-    {
-        if(idAgendamento <= 0)
-        {
-            throw new BusinessException("ID do Agendamento não pode ser negativo ou igual a 0 !");
-        }
-
-        return agendamentoRepository.existsById(idAgendamento);
-    }
-
    public void delete(long id)
    {
        if(agendamentoRepository.findById(id).isEmpty())
@@ -175,6 +165,20 @@ public class AgendamentoService
        if (agendamentos.isEmpty())
        {
            throw new BusinessException("Nenhum agendamento com essa data foi encontrado");
+       }
+
+       List<AgendamentoResponseDTO> dtos = AgendamentoMapper.toResponseDTOList(agendamentos);
+
+       return dtos;
+   }
+
+   public List<AgendamentoResponseDTO> findUpcoming()
+   {
+       List<Agendamento> agendamentos = agendamentoRepository.findUpcoming();
+
+       if(agendamentos.isEmpty())
+       {
+           throw new BusinessException("Nenhum agendamento futuro encontrado");
        }
 
        List<AgendamentoResponseDTO> dtos = AgendamentoMapper.toResponseDTOList(agendamentos);
