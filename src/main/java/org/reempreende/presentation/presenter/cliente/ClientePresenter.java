@@ -1,8 +1,7 @@
-package org.reempreende.presentation.presenter;
+package org.reempreende.presentation.presenter.cliente;
 
 import org.reempreende.presentation.interfaces.icliente.IClienteView;
 import org.reempreende.presentation.router.AppRouter;
-import org.reempreende.presentation.view.cliente.ClienteView;
 
 import java.util.OptionalInt;
 
