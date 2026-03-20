@@ -1,5 +1,6 @@
 package org.reempreende.presentation.view.cliente;
 
+import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewHorarios;
 
@@ -7,7 +8,7 @@ import java.util.OptionalInt;
 
 public class ClienteViewHorarios implements IClienteViewHorarios {
     @Override
-    public void exibirHorarios() {
+    public void exibirHorarios(AgendamentoResponseDTO agendamento) {
 
     }
 

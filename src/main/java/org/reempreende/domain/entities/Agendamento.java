@@ -60,4 +60,14 @@ public class Agendamento {
     public void setDataFim(LocalDateTime dataFim) {
         this.dataFim = dataFim;
     }
+
+    @Override
+    public String toString() {
+        return "Agendamento{" +
+                "dataFim=" + dataFim +
+                ", observacao='" + observacao + '\'' +
+                ", dataInicio=" + dataInicio +
+                ", idAgendamento=" + idAgendamento +
+                '}';
+    }
 }

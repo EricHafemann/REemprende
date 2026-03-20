@@ -13,6 +13,7 @@ import org.reempreende.infrastructure.exception.UsuarioNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -160,5 +161,24 @@ public class AgendamentoService
        {
            throw new BusinessException("Erro ao buscar agendamento do cliente: " + e);
        }
+   }
+
+   public List<AgendamentoResponseDTO> findByDate(LocalDateTime dateTime)
+   {
+       if(dateTime == null)
+       {
+           throw new BusinessException("A data não poder ser nula");
+       }
+
+       List<Agendamento> agendamentos = agendamentoRepository.findByDate(dateTime);
+
+       if (agendamentos.isEmpty())
+       {
+           throw new BusinessException("Nenhum agendamento com essa data foi encontrado");
+       }
+
+       List<AgendamentoResponseDTO> dtos = AgendamentoMapper.toResponseDTOList(agendamentos);
+
+       return dtos;
    }
 }

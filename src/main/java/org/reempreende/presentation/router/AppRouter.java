@@ -14,6 +14,8 @@ import org.reempreende.presentation.interfaces.icomerciante.IComercianteView;
 import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.presenter.*;
+import org.reempreende.presentation.presenter.cliente.ClienteCadastroPresenter;
+import org.reempreende.presentation.presenter.cliente.ClientePresenter;
 import org.reempreende.presentation.view.cliente.*;
 import org.reempreende.presentation.view.comerciante.CadastroComercianteView;
 import org.reempreende.presentation.view.comerciante.ComercianteView;
