@@ -68,13 +68,14 @@ public class ServicoResponseDTO {
         this.idComerciante = idComerciante;
     }
 
-    public void exibirInfo ()
-    {
-        System.out.println(Cores.VERDE + TextoUtil.transformar("   Inoformações do Serviço   " )+ Cores.RESET);
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Id                - " + getIdServico()) + Cores.RESET);
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Avaliação         - " + getAvaliacao()) + Cores.RESET );
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Descrição         - " + getDescricao()) + Cores.RESET );
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Duração           - " + getDuracaoHoras()) + Cores.RESET);
-        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Id do comerciante - " + getIdComerciante()) + Cores.RESET );
+    public String exibirInfo() {
+        return
+                "  ──────────────────────────────────  \n" +
+                        "  ➜ ID            : " + idServico + "\n" +
+                        "  ➜ Avaliação     : " + avaliacao + "\n" +
+                        "  ➜ Descrição     : " + descricao + "\n" +
+                        "  ➜ Duração       : " + duracaoHoras + "\n" +
+                        "  ➜ IdComerciante : " + idComerciante + "\n" +
+                        "  ──────────────────────────────────\n";
     }
 }
