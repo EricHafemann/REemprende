@@ -67,6 +67,17 @@ public class AgendamentoService
        return AgendamentoMapper.toResponseDTO(agendamento);
    }
 
+   public boolean existById(long id)
+   {
+       if(id <= 0)
+       {
+           throw new IllegalArgumentException("ID do cliente não pode ser negativo ou igual a 0");
+       }
+
+       return agendamentoRepository.existsById(id);
+
+   }
+
    public long countAgendamentosByIdClient (long idClient)
    {
        if(idClient <= 0)
