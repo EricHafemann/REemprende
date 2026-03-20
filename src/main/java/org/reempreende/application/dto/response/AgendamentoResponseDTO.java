@@ -1,6 +1,10 @@
 package org.reempreende.application.dto.response;
 
 import org.reempreende.domain.entities.Agendamento;
+import org.reempreende.infrastructure.utility.Cores;
+import org.reempreende.infrastructure.utility.TextoUtil;
+import org.reempreende.infrastructure.utility.Util;
+
 import java.time.format.DateTimeFormatter;
 
 public class AgendamentoResponseDTO {
@@ -39,4 +43,16 @@ public class AgendamentoResponseDTO {
 
     public Long getIdCliente() { return idCliente; }
     public void setIdCliente(Long idCliente) { this.idCliente = idCliente; }
+
+    private static final Util u = new Util();
+
+    public void exibirInfo ()
+    {
+        System.out.println(Cores.VERDE + TextoUtil.transformar("   Inoformações do Agendamento   " )+ Cores.RESET);
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Id              - " + getIdAgendamento()) + Cores.RESET);
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Data de início  - " + getDataInicio()) + Cores.RESET );
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Data de fim     - " + getDataFim()) + Cores.RESET );
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Observação      - " + getObservacao()) + Cores.RESET);
+        System.out.println(Cores.NEGRITO + TextoUtil.transformar("Nome do cliente - " + getNomeCliente()) + Cores.RESET );
+    }
 }
