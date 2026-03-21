@@ -7,6 +7,7 @@ import org.reempreende.presentation.router.AppRouter;
 import java.util.OptionalInt;
 
 public class InicialPresenter {
+    private final Util u = new Util();
 
     private final IInicialView inicialView;
     private final AppRouter appRouter;

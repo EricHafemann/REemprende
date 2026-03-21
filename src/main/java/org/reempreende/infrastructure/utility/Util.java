@@ -16,7 +16,11 @@ public class Util {
     {
         try
         {
-            return  sc.nextDouble();
+            double num = sc.nextDouble();
+
+            next();
+
+            return num;
         }catch (InputMismatchException e)
         {
             System.err.println("Digite apenas números !");
@@ -29,7 +33,11 @@ public class Util {
     {
         try
         {
-            return  sc.nextInt();
+            int num = sc.nextInt();
+
+            next();
+
+            return num;
         }catch (InputMismatchException e)
         {
             System.err.println("Digite apenas números !");
@@ -41,7 +49,11 @@ public class Util {
     public long lLong() {
         try
         {
-            return  sc.nextLong();
+            long num = sc.nextLong();
+
+            next();
+
+            return num;
         }catch (InputMismatchException e)
         {
             System.err.println("Digite apenas números!");
@@ -76,7 +88,7 @@ public class Util {
     }
 
     public void next() {
-        sc.next();
+        sc.nextLine();
     }
 
     public Scanner getSc() {

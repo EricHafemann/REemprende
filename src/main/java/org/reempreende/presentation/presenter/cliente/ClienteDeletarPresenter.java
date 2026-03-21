@@ -6,7 +6,6 @@ import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.interfaces.icliente.IClienteDeletarView;
 import org.reempreende.presentation.router.AppRouter;
-import org.reempreende.presentation.view.cliente.ClienteDeletar;
 
 public class ClienteDeletarPresenter {
     private final Util u = new Util();
@@ -25,15 +24,27 @@ public class ClienteDeletarPresenter {
 
     public void delete() {
         try {
-            clienteService.delete(sessao.getUsuarioLogado().getId());
-            sessao.logout();
+            view.mostrarTela();
+            String confirmacao = view.confirmarDeletar();
 
-            view.exibirSucesso("Cliente deletado com sucesso!");
-            view.exibirMensagem("Saindo...");
+            do {
+                if (confirmacao.equals("DELETAR")) {
+                    clienteService.delete(sessao.getUsuarioLogado().getId());
+                    sessao.logout();
 
-            u.delay(1500);
+                    view.exibirSucesso("Cliente deletado com sucesso!");
+                    view.exibirMensagem("Saindo...");
 
-            appRouter.startSystem();
+                    u.delay(1500);
+
+                    appRouter.startSystem();
+                } else if (confirmacao.equalsIgnoreCase("SAIR")) {
+                    view.exibirMensagem("Saindo...");
+
+                    u.delay(1500);
+                    return;
+                }
+            } while (!confirmacao.equals("DELETAR"));
         } catch (InvalidFieldException e) {
             view.exibirErro(e.getMessage());
         }

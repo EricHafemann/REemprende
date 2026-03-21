@@ -6,12 +6,10 @@ import org.reempreende.application.service.ClienteService;
 import org.reempreende.application.service.ComercianteService;
 import org.reempreende.application.service.UsuarioService;
 import org.reempreende.infrastructure.sessao.Sessao;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
-import org.reempreende.presentation.interfaces.icliente.IClienteView;
-import org.reempreende.presentation.interfaces.icliente.IClienteViewAgendarDisponivel;
-import org.reempreende.presentation.interfaces.icliente.IClienteViewHistorico;
-import org.reempreende.presentation.interfaces.icliente.IClienteViewHorarios;
+import org.reempreende.presentation.interfaces.icliente.*;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteView;
 import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
@@ -25,6 +23,8 @@ import org.reempreende.presentation.view.cadastro.CadastroBaseView;
 import org.reempreende.presentation.view.login.LoginView;
 
 public class AppRouter {
+    private final Util u = new Util();
+
     private final UsuarioService usuarioService;
     private final ClienteService clienteService;
     private final ComercianteService comercianteService;
@@ -127,6 +127,15 @@ public class AppRouter {
         IComercianteView comercianteView = new ComercianteView();
 
         comercianteView.exibirSucesso("Comerciante View");
+    }
+
+    public void updateCliente() {
+        IClienteAtualizarView view = new ClienteAtualizarView();
+
+        ClienteAtualizarPresenter clienteAtualizarPresenter =
+                new ClienteAtualizarPresenter(this, this.sessao, view, clienteService);
+
+        clienteAtualizarPresenter.update();
     }
 
     public void logout() {

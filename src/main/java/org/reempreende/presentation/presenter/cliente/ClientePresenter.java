@@ -27,6 +27,7 @@ public class ClientePresenter {
                 case 1 -> appRouter.clientViewHorarios();
                 case 2 -> appRouter.clientAgendarHorarioDisponivel();
                 case 3 -> appRouter.clientViewHistory();
+                case 4 -> appRouter.updateCliente();
                 case 0 -> {
                     view.exibirMensagem("Voltando...");
                     appRouter.logout();
