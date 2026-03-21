@@ -28,7 +28,7 @@ public class ClienteViewAgendarDisponivel implements IClienteViewAgendarDisponiv
     public OptionalInt mostrarTela() {
         System.out.println("Selecione uma das IDs dos agendamentos acima para agendar: ");
 
-        return OptionalInt.of(u.l());
+        return OptionalInt.of(u.lInt());
     }
 
     @Override

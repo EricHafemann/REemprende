@@ -26,9 +26,6 @@ public class ClienteViewHorarios implements IClienteViewHorarios {
         System.out.println("            ██║  ██║╚██████╔╝██║  ██║██║  ██║██║  ██║██║╚██████╔╝███████║");
         System.out.println("            ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚══════╝");
 
-        System.out.println(Cores.VERDE + "Disponível");
-        System.out.println(Cores.VERMELHO + "Indisponível\n");
-
         return OptionalInt.empty();
     }
 

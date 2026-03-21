@@ -1,6 +1,7 @@
 package org.reempreende.presentation.presenter.cliente;
 
 import org.reempreende.application.dto.mapper.AgendamentoMapper;
+import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.application.service.ClienteService;
@@ -34,9 +35,9 @@ public class ClienteAgendarPresenter {
     }
 
     public void schedule() {
-        view.mostrarTela();
-
         clienteHorariosPresenter.showHorarios();
+
+        view.mostrarTela();
 
         OptionalInt idCaixa = view.mostrarTela();
 
@@ -45,8 +46,10 @@ public class ClienteAgendarPresenter {
         try {
            AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(id);
 
+           agendamentoResponseDTO.setIdCliente(sessao.getUsuarioLogado().getId());
            if (agendamentoResponseDTO.getIdCliente() != null) {
-
+               agendamentoService.update(agendamentoResponseDTO.getIdAgendamento(), AgendamentoMapper.toRequestDTO(agendamentoResponseDTO));
+               view.exibirSucesso("Agendamento registrado com sucesso!");
            }
         } catch (InvalidFieldException e) {
             System.out.println(Cores.VERMELHO + e.getMessage() + Cores.RESET);

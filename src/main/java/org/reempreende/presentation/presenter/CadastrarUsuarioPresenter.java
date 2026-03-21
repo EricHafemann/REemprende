@@ -31,6 +31,11 @@ public class CadastrarUsuarioPresenter {
     public void collectInfo() {
         int tipoUsuario = inicialView.selecionarTipoUsuario();
 
+        if (tipoUsuario < 1 || tipoUsuario > 2) {
+            inicialView.exibirErro("Opção de Tipo de Usuário inválido!");
+            return;
+        }
+
         String nome = cadastroBaseView.pedirNome();
         String email = cadastroBaseView.pedirEmail();
         String senha = cadastroBaseView.pedirSenha();
