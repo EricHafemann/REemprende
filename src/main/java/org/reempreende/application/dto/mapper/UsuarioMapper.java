@@ -61,6 +61,53 @@ public class UsuarioMapper {
         }
     }
 
+    public static Usuario toEntity(UsuarioRequestDTO dto, Long id) {
+        if (dto == null) return null;
+
+        TipoUsuario tipo = TipoUsuario.fromCodigo(dto.getTipoUsuario());
+
+        switch (tipo) {
+            case CLIENTE:
+                // Verifica se tem CPF
+                if (dto.getCpf() == null || dto.getCpf().isEmpty()) {
+                    throw new IllegalArgumentException("CPF é obrigatório para cliente");
+                }
+
+                return new Cliente(
+                        id,
+                        dto.getEmail(),
+                        dto.getSenha(),
+                        dto.getNome(),
+                        Status.fromCodigo(dto.getStatus()),
+                        tipo,
+                        dto.getCpf()
+                );
+
+            case COMERCIANTE:
+                // Verifica se tem CNPJ e senhaAcesso
+                if (dto.getCnpj() == null || dto.getCnpj().isEmpty()) {
+                    throw new IllegalArgumentException("CNPJ é obrigatório para comerciante");
+                }
+                if (dto.getSenhaAcesso() == null || dto.getSenhaAcesso().isEmpty()) {
+                    throw new IllegalArgumentException("Senha de acesso é obrigatória para comerciante");
+                }
+
+                return new Comerciante(
+                        id,
+                        dto.getEmail(),
+                        dto.getSenha(),
+                        dto.getNome(),
+                        Status.fromCodigo(dto.getStatus()),
+                        tipo,
+                        dto.getCnpj(),
+                        dto.getSenhaAcesso()
+                );
+
+            default:
+                throw new TipoUsuarioInvalidException("Tipo de usuário inválido: " + tipo);
+        }
+    }
+
     public static UsuarioResponseDTO toResponseDTO(Usuario usuario) {
         if (usuario == null) return null;
         return new UsuarioResponseDTO(usuario);
