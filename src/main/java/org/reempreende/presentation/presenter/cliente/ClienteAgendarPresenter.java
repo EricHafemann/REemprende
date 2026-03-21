@@ -3,6 +3,7 @@ package org.reempreende.presentation.presenter.cliente;
 import org.reempreende.application.dto.mapper.AgendamentoMapper;
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
+import org.reempreende.application.exception.BusinessException;
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.application.service.ClienteService;
 import org.reempreende.domain.entities.Agendamento;
@@ -15,6 +16,7 @@ import org.reempreende.presentation.interfaces.icliente.IClienteViewAgendarDispo
 import org.reempreende.presentation.interfaces.icliente.IClienteViewHorarios;
 import org.reempreende.presentation.router.AppRouter;
 
+import java.util.List;
 import java.util.OptionalInt;
 
 public class ClienteAgendarPresenter {
@@ -37,26 +39,36 @@ public class ClienteAgendarPresenter {
     public void schedule() {
         clienteHorariosPresenter.showHorarios();
 
-        view.mostrarTela();
+        // Verifica se existem horários disponíveis ANTES de pedir o ID
+        List<AgendamentoResponseDTO> horarios = null;
+        try {
+            horarios = agendamentoService.findAvailable();
+        } catch (BusinessException e) {
+            view.exibirErro(e.getMessage());
+            return;
+        }
+
+        if (horarios.isEmpty()) {
+            view.exibirErro("Não há horários disponíveis no momento.");
+            return;
+        }
 
         OptionalInt idCaixa = view.mostrarTela();
 
         long id = idCaixa.orElse(-1);
 
         try {
-           AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(id);
+            AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(id);
 
-           agendamentoResponseDTO.setIdCliente(sessao.getUsuarioLogado().getId());
-           if (agendamentoResponseDTO.getIdCliente() != null) {
-               agendamentoService.update(agendamentoResponseDTO.getIdAgendamento(), AgendamentoMapper.toRequestDTO(agendamentoResponseDTO));
-               view.exibirSucesso("Agendamento registrado com sucesso!");
-           }
+            agendamentoResponseDTO.setIdCliente(sessao.getUsuarioLogado().getId());
+            if (agendamentoResponseDTO.getIdCliente() != null) {
+                agendamentoService.update(agendamentoResponseDTO.getIdAgendamento(),
+                        AgendamentoMapper.toRequestDTO(agendamentoResponseDTO));
+                view.exibirSucesso("Agendamento registrado com sucesso!");
+            }
         } catch (InvalidFieldException e) {
             System.out.println(Cores.VERMELHO + e.getMessage() + Cores.RESET);
         }
-
-
-
     }
 
 }

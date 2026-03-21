@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class AgendamentoService
@@ -77,6 +78,23 @@ public class AgendamentoService
        return agendamentoRepository.existsById(id);
 
    }
+
+    public List<AgendamentoResponseDTO> findAvailable() {
+        List<Agendamento> todosAgendamentos = agendamentoRepository.findAll();
+
+        List<Agendamento> disponiveis = new ArrayList<>();
+        for (Agendamento agendamento : todosAgendamentos) {
+            if (agendamento.getCliente() == null) {
+                disponiveis.add(agendamento);
+            }
+        }
+
+        if (disponiveis.isEmpty()) {
+            throw new BusinessException("Não há horários disponíveis para agendamento");
+        }
+
+        return AgendamentoMapper.toResponseDTOList(disponiveis);
+    }
 
    public long countAgendamentosByIdClient (long idClient)
    {

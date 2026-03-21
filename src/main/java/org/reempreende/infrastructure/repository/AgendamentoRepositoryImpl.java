@@ -198,25 +198,20 @@ public class AgendamentoRepositoryImpl implements AgendamentoRepository {
     @Override
     public boolean isAvailable(LocalDateTime startTime, LocalDateTime endTime) {
         String sql = "SELECT COUNT(*) FROM Agendamentos WHERE " +
-                "(dataInicio < ? AND dataFim > ?) OR " +
-                "(dataInicio < ? AND dataFim > ?) OR " +
-                "(dataInicio >= ? AND dataFim <= ?)";
+                "NOT (dataFim <= ? OR dataInicio >= ?)";
 
         try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
-            stmt.setTimestamp(1, Timestamp.valueOf(endTime));
-            stmt.setTimestamp(2, Timestamp.valueOf(startTime));
-            stmt.setTimestamp(3, Timestamp.valueOf(startTime));
-            stmt.setTimestamp(4, Timestamp.valueOf(startTime));
-            stmt.setTimestamp(5, Timestamp.valueOf(startTime));
-            stmt.setTimestamp(6, Timestamp.valueOf(endTime));
+
+            stmt.setTimestamp(1, Timestamp.valueOf(startTime));
+            stmt.setTimestamp(2, Timestamp.valueOf(endTime));
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt(1) == 0;
+                    return rs.getInt(1) == 0; // Disponível se não há conflitos
                 }
             }
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao verificar disponibilidade");
+            throw new RepositoryException("Erro ao verificar disponibilidade.");
         }
         return false;
     }
