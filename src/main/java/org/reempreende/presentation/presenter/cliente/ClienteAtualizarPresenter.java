@@ -1,7 +1,6 @@
 package org.reempreende.presentation.presenter.cliente;
 
-import org.reempreende.application.dto.mapper.UsuarioMapper;
-import org.reempreende.application.dto.request.UsuarioRequestDTO;
+import org.reempreende.application.dto.request.UsuarioUpdateDTO;
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.service.ClienteService;
 import org.reempreende.infrastructure.sessao.Sessao;
@@ -36,51 +35,42 @@ public class ClienteAtualizarPresenter {
                 case 1 -> {
                     String nome = view.newNome();
 
-                    if (nome == null || nome.length() < 2 || nome.length() > 1000) {
-                        view.exibirErro("Nome inválido!");
+                    if (nome == null || nome.length() < 2 || nome.length() > 100) {
+                        view.exibirErro("Nome inválido! Deve ter entre 2 e 100 caracteres.");
                         update();
+                        return;
                     }
 
-                    UsuarioRequestDTO usuarioRequestDTO = new UsuarioRequestDTO();
-                    usuarioRequestDTO.setSenha(nome);
+                    UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
+                    dto.setNome(nome);
 
-                    clienteService.update(sessao.getUsuarioLogado().getId(), usuarioRequestDTO);
-                } case 2 -> {
+                    clienteService.update(sessao.getUsuarioLogado().getId(), dto);
+                    view.exibirSucesso("Nome atualizado com sucesso!");
+                }
+                case 2 -> {
                     String email = view.newEmail();
 
-                    if (email == null || email.isBlank() || !email.contains("@") || email.length() > 254) {
-                        view.exibirErro("E-mail inválido!");
-                        update();
-                    }
+                    UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
+                    dto.setEmail(email);
 
-                    UsuarioRequestDTO usuarioRequestDTO = new UsuarioRequestDTO();
-                    usuarioRequestDTO.setSenha(email);
-
-                    clienteService.update(sessao.getUsuarioLogado().getId(), usuarioRequestDTO);
-                } case 3 -> {
+                    clienteService.update(sessao.getUsuarioLogado().getId(), dto);
+                    view.exibirSucesso("E-mail atualizado com sucesso!");
+                }
+                case 3 -> {
                     String senha = view.newPassword();
 
-                    if (senha == null || senha.length() < 8 || senha.isBlank()) {
-                        view.exibirErro("Erro! Senha menor do que 8 dígitos!");
-                        update();
-                    }
+                    UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
+                    dto.setSenha(senha);
 
-                    String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d]).+$";
-
-                    if (!senha.matches(regex)) {
-                        view.exibirErro("Senha inválida! Não possui letra maíscula ou minúscula, ou números e carácteres especiais");
-                        update();
-                    }
-
-                    UsuarioRequestDTO usuarioRequestDTO = new UsuarioRequestDTO();
-                    usuarioRequestDTO.setSenha(senha);
-
-                    clienteService.update(sessao.getUsuarioLogado().getId(), usuarioRequestDTO);
-                } case 0 -> {
+                    clienteService.update(sessao.getUsuarioLogado().getId(), dto);
+                    view.exibirSucesso("Senha atualizada com sucesso!");
+                }
+                case 0 -> {
                     view.exibirMensagem("Voltando...");
                     u.cls();
                     u.delay(1500);
-                } default -> {
+                }
+                default -> {
                     view.exibirErro("Opção inválida! Tente novamente:");
                     update();
                 }
@@ -90,5 +80,4 @@ public class ClienteAtualizarPresenter {
             update();
         }
     }
-
 }

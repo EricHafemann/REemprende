@@ -1,5 +1,6 @@
 package org.reempreende.application.service;
 
+import org.reempreende.application.dto.request.UsuarioUpdateDTO;
 import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.domain.repository.ClienteRepository;
 import org.reempreende.domain.entities.Usuario;
@@ -52,33 +53,65 @@ public class ClienteService {
         return UsuarioMapper.toResponseDTO(cliente);
     }
 
-    public UsuarioResponseDTO update(Long id, UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO update(Long id, UsuarioUpdateDTO dto) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente não encontrado"));
 
-        if (!cliente.getEmail().equals(dto.getEmail())) {
-            if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
-                throw new BusinessException("Email já cadastrado para outro usuário");
+        if (dto.getNome() != null && !dto.getNome().isEmpty()) {
+            if (dto.getNome().length() < 2 || dto.getNome().length() > 100) {
+                throw new BusinessException("Nome deve ter entre 2 e 100 caracteres");
             }
+            cliente.setNome(dto.getNome());
         }
 
-        if (!cliente.getCpf().equals(dto.getCpf())) {
-            if (clienteRepository.existsByCpf(dto.getCpf())) {
-                throw new BusinessException("CPF já cadastrado para outro cliente");
+        if (dto.getEmail() != null && !dto.getEmail().isEmpty()) {
+            if (!isValidEmail(dto.getEmail())) {
+                throw new BusinessException("Formato de e-mail inválido");
             }
+
+            if (dto.getEmail().length() > 254) {
+                throw new BusinessException("E-mail muito longo (máximo 254 caracteres)");
+            }
+
+            if(dto.getEmail() == cliente.getEmail())
+            {
+                throw new BusinessException("Troque por um E-mail diferente do atual");
+            }
+
+            if (!cliente.getEmail().equals(dto.getEmail())) {
+                if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
+                    throw new BusinessException("Email já cadastrado para outro usuário");
+                }
+            }
+            cliente.setEmail(dto.getEmail());
         }
 
-        cliente.setEmail(dto.getEmail());
-        cliente.setNome(dto.getNome());
         if (dto.getSenha() != null && !dto.getSenha().isEmpty()) {
+            if (dto.getSenha().length() < 8) {
+                throw new BusinessException("Senha deve ter no mínimo 8 caracteres");
+            }
+
+            String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d]).+$";
+            if (!dto.getSenha().matches(regex)) {
+                throw new BusinessException("Senha inválida! Deve conter letra maiúscula, minúscula, número e caractere especial");
+            }
+
             cliente.setSenha(dto.getSenha());
         }
-        cliente.setCpf(dto.getCpf());
 
         usuarioRepository.update(cliente);
         clienteRepository.update(cliente);
 
         return UsuarioMapper.toResponseDTO(cliente);
+    }
+
+    private boolean isValidEmail(String email) {
+        if (email == null || email.isBlank()) {
+            return false;
+        }
+
+        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(regex);
     }
 
     public void delete(Long id) {

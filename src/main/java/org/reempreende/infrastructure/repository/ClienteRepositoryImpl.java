@@ -67,7 +67,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao atualizar cliente");
+            throw new RepositoryException("Erro ao atualizar cliente "+ e.getMessage());
         }
     }
 
