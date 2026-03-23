@@ -73,8 +73,7 @@ public class ClienteService {
                 throw new BusinessException("E-mail muito longo (máximo 254 caracteres)");
             }
 
-            if(dto.getEmail() == cliente.getEmail())
-            {
+            if (dto.getEmail().equals(cliente.getEmail())) {
                 throw new BusinessException("Troque por um E-mail diferente do atual");
             }
 

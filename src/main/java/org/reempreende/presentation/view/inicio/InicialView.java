@@ -26,16 +26,31 @@ public class InicialView implements IInicialView {
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("1 ➤ Cadastro") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("2 ➤ Login") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("0 ➤ Sair") + Cores.RESET);
-        System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA ^ ") + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA : ") + Cores.RESET);
         System.out.print("➤ ");
 
+        String input = u.lString();
+
         try {
-            return OptionalInt.of(u.lInt());
-        } catch (InputMismatchException e) {
-            u.next();
+            int opcao = Integer.parseInt(input.trim());
+
+            if (opcao == 0) {
+                System.out.print("Tem certeza que deseja sair? (S/N): ");
+                String confirmacao = u.lString();
+                if (confirmacao.equalsIgnoreCase("S")) {
+                    return OptionalInt.of(0);
+                } else {
+                    return OptionalInt.empty();
+                }
+            }
+
+            return OptionalInt.of(opcao);
+        } catch (NumberFormatException e) {
+            System.out.println(Cores.VERMELHO + "Digite apenas números!" + Cores.RESET);
+            u.delay(700);
+            u.cls(4);
             return OptionalInt.empty();
         }
-
     }
 
     @Override
@@ -51,5 +66,4 @@ public class InicialView implements IInicialView {
 
         return u.lInt();
     }
-
 }

@@ -23,7 +23,11 @@ public class InicialPresenter {
         while (continuar) {
             OptionalInt opcaoCaixa = inicialView.mostrarTela();
 
-            int opcao = opcaoCaixa.orElse(-1);
+            if (opcaoCaixa.isEmpty()) {
+                continue;
+            }
+
+            int opcao = opcaoCaixa.getAsInt();
 
             switch (opcao) {
                 case 1 -> {
@@ -42,5 +46,4 @@ public class InicialPresenter {
             }
         }
     }
-
 }
