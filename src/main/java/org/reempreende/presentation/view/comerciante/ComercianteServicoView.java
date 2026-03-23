@@ -33,7 +33,7 @@ public class ComercianteServicoView implements IComercianteServicoView {
 
     @Override
     public double askDuracaoDeCadaAgendamento() {
-        System.out.println("Digite a duração de cada agendamento");
+        System.out.println("Digite a duração de cada agendamento (Em horas)");
         System.out.print("➤ ");
 
         return u.lDouble();

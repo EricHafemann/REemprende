@@ -1,66 +1,77 @@
 package org.reempreende.presentation.presenter.comerciante;
 
+import org.reempreende.application.dto.request.AgendamentoRequestDTO;
+import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.application.service.ServicoService;
+import org.reempreende.domain.entities.Agendamento;
+import org.reempreende.domain.repository.AgendamentoRepository;
+import org.reempreende.infrastructure.repository.AgendamentoRepositoryImpl;
+import org.reempreende.infrastructure.sessao.Sessao;
+import org.reempreende.presentation.interfaces.icomerciante.IComercianteCriarAgendamentoView;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteServicoView;
 import org.reempreende.presentation.router.AppRouter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ComercianteCriarAgendamentoPresenter {
-    private AppRouter appRouter;
-    private IComercianteServicoView view;
-    private ServicoService service;
+    private final AppRouter appRouter;
+    private final Sessao sessao;
+    private final AgendamentoService agendamentoService;
+    private final IComercianteCriarAgendamentoView view;
 
-    public void createAgendamentoViaServico(LocalTime abre, LocalTime fecha, double duracao) {
-        double abreHora = abre.getHour();
-        double abreMinuto = abre.getMinute();
+    public ComercianteCriarAgendamentoPresenter(AppRouter appRouter,
+                                                Sessao sessao, AgendamentoService agendamentoService,
+                                                IComercianteCriarAgendamentoView view) {
+        this.appRouter = appRouter;
+        this.sessao = sessao;
+        this.agendamentoService = agendamentoService;
+        this.view = view;
+    }
 
-        double fechaHora = fecha.getHour();
-        double fechaMinuto = fecha.getMinute();
+    public void createAgendamentoViaServico(AgendamentoRequestDTO agendamentoRequestDTO) {
+        LocalTime abre = agendamentoRequestDTO.getDataInicio().toLocalTime();
+        LocalTime fecha = agendamentoRequestDTO.getDataFim().toLocalTime();
 
-        double aberto = abreHora + (abreMinuto / 60);
-        double fechado = fechaHora + (fechaMinuto / 60);
+        while (abre.isBefore(fecha)) {
+            agendamentoRequestDTO.setDataInicio(abre.atDate(LocalDate.now()));
+            agendamentoRequestDTO.setDataFim(fecha.atDate(LocalDate.now()));
+            agendamentoRequestDTO.setObservacao("Teste");
+            agendamentoRequestDTO.setIdCliente(null);
 
-        double cont = aberto;
-
-        while (cont < fechado) {
-            // criar agendamento
-            cont += duracao / 60;
+            createAgendamento(agendamentoRequestDTO);
+            abre = abre.plusMinutes(30L);
         }
 
-        if (cont > fechado) {
-            // colocar o resto de tempo sobrando como um agendamento
-            // top
-        }
     }
 
     public static void main(String[] args) {
-        LocalTime abre = LocalTime.of(10, 30);
-        LocalTime fecha = LocalTime.of(11, 35);
+        AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
 
-        double abreNum = abre.getHour();
-        double abree = abre.getMinute();
+        agendamentoRequestDTO.setObservacao("Teste");
+        agendamentoRequestDTO.setDataInicio(LocalDateTime.now());
+        agendamentoRequestDTO.setDataFim(LocalDateTime.now());
+        agendamentoRequestDTO.setIdCliente(null);
 
-        double fechaNum = fecha.getHour();
-        double fechaa = fecha.getMinute();
-
-        System.out.println(abreNum + abree / 60);
-
-        double aberto = abreNum + (abree / 60);
-        double fechado = fechaNum + (fechaa / 60);
-
-        double duracao = 30;
-
-        double cont = aberto;
-
-        while (cont < fechado) {
-            System.out.println("EEEE");
-            cont += duracao / 60;
+        try {
+            AgendamentoService agendamentoService1 =
+                    new AgendamentoService(new AgendamentoRepositoryImpl());
+            agendamentoService1.insertAgendamento(agendamentoRequestDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
         }
 
-        if (cont > fechado) {
-            System.out.println((Math.floor(cont - fechado) * 100) / 100);
+    }
+
+    public void createAgendamento(AgendamentoRequestDTO agendamentoRequestDTO) {
+        try {
+            agendamentoService.insertAgendamento(agendamentoRequestDTO);
+        } catch (Exception e) {
+            view.exibirErro(e.getMessage());
+            return;
         }
+
     }
 }

@@ -1,6 +1,7 @@
 package org.reempreende.presentation.presenter.comerciante;
 
 import org.reempreende.application.dto.mapper.UsuarioMapper;
+import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.request.ServicoRequestDTO;
 import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
@@ -13,6 +14,7 @@ import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteServicoView;
 import org.reempreende.presentation.router.AppRouter;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ComercianteServicoPresenter {
@@ -52,6 +54,15 @@ public class ComercianteServicoPresenter {
             view.exibirErro(e.getMessage());
             return;
         }
+
+        AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
+
+        agendamentoRequestDTO.setDataInicio(abre.atDate(LocalDate.now()));
+        agendamentoRequestDTO.setDataFim(fecha.atDate(LocalDate.now()));
+        agendamentoRequestDTO.setObservacao("Teste");
+        agendamentoRequestDTO.setIdCliente(null);
+
+        appRouter.createAgendamentoComerciante(false, agendamentoRequestDTO);
     }
 
 }
