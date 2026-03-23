@@ -30,18 +30,22 @@ public class ComercianteCriarAgendamentoPresenter {
         this.view = view;
     }
 
-    public void createAgendamentoViaServico(AgendamentoRequestDTO agendamentoRequestDTO) {
-        LocalTime abre = agendamentoRequestDTO.getDataInicio().toLocalTime();
-        LocalTime fecha = agendamentoRequestDTO.getDataFim().toLocalTime();
+    public void createAgendamentoViaServico(long duracao) {
+        LocalTime abre = view.askAbreAgendamento();
+        LocalTime fecha = view.askFechaAgendamento();
+
+        String observacao = view.askObservacao();
+
+        AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
 
         while (abre.isBefore(fecha)) {
             agendamentoRequestDTO.setDataInicio(abre.atDate(LocalDate.now()));
-            agendamentoRequestDTO.setDataFim(fecha.atDate(LocalDate.now()));
-            agendamentoRequestDTO.setObservacao("Teste");
+            agendamentoRequestDTO.setDataFim(abre.plusMinutes(duracao).atDate(LocalDate.now()));
+            agendamentoRequestDTO.setObservacao(observacao);
             agendamentoRequestDTO.setIdCliente(null);
 
             createAgendamento(agendamentoRequestDTO);
-            abre = abre.plusMinutes(30L);
+            abre = abre.plusMinutes(duracao * 60);
         }
 
     }
@@ -51,7 +55,7 @@ public class ComercianteCriarAgendamentoPresenter {
 
         agendamentoRequestDTO.setObservacao("Teste");
         agendamentoRequestDTO.setDataInicio(LocalDateTime.now());
-        agendamentoRequestDTO.setDataFim(LocalDateTime.now());
+        agendamentoRequestDTO.setDataFim(LocalDateTime.of(2130, 12, 12, 12, 12));
         agendamentoRequestDTO.setIdCliente(null);
 
         try {
@@ -73,5 +77,6 @@ public class ComercianteCriarAgendamentoPresenter {
             return;
         }
 
+        view.exibirSucesso("Agendamentos criados com sucesso!");
     }
 }

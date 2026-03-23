@@ -22,8 +22,8 @@ public class AgendamentoResponseDTO {
         this.dataInicio = agendamento.getDataInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
         this.dataFim = agendamento.getDataFim().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
         this.observacao = agendamento.getObservacao();
-        this.nomeCliente = agendamento.getCliente().getNome();
-        this.idCliente = agendamento.getCliente().getId();
+        this.nomeCliente = null;
+        this.idCliente = null;
     }
 
     public Long getIdAgendamento() { return idAgendamento; }

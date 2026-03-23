@@ -26,7 +26,7 @@ public class AgendamentoRepositoryImpl implements AgendamentoRepository {
             stmt.setTimestamp(1, Timestamp.valueOf(agendamento.getDataInicio()));
             stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataFim()));
             stmt.setString(3, agendamento.getObservacao());
-            stmt.setLong(4, agendamento.getCliente().getId());
+            stmt.setNull(4, java.sql.Types.BIGINT);
 
             stmt.executeUpdate();
 

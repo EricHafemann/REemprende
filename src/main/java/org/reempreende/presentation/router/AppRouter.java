@@ -159,16 +159,14 @@ public class AppRouter {
         comercianteServicoPresenter.createServico();
     }
 
-    public void createAgendamentoComerciante(boolean askInfo, AgendamentoRequestDTO agendamentoRequestDTO) {
+    public void createAgendamentoComerciante(long duracao) {
         IComercianteCriarAgendamentoView view = new ComercianteCriarAgendamentoView();
 
-        if (!askInfo) {
-            ComercianteCriarAgendamentoPresenter comercianteCriarAgendamentoPresenter =
+
+        ComercianteCriarAgendamentoPresenter comercianteCriarAgendamentoPresenter =
                     new ComercianteCriarAgendamentoPresenter(this, this.sessao, agendamentoService, view);
 
-            comercianteCriarAgendamentoPresenter.createAgendamentoViaServico(agendamentoRequestDTO);
-        }
-
+        comercianteCriarAgendamentoPresenter.createAgendamentoViaServico(duracao);
     }
 
     public void logout() {

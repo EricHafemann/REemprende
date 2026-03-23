@@ -32,36 +32,11 @@ public class ComercianteServicoView implements IComercianteServicoView {
     }
 
     @Override
-    public double askDuracaoDeCadaAgendamento() {
+    public long askDuracaoDeCadaAgendamento() {
         System.out.println("Digite a duração de cada agendamento (Em horas)");
         System.out.print("➤ ");
 
-        return u.lDouble();
+        return u.lLong();
     }
 
-    @Override
-    public LocalTime askHorarioAbertura() {
-        System.out.println("Digite as horas que abre o serviço");
-        System.out.print("➤ ");
-        int horas = u.lInt();
-
-        System.out.println("Digite os minutos que abre o serviço");
-        System.out.print("➤ ");
-        int minutos = u.lInt();
-
-        return LocalTime.of(horas, minutos);
-    }
-
-    @Override
-    public LocalTime askHorarioFechar() {
-        System.out.println("Digite as horas que fecha o serviço");
-        System.out.print("➤ ");
-        int horas = u.lInt();
-
-        System.out.println("Digite os minutos que fecha o serviço");
-        System.out.print("➤ ");
-        int minutos = u.lInt();
-
-        return LocalTime.of(horas, minutos);
-    }
 }

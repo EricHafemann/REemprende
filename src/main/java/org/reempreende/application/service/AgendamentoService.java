@@ -45,7 +45,7 @@ public class AgendamentoService
            throw new BusinessException("A data de ínicio não pode ser depois da data de fim");
        }
 
-       if(dto.getDataFim().isAfter(dto.getDataInicio()))
+       if(dto.getDataFim().isBefore(dto.getDataInicio()))
        {
            throw new BusinessException("A data de fim não pode ser antes da data de ínicio");
        }
@@ -57,6 +57,7 @@ public class AgendamentoService
 
        Agendamento agendamento = (Agendamento) AgendamentoMapper.toEntityComerciante(dto);
        Agendamento agendamentoSalvo = agendamentoRepository.insert(agendamento);
+
 
        return AgendamentoMapper.toResponseDTO(agendamentoSalvo);
    }
