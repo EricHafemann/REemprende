@@ -14,6 +14,34 @@ import java.util.List;
 public class ServicoAgendamentoRepositoryImpl implements ServicoAgendamentoRepository {
 
     @Override
+    public ServicoAgendamento insert(Long idAgendamento, Long idServico) {
+        String sql = "INSERT INTO Servicos_Agendamentos (idServico, idAgendamento) VALUES (?, ?)";
+
+        ServicoAgendamento servicoAgendamento = new ServicoAgendamento();
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setLong(1, idServico);
+            stmt.setLong(2, idAgendamento);
+
+            stmt.executeUpdate();
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    servicoAgendamento.setIdServicosAgendamentos(generatedKeys.getLong(1));
+                }
+            }
+
+
+            return servicoAgendamento;
+
+        } catch (SQLException e) {
+
+            throw new RepositoryException("Erro ao associar serviço ao agendamento");
+        }
+    }
+    @Override
     public ServicoAgendamento insert(ServicoAgendamento servicoAgendamento) {
         String sql = "INSERT INTO Servicos_Agendamentos (idServico, idAgendamento) VALUES (?, ?)";
 

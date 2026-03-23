@@ -22,12 +22,12 @@ public class Main {
         ComercianteService comercianteService = new ComercianteService(usuarioRepository, comercianteRepository);
 
         AgendamentoRepository agendamentoRepository = new AgendamentoRepositoryImpl();
-        AgendamentoService agendamentoService = new AgendamentoService(agendamentoRepository);
+        ServicoAgendamentoRepository servicoAgendamentoRepository = new ServicoAgendamentoRepositoryImpl();
+        AgendamentoService agendamentoService = new AgendamentoService(agendamentoRepository, servicoAgendamentoRepository);
 
         Sessao sessao = new Sessao();
 
         ServicoRepository servicoRepository = new ServicoRepositoryImpl();
-        ServicoAgendamentoRepository servicoAgendamentoRepository = new ServicoAgendamentoRepositoryImpl();
         ServicoService service = new ServicoService(servicoRepository, servicoAgendamentoRepository,
                 agendamentoService, comercianteRepository);
 

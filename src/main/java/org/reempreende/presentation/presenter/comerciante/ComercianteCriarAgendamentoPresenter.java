@@ -6,6 +6,7 @@ import org.reempreende.application.service.ServicoService;
 import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.repository.AgendamentoRepository;
 import org.reempreende.infrastructure.repository.AgendamentoRepositoryImpl;
+import org.reempreende.infrastructure.repository.ServicoAgendamentoRepositoryImpl;
 import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteCriarAgendamentoView;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteServicoView;
@@ -46,25 +47,6 @@ public class ComercianteCriarAgendamentoPresenter {
 
             createAgendamento(agendamentoRequestDTO);
             abre = abre.plusMinutes(duracao * 60);
-        }
-
-    }
-
-    public static void main(String[] args) {
-        AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
-
-        agendamentoRequestDTO.setObservacao("Teste");
-        agendamentoRequestDTO.setDataInicio(LocalDateTime.now());
-        agendamentoRequestDTO.setDataFim(LocalDateTime.of(2130, 12, 12, 12, 12));
-        agendamentoRequestDTO.setIdCliente(null);
-
-        try {
-            AgendamentoService agendamentoService1 =
-                    new AgendamentoService(new AgendamentoRepositoryImpl());
-            agendamentoService1.insertAgendamento(agendamentoRequestDTO);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
         }
 
     }

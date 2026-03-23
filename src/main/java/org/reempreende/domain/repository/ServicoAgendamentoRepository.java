@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ServicoAgendamentoRepository {
 
+    ServicoAgendamento insert(Long idAgendamento, Long idServico);
+
     ServicoAgendamento insert(ServicoAgendamento servicoAgendamento);
 
     void insertAll(long idAgendamento, List<Servico> servicos);

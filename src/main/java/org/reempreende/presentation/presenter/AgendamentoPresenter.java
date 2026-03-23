@@ -16,7 +16,6 @@ public class AgendamentoPresenter {
 
     public AgendamentoPresenter(IAgendamentoView iAgendamentoView) {
         this.iAgendamentoView = iAgendamentoView;
-        //this.agendamentoService = new AgendamentoService();
     }
 
     public void checkInformation(Agendamento agendamento) {

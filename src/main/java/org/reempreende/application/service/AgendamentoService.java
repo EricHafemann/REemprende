@@ -7,7 +7,9 @@ import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Agendamento;
+import org.reempreende.domain.entities.ServicoAgendamento;
 import org.reempreende.domain.repository.AgendamentoRepository;
+import org.reempreende.domain.repository.ServicoAgendamentoRepository;
 import org.reempreende.infrastructure.exception.RepositoryException;
 import org.reempreende.infrastructure.exception.UsuarioNotFoundException;
 
@@ -22,13 +24,14 @@ public class AgendamentoService
 {
 
    private final AgendamentoRepository agendamentoRepository;
+   private final ServicoAgendamentoRepository servicoAgendamentoRepository;
 
-    public AgendamentoService(AgendamentoRepository agendamentoRepository)
-   {
-       this.agendamentoRepository = agendamentoRepository;
-   }
+    public AgendamentoService(AgendamentoRepository agendamentoRepository, ServicoAgendamentoRepository servicoAgendamentoRepository) {
+        this.agendamentoRepository = agendamentoRepository;
+        this.servicoAgendamentoRepository = servicoAgendamentoRepository;
+    }
 
-   public AgendamentoResponseDTO insertAgendamento(AgendamentoRequestDTO dto)
+    public AgendamentoResponseDTO insertAgendamento(AgendamentoRequestDTO dto, Long idServico)
    {
        if(dto.getObservacao() == null)
        {
@@ -57,6 +60,7 @@ public class AgendamentoService
 
        Agendamento agendamento = (Agendamento) AgendamentoMapper.toEntityComerciante(dto);
        Agendamento agendamentoSalvo = agendamentoRepository.insert(agendamento);
+       servicoAgendamentoRepository.insert(agendamentoSalvo.getIdAgendamento(), idServico);
 
 
        return AgendamentoMapper.toResponseDTO(agendamentoSalvo);
