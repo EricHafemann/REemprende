@@ -7,6 +7,7 @@ import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Comerciante;
 import org.reempreende.domain.entities.Servico;
 import org.reempreende.domain.entities.Usuario;
+import org.reempreende.domain.repository.ComercianteRepository;
 import org.reempreende.domain.repository.ServicoAgendamentoRepository;
 import org.reempreende.domain.repository.ServicoRepository;
 import org.reempreende.domain.repository.UsuarioRepository;
@@ -20,20 +21,20 @@ public class ServicoService {
     private final ServicoRepository servicoRepository;
     private final ServicoAgendamentoRepository servicoAgendamentoRepository;
     private final AgendamentoService agendamentoService;
-    private final UsuarioRepository usuarioRepository;
+    private final ComercianteRepository comercianteRepository;
 
-    public ServicoService(ServicoRepository servicoRepository, ServicoAgendamentoRepository servicoAgendamentoRepository, AgendamentoService agendamentoService, UsuarioRepository usuarioRepository) {
+    public ServicoService(ServicoRepository servicoRepository, ServicoAgendamentoRepository servicoAgendamentoRepository, AgendamentoService agendamentoService, ComercianteRepository comercianteRepository) {
         this.servicoRepository = servicoRepository;
         this.servicoAgendamentoRepository = servicoAgendamentoRepository;
         this.agendamentoService = agendamentoService;
-        this.usuarioRepository = usuarioRepository;
+        this.comercianteRepository = comercianteRepository;
     }
 
     public ServicoResponseDTO insertServico(ServicoRequestDTO dto) {
 
         if (dto == null) return null;
 
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(dto.getIdComerciante());
+        Optional<Comerciante> usuarioOpt = comercianteRepository.findById(dto.getIdComerciante());
 
         if (usuarioOpt.isEmpty()) {
             throw new BusinessException("Usuário não encontrado");
