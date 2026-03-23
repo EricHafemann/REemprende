@@ -1,17 +1,8 @@
 package org.reempreende.initializer;
 
-import org.reempreende.application.service.AgendamentoService;
-import org.reempreende.application.service.ClienteService;
-import org.reempreende.application.service.ComercianteService;
-import org.reempreende.application.service.UsuarioService;
-import org.reempreende.domain.repository.AgendamentoRepository;
-import org.reempreende.domain.repository.ClienteRepository;
-import org.reempreende.domain.repository.ComercianteRepository;
-import org.reempreende.domain.repository.UsuarioRepository;
-import org.reempreende.infrastructure.repository.AgendamentoRepositoryImpl;
-import org.reempreende.infrastructure.repository.ClienteRepositoryImpl;
-import org.reempreende.infrastructure.repository.ComercianteRepositoryImpl;
-import org.reempreende.infrastructure.repository.UsuarioRepositoryImpl;
+import org.reempreende.application.service.*;
+import org.reempreende.domain.repository.*;
+import org.reempreende.infrastructure.repository.*;
 import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.presentation.router.AppRouter;
 import org.reempreende.presentation.view.inicio.InicialView;
@@ -35,7 +26,13 @@ public class Main {
 
         Sessao sessao = new Sessao();
 
-        AppRouter appRouter = new AppRouter(usuarioService, clienteService, comercianteService, agendamentoService, sessao);
+        ServicoRepository servicoRepository = new ServicoRepositoryImpl();
+        ServicoAgendamentoRepository servicoAgendamentoRepository = new ServicoAgendamentoRepositoryImpl();
+        ServicoService service = new ServicoService(servicoRepository, servicoAgendamentoRepository,
+                agendamentoService, comercianteRepository);
+
+        AppRouter appRouter = new AppRouter(usuarioService, clienteService, comercianteService,
+                agendamentoService, service, sessao);
 
         appRouter.startSystem();
     }

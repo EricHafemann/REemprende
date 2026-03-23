@@ -9,7 +9,6 @@ public class ClientePresenter {
     private AppRouter appRouter;
     private IClienteView view;
 
-
     public ClientePresenter(AppRouter appRouter, IClienteView view) {
         this.appRouter = appRouter;
         this.view = view;
@@ -29,7 +28,7 @@ public class ClientePresenter {
                 case 3 -> appRouter.clientViewHistory();
                 case 4 -> appRouter.updateCliente();
                 case 0 -> {
-                    view.exibirMensagem("Voltando...");
+                    view.exibirMensagem("Saindo...");
                     appRouter.logout();
                     continuar = false;
                 }

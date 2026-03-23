@@ -1,22 +1,24 @@
 package org.reempreende.presentation.router;
 
 import org.reempreende.application.dto.request.UsuarioRequestDTO;
-import org.reempreende.application.service.AgendamentoService;
-import org.reempreende.application.service.ClienteService;
-import org.reempreende.application.service.ComercianteService;
-import org.reempreende.application.service.UsuarioService;
+import org.reempreende.application.service.*;
 import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
 import org.reempreende.presentation.interfaces.icliente.*;
+import org.reempreende.presentation.interfaces.icomerciante.IComercianteServicoView;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteView;
 import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.presenter.*;
 import org.reempreende.presentation.presenter.cliente.*;
+import org.reempreende.presentation.presenter.comerciante.ComercianteCadastroPresenter;
+import org.reempreende.presentation.presenter.comerciante.ComerciantePresenter;
+import org.reempreende.presentation.presenter.comerciante.ComercianteServicoPresenter;
 import org.reempreende.presentation.view.cliente.*;
 import org.reempreende.presentation.view.comerciante.CadastroComercianteView;
+import org.reempreende.presentation.view.comerciante.ComercianteServicoView;
 import org.reempreende.presentation.view.comerciante.ComercianteView;
 import org.reempreende.presentation.view.inicio.InicialView;
 import org.reempreende.presentation.view.cadastro.CadastroBaseView;
@@ -30,14 +32,16 @@ public class AppRouter {
     private final ComercianteService comercianteService;
     private final AgendamentoService agendamentoService;
     private final Sessao sessao;
+    private final ServicoService servicoService;
 
     public AppRouter(UsuarioService usuarioService, ClienteService clienteService,
                      ComercianteService comercianteService, AgendamentoService agendamentoService,
-                     Sessao sessao) {
+                     ServicoService service, Sessao sessao) {
         this.usuarioService = usuarioService;
         this.clienteService = clienteService;
         this.comercianteService = comercianteService;
         this.agendamentoService = agendamentoService;
+        this.servicoService = service;
         this.sessao = sessao;
     }
 
@@ -124,9 +128,12 @@ public class AppRouter {
     }
 
     public void startComercianteView() {
-        IComercianteView comercianteView = new ComercianteView();
+        IComercianteView view = new ComercianteView();
 
-        comercianteView.exibirSucesso("Comerciante View");
+        ComerciantePresenter comerciantePresenter =
+                new ComerciantePresenter(this, view);
+
+        comerciantePresenter.selectOptions();
     }
 
     public void updateCliente() {
@@ -136,6 +143,16 @@ public class AppRouter {
                 new ClienteAtualizarPresenter(this, this.sessao, view, clienteService);
 
         clienteAtualizarPresenter.update();
+    }
+
+    public void servicoComerciante() {
+        IComercianteServicoView view = new ComercianteServicoView();
+
+        ComercianteServicoPresenter comercianteServicoPresenter =
+                new ComercianteServicoPresenter(this, view, servicoService,
+                        this.comercianteService, this.sessao);
+
+        comercianteServicoPresenter.createServico();
     }
 
     public void logout() {

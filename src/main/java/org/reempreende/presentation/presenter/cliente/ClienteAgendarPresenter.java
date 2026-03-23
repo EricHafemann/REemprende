@@ -25,7 +25,6 @@ public class ClienteAgendarPresenter {
     private AgendamentoService agendamentoService;
     private ClienteHorariosPresenter clienteHorariosPresenter;
     private Sessao sessao;
-    private ClienteService clienteService = new ClienteService(new UsuarioRepositoryImpl(), new ClienteRepositoryImpl());
 
     public ClienteAgendarPresenter(AppRouter appRouter, IClienteViewAgendarDisponivel view, AgendamentoService agendamentoService,
                                    Sessao sessao, ClienteHorariosPresenter clienteHorariosPresenter) {
