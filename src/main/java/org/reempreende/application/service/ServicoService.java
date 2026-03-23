@@ -6,48 +6,60 @@ import org.reempreende.application.dto.response.ServicoResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Comerciante;
 import org.reempreende.domain.entities.Servico;
+import org.reempreende.domain.entities.Usuario;
 import org.reempreende.domain.repository.ServicoAgendamentoRepository;
 import org.reempreende.domain.repository.ServicoRepository;
+import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.presentation.exception.InvalidFieldException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ServicoService {
 
     private final ServicoRepository servicoRepository;
     private final ServicoAgendamentoRepository servicoAgendamentoRepository;
     private final AgendamentoService agendamentoService;
+    private final UsuarioRepository usuarioRepository;
 
-    public ServicoService(ServicoRepository servicoRepository, ServicoAgendamentoRepository servicoAgendamentoRepository, AgendamentoService agendamentoService) {
+    public ServicoService(ServicoRepository servicoRepository, ServicoAgendamentoRepository servicoAgendamentoRepository, AgendamentoService agendamentoService, UsuarioRepository usuarioRepository) {
         this.servicoRepository = servicoRepository;
         this.servicoAgendamentoRepository = servicoAgendamentoRepository;
         this.agendamentoService = agendamentoService;
+        this.usuarioRepository = usuarioRepository;
     }
 
-    public ServicoResponseDTO insertServico(ServicoRequestDTO dto, Comerciante comerciante) {
+    public ServicoResponseDTO insertServico(ServicoRequestDTO dto) {
 
-        // Validações Básicas
         if (dto == null) return null;
+
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(dto.getIdComerciante());
+
+        if (usuarioOpt.isEmpty()) {
+            throw new BusinessException("Usuário não encontrado");
+        }
+
+        Usuario usuario = usuarioOpt.get();
+
+        if (!(usuario instanceof Comerciante comerciante)) {
+            throw new BusinessException("O usuário informado não é um comerciante");
+        }
 
         Servico servicoInsert = ServicoMapper.toEntity(dto, comerciante);
 
-        if(servicoInsert.getComerciante() == null)
-        {
+        if(servicoInsert.getComerciante() == null) {
             throw new BusinessException("Comerciante não pode ser nulo !");
         }
-        if(servicoInsert.getDuracaoHoras() < 0)
-        {
-            throw new BusinessException("Duração não pode ter valores negativos !");
+        if(servicoInsert.getDuracaoHoras() <= 0) {
+            throw new BusinessException("Duração deve ser maior que zero !");
         }
-        if(servicoInsert.getDescricao().length() < 10 )
-        {
-            throw new BusinessException("Descrição precisa ter no mínimo 10 caracteres !");
+        if(servicoInsert.getDescricao() == null || servicoInsert.getDescricao().trim().length() < 5) {
+            throw new BusinessException("Descrição precisa ter no mínimo 5 caracteres !");
         }
 
         Servico servicoSalvo = servicoRepository.insert(servicoInsert);
 
         return ServicoMapper.toResponseDTO(servicoSalvo);
-
     }
 
     public ServicoResponseDTO findById(Long id)

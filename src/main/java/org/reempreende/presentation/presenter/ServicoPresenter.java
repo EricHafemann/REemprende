@@ -33,7 +33,7 @@ public class ServicoPresenter
 
             ServicoRequestDTO servicoRequestDTOs = new ServicoRequestDTO(null, descricao, duracaoHoras, comerciante.getId());
 
-            servicoService.insertServico(servicoRequestDTOs, comerciante);
+            servicoService.insertServico(servicoRequestDTOs);
             servicoView.exibirSucesso("Serviço cadastrado com sucesso!!!");
         }
 
