@@ -73,6 +73,17 @@ public class AgendamentoService
        return AgendamentoMapper.toResponseDTO(agendamento);
    }
 
+   public List<AgendamentoResponseDTO> findAgendamentosByServicoId (Long idServico)
+   {
+       if(idServico <= 0)
+       {
+           throw new BusinessException("O ID precisa ser válido !");
+       }
+
+       List<Agendamento> listAgendamentos = servicoAgendamentoRepository.findAgendamentosByServicoId(idServico);
+       return AgendamentoMapper.toResponseDTOList(listAgendamentos);
+   }
+
    public boolean existById(long id)
    {
        if(id <= 0)
