@@ -22,6 +22,11 @@ public class ClienteHorariosPresenter {
         this.agendamentoService = agendamentoService;
     }
 
+    public ClienteHorariosPresenter(IClienteViewHorarios view, AgendamentoService agendamentoService) {
+        this.view = view;
+        this.agendamentoService = agendamentoService;
+    }
+
     public void showHorarios() {
         view.mostrarTela();
 

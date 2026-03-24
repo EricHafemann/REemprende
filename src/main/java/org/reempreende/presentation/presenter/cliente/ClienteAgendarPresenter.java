@@ -7,14 +7,18 @@ import org.reempreende.application.exception.BusinessException;
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.application.service.ClienteService;
 import org.reempreende.domain.entities.Agendamento;
-import org.reempreende.infrastructure.repository.ClienteRepositoryImpl;
-import org.reempreende.infrastructure.repository.UsuarioRepositoryImpl;
+import org.reempreende.domain.repository.AgendamentoRepository;
+import org.reempreende.domain.repository.ServicoAgendamentoRepository;
+import org.reempreende.domain.repository.ServicoRepository;
+import org.reempreende.infrastructure.repository.*;
 import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.infrastructure.utility.Cores;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewAgendarDisponivel;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewHorarios;
 import org.reempreende.presentation.router.AppRouter;
+import org.reempreende.presentation.view.cliente.ClienteViewAgendarDisponivel;
+import org.reempreende.presentation.view.cliente.ClienteViewHorarios;
 
 import java.util.List;
 import java.util.OptionalInt;
@@ -65,9 +69,21 @@ public class ClienteAgendarPresenter {
                         AgendamentoMapper.toRequestDTO(agendamentoResponseDTO));
                 view.exibirSucesso("Agendamento registrado com sucesso!");
             }
-        } catch (InvalidFieldException e) {
+        } catch (Exception e) {
             System.out.println(Cores.VERMELHO + e.getMessage() + Cores.RESET);
         }
+    }
+
+    public static void main(String[] args) {
+         IClienteViewHorarios view = new ClienteViewHorarios();
+
+        AgendamentoRepository agendamentoRepository = new AgendamentoRepositoryImpl();
+        ServicoAgendamentoRepository servicoRepository = new ServicoAgendamentoRepositoryImpl();
+
+        AgendamentoService agendamentoService = new AgendamentoService(agendamentoRepository, servicoRepository);
+        ClienteHorariosPresenter clienteHorariosPresenter1 = new ClienteHorariosPresenter(view, agendamentoService);
+
+
     }
 
 }

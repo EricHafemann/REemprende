@@ -1,6 +1,8 @@
 package org.reempreende.presentation.presenter.comerciante;
 
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
+import org.reempreende.application.dto.request.ServicoRequestDTO;
+import org.reempreende.application.dto.response.ServicoResponseDTO;
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.application.service.ServicoService;
 import org.reempreende.domain.entities.Agendamento;
@@ -31,7 +33,7 @@ public class ComercianteCriarAgendamentoPresenter {
         this.view = view;
     }
 
-    public void createAgendamentoViaServico(long duracao) {
+    public void createAgendamentoViaServico(ServicoResponseDTO servicoResponseDTO) {
         LocalTime abre = view.askAbreAgendamento();
         LocalTime fecha = view.askFechaAgendamento();
 
@@ -41,19 +43,19 @@ public class ComercianteCriarAgendamentoPresenter {
 
         while (abre.isBefore(fecha)) {
             agendamentoRequestDTO.setDataInicio(abre.atDate(LocalDate.now()));
-            agendamentoRequestDTO.setDataFim(abre.plusMinutes(duracao).atDate(LocalDate.now()));
+            agendamentoRequestDTO.setDataFim(abre.plusMinutes((long) servicoResponseDTO.getDuracaoHoras()).atDate(LocalDate.now()));
             agendamentoRequestDTO.setObservacao(observacao);
             agendamentoRequestDTO.setIdCliente(null);
 
-            createAgendamento(agendamentoRequestDTO);
-            abre = abre.plusMinutes(duracao * 60);
+            createAgendamento(agendamentoRequestDTO, servicoResponseDTO.getIdServico());
+            abre = abre.plusMinutes((long) servicoResponseDTO.getDuracaoHoras() * 60);
         }
 
     }
 
-    public void createAgendamento(AgendamentoRequestDTO agendamentoRequestDTO) {
+    public void createAgendamento(AgendamentoRequestDTO agendamentoRequestDTO, long idServico) {
         try {
-            agendamentoService.insertAgendamento(agendamentoRequestDTO);
+            agendamentoService.insertAgendamento(agendamentoRequestDTO, idServico);
         } catch (Exception e) {
             view.exibirErro(e.getMessage());
             return;

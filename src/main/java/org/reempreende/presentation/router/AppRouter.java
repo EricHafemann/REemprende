@@ -1,7 +1,9 @@
 package org.reempreende.presentation.router;
 
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
+import org.reempreende.application.dto.request.ServicoRequestDTO;
 import org.reempreende.application.dto.request.UsuarioRequestDTO;
+import org.reempreende.application.dto.response.ServicoResponseDTO;
 import org.reempreende.application.service.*;
 import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.infrastructure.utility.Util;
@@ -159,14 +161,13 @@ public class AppRouter {
         comercianteServicoPresenter.createServico();
     }
 
-    public void createAgendamentoComerciante(long duracao) {
+    public void createAgendamentoComerciante(ServicoResponseDTO servicoResponseDTO) {
         IComercianteCriarAgendamentoView view = new ComercianteCriarAgendamentoView();
-
 
         ComercianteCriarAgendamentoPresenter comercianteCriarAgendamentoPresenter =
                     new ComercianteCriarAgendamentoPresenter(this, this.sessao, agendamentoService, view);
 
-        comercianteCriarAgendamentoPresenter.createAgendamentoViaServico(duracao);
+        comercianteCriarAgendamentoPresenter.createAgendamentoViaServico(servicoResponseDTO);
     }
 
     public void logout() {
