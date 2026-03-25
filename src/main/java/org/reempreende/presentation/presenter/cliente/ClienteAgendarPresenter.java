@@ -1,32 +1,16 @@
 package org.reempreende.presentation.presenter.cliente;
 
 import org.reempreende.application.dto.mapper.AgendamentoMapper;
-import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.dto.response.ServicoResponseDTO;
-import org.reempreende.application.dto.response.UsuarioResponseDTO;
-import org.reempreende.application.exception.BusinessException;
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.application.service.ClienteService;
 import org.reempreende.application.service.ServicoService;
-import org.reempreende.domain.entities.Agendamento;
-import org.reempreende.domain.entities.Cliente;
-import org.reempreende.domain.entities.Servico;
-import org.reempreende.domain.repository.AgendamentoRepository;
-import org.reempreende.domain.repository.ServicoAgendamentoRepository;
-import org.reempreende.domain.repository.ServicoRepository;
 import org.reempreende.infrastructure.repository.*;
 import org.reempreende.infrastructure.sessao.Sessao;
-import org.reempreende.infrastructure.utility.Cores;
-import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewAgendarDisponivel;
-import org.reempreende.presentation.interfaces.icliente.IClienteViewHorarios;
-import org.reempreende.presentation.router.AppRouter;
-import org.reempreende.presentation.view.cliente.ClienteViewAgendarDisponivel;
-import org.reempreende.presentation.view.cliente.ClienteViewHorarios;
 
 import java.util.List;
-import java.util.OptionalInt;
 import java.util.OptionalLong;
 
 public class ClienteAgendarPresenter {

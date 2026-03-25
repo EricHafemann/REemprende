@@ -7,8 +7,6 @@ import org.reempreende.presentation.interfaces.icliente.IClienteViewHistorico;
 import java.util.OptionalInt;
 
 public class ClienteViewHistorico implements IClienteViewHistorico {
-
-    private Util u = new Util();
     @Override
     public void verHistoricoAgendamentos(String message) {
         System.out.println("\n" + message);
@@ -16,7 +14,7 @@ public class ClienteViewHistorico implements IClienteViewHistorico {
 
     @Override
     public OptionalInt mostrarTela() {
-        u.cls(15);
+        Util.cls(15);
         System.out.println("            ██╗  ██╗██╗███████╗ ███████╗ ██████╗ ██████╗ ██╗ ██████╗  ██████╗ ");
         System.out.println("            ██║  ██║██║██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗██║██╔════╝ ██╔═══██╗");
         System.out.println("            ███████║██║███████╗   ██║   ██║   ██║██████╔╝██║██║      ██║   ██║");

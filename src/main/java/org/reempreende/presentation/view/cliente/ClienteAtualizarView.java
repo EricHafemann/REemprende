@@ -6,8 +6,6 @@ import org.reempreende.presentation.interfaces.icliente.IClienteAtualizarView;
 import java.util.OptionalInt;
 
 public class ClienteAtualizarView implements IClienteAtualizarView {
-    private final Util u = new Util();
-
     @Override
     public OptionalInt mostrarTela() {
         System.out.println("             █████╗ ████████╗██╗   ██╗ █████╗ ██╗     ██╗███████╗ █████╗ ██████╗ ");
@@ -24,7 +22,7 @@ public class ClienteAtualizarView implements IClienteAtualizarView {
         System.out.println("SELECIONE UMA DAS OPÇÕES ACIMA:");
         System.out.print("➤ ");
 
-        return OptionalInt.of(u.lInt());
+        return OptionalInt.of(Util.lInt());
     }
 
     @Override
@@ -32,7 +30,7 @@ public class ClienteAtualizarView implements IClienteAtualizarView {
         System.out.println("Digite o seu novo nome:");
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
@@ -40,7 +38,7 @@ public class ClienteAtualizarView implements IClienteAtualizarView {
         System.out.println("Digite o seu novo E-mail:");
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
@@ -48,6 +46,6 @@ public class ClienteAtualizarView implements IClienteAtualizarView {
         System.out.println("Digite a sua nova senha:");
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 }

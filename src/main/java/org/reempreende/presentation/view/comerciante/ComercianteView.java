@@ -11,11 +11,10 @@ import java.util.OptionalInt;
 
 public class ComercianteView implements IComercianteView
 {
-    private static final Util u = new Util();
-
     @Override
     public OptionalInt mostrarTela() {
-        u.cls(15);
+        Util.cls(15);
+
         System.out.println(Cores.VERDE + "             ██████╗  ██████╗ ███╗   ███╗███████╗██████╗  ██████╗██╗ █████╗ ███╗   ██╗███████╗███████╗" + Cores.RESET);
         System.out.println(Cores.VERDE + "            ██╔════╝ ██╔═══██╗████╗ ████║██╔════╝██╔══██╗██╔════╝██║██╔══██╗████╗  ██║╚══██╔══╝██╔════╝" + Cores.RESET);
         System.out.println(Cores.VERDE + "            ██║      ██║   ██║██╔████╔██║█████╗  ██████╔╝██║     ██║███████║██╔██╗ ██║   ██║   █████╗ " + Cores.RESET);
@@ -28,7 +27,7 @@ public class ComercianteView implements IComercianteView
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA ^ ") + Cores.RESET);
         System.out.print("➤ ");
 
-        return OptionalInt.of(u.lInt());
+        return OptionalInt.of(Util.lInt());
     }
 
 }

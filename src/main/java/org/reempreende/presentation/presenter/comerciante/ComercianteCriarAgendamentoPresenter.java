@@ -1,21 +1,13 @@
 package org.reempreende.presentation.presenter.comerciante;
 
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
-import org.reempreende.application.dto.request.ServicoRequestDTO;
 import org.reempreende.application.dto.response.ServicoResponseDTO;
 import org.reempreende.application.service.AgendamentoService;
-import org.reempreende.application.service.ServicoService;
-import org.reempreende.domain.entities.Agendamento;
-import org.reempreende.domain.repository.AgendamentoRepository;
-import org.reempreende.infrastructure.repository.AgendamentoRepositoryImpl;
-import org.reempreende.infrastructure.repository.ServicoAgendamentoRepositoryImpl;
 import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteCriarAgendamentoView;
-import org.reempreende.presentation.interfaces.icomerciante.IComercianteServicoView;
 import org.reempreende.presentation.router.AppRouter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ComercianteCriarAgendamentoPresenter {

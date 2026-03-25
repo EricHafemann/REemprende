@@ -6,15 +6,13 @@ import org.reempreende.presentation.view.cadastro.CadastroBaseView;
 
 public class ServicoView extends CadastroBaseView implements IServicoView
 {
-    private final Util u = new Util();
-
     @Override
     public String pedirDescricao()
     {
         System.out.println("Digite a descrição do serviço:");
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
@@ -23,6 +21,6 @@ public class ServicoView extends CadastroBaseView implements IServicoView
         System.out.println("Dgite a duração em horas do serviço:");
         System.out.print("➤ ");
 
-        return u.lDouble();
+        return Util.lDouble();
     }
 }

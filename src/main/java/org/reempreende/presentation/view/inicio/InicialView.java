@@ -10,9 +10,6 @@ import java.util.InputMismatchException;
 import java.util.OptionalInt;
 
 public class InicialView implements IInicialView {
-
-    private static final Util u = new Util();
-
     @Override
     public OptionalInt mostrarTela()
     {
@@ -29,14 +26,14 @@ public class InicialView implements IInicialView {
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA : ") + Cores.RESET);
         System.out.print("➤ ");
 
-        String input = u.lString();
+        String input = Util.lString();
 
         try {
             int opcao = Integer.parseInt(input.trim());
 
             if (opcao == 0) {
                 System.out.print("Tem certeza que deseja sair? (S/N): ");
-                String confirmacao = u.lString();
+                String confirmacao = Util.lString();
                 if (confirmacao.equalsIgnoreCase("S")) {
                     return OptionalInt.of(0);
                 } else {
@@ -47,8 +44,8 @@ public class InicialView implements IInicialView {
             return OptionalInt.of(opcao);
         } catch (NumberFormatException e) {
             System.out.println(Cores.VERMELHO + "Digite apenas números!" + Cores.RESET);
-            u.delay(700);
-            u.cls(4);
+            Util.delay(700);
+            Util.cls(4);
             return OptionalInt.empty();
         }
     }
@@ -64,6 +61,6 @@ public class InicialView implements IInicialView {
         }
         System.out.print("➤ ");
 
-        return u.lInt();
+        return Util.lInt();
     }
 }

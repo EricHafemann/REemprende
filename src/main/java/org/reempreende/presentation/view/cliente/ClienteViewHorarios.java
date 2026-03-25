@@ -8,8 +8,6 @@ import org.reempreende.presentation.interfaces.icliente.IClienteViewHorarios;
 import java.util.OptionalInt;
 
 public class ClienteViewHorarios implements IClienteViewHorarios {
-
-    private Util u = new Util();
     @Override
     public void exibirHorarios(String mensagem, boolean isDisponivel) {
         if (isDisponivel) {
@@ -22,7 +20,7 @@ public class ClienteViewHorarios implements IClienteViewHorarios {
 
     @Override
     public OptionalInt mostrarTela() {
-        u.cls(15);
+        Util.cls(15);
         System.out.println("            ██╗  ██╗ ██████╗ ██████╗  █████╗ ██████╗ ██╗ ██████╗ ███████╗");
         System.out.println("            ██║  ██║██╔═══██╗██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗██╔════╝");
         System.out.println("            ███████║██║   ██║██████╔╝███████║██████╔╝██║██║   ██║███████╗");

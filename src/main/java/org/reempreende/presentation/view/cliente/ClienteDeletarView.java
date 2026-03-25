@@ -6,8 +6,6 @@ import org.reempreende.presentation.interfaces.icliente.IClienteDeletarView;
 import java.util.OptionalInt;
 
 public class ClienteDeletarView implements IClienteDeletarView {
-    private final Util u = new Util();
-
     @Override
     public OptionalInt mostrarTela() {
         System.out.println("            ██████╗ ███████╗██╗     ███████╗ ███████╗ █████╗ ██████╗ ");
@@ -25,6 +23,6 @@ public class ClienteDeletarView implements IClienteDeletarView {
         System.out.println("Digite DELETAR para confirmar a sua ação");
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 }

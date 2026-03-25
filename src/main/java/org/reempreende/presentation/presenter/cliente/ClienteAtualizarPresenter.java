@@ -1,7 +1,6 @@
 package org.reempreende.presentation.presenter.cliente;
 
 import org.reempreende.application.dto.request.UsuarioUpdateDTO;
-import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.service.ClienteService;
 import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.infrastructure.utility.Util;
@@ -11,8 +10,6 @@ import org.reempreende.presentation.router.AppRouter;
 import java.util.OptionalInt;
 
 public class ClienteAtualizarPresenter {
-    private final Util u = new Util();
-
     private final AppRouter appRouter;
     private final Sessao sessao;
     private final IClienteAtualizarView view;
@@ -67,8 +64,8 @@ public class ClienteAtualizarPresenter {
                 }
                 case 0 -> {
                     view.exibirMensagem("Voltando...");
-                    u.cls();
-                    u.delay(1500);
+                    Util.cls();
+                    Util.delay(1500);
                 }
                 default -> {
                     view.exibirErro("Opção inválida! Tente novamente:");

@@ -1,11 +1,9 @@
 package org.reempreende.presentation.presenter.cliente;
 
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
-import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.application.service.AgendamentoService;
-import org.reempreende.infrastructure.sessao.Sessao;
-import org.reempreende.presentation.exception.InvalidFieldException;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewHorarios;
 import org.reempreende.presentation.router.AppRouter;
 
@@ -50,5 +48,7 @@ public class ClienteHorariosPresenter {
         for (AgendamentoResponseDTO agendamento : agendamentos) {
             view.exibirHorarios(agendamento.exibirInfo(), true);
         }
+
+        Util.digiteEnterParaContinuar();
     }
 }

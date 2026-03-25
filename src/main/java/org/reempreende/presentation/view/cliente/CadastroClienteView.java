@@ -7,13 +7,11 @@ import org.reempreende.presentation.view.cadastro.CadastroBaseView;
 import java.util.OptionalInt;
 
 public class CadastroClienteView extends CadastroBaseView implements ICadastroClienteView {
-    private final Util u = new Util();
-
     @Override
     public String pedirCPF() {
         System.out.println("Digite o seu CPF:");
         System.out.print("➤ ");
-        return u.lString();
+        return Util.lString();
     }
 
     @Override

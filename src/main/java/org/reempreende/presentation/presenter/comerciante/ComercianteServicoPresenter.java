@@ -3,7 +3,6 @@ package org.reempreende.presentation.presenter.comerciante;
 import org.reempreende.application.dto.request.ServicoRequestDTO;
 import org.reempreende.application.dto.response.ServicoResponseDTO;
 import org.reempreende.application.service.*;
-import org.reempreende.domain.entities.Servico;
 import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteServicoView;
 import org.reempreende.presentation.router.AppRouter;

@@ -31,8 +31,6 @@ import org.reempreende.presentation.view.cadastro.CadastroBaseView;
 import org.reempreende.presentation.view.login.LoginView;
 
 public class AppRouter {
-    private final Util u = new Util();
-
     private final UsuarioService usuarioService;
     private final ClienteService clienteService;
     private final ComercianteService comercianteService;

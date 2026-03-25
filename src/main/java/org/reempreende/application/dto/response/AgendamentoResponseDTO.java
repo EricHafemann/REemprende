@@ -44,8 +44,6 @@ public class AgendamentoResponseDTO {
     public Long getIdCliente() { return idCliente; }
     public void setIdCliente(Long idCliente) { this.idCliente = idCliente; }
 
-    private static final Util u = new Util();
-
     public String exibirInfo() {
         return
                 "  ──────────────────────────────────  \n" +

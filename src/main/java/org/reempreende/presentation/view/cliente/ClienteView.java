@@ -8,11 +8,10 @@ import org.reempreende.presentation.interfaces.icliente.IClienteView;
 import java.util.OptionalInt;
 
 public class ClienteView implements IClienteView {
-    private Util u = new Util();
-
     @Override
     public OptionalInt mostrarTela() {
-        u.cls(15);
+        Util.cls(15);
+
         System.out.println("            ███████╗ ██╗     ██╗███████╗███╗   ██ ████████╗███████╗");
         System.out.println("            ██╔════╝ ██║     ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝");
         System.out.println("            ██║      ██║     ██║█████╗  ██╔██╗ ██║   ██║   █████╗ ");
@@ -29,6 +28,6 @@ public class ClienteView implements IClienteView {
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA ^ ") + Cores.RESET);
         System.out.print("➤ ");
 
-        return OptionalInt.of(u.lInt());
+        return OptionalInt.of(Util.lInt());
     }
 }

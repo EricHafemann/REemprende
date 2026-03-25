@@ -8,15 +8,12 @@ import org.reempreende.presentation.view.cadastro.CadastroBaseView;
 import java.util.OptionalInt;
 
 public class CadastroComercianteView extends CadastroBaseView implements ICadastroComercianteView {
-    private final Util u = new Util();
-
-
     @Override
     public String pedirCNPJ() {
         System.out.println("Digite o seu CNPJ:");
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
@@ -24,7 +21,7 @@ public class CadastroComercianteView extends CadastroBaseView implements ICadast
         System.out.println("Crie uma senha de Acesso:");
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override

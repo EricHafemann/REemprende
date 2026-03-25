@@ -8,20 +8,18 @@ import org.reempreende.presentation.interfaces.icadastro.ICadastroView;
 import java.util.OptionalInt;
 
 public class CadastroBaseView implements ICadastroView {
-    private final Util u = new Util();
-
     @Override
     public String pedirNome() {
         System.out.println("Digite o seu nome:");
         System.out.print("➤ ");
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
     public String pedirEmail() {
         System.out.println("Digite o seu e-mail:");
         System.out.print("➤ ");
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
@@ -29,7 +27,7 @@ public class CadastroBaseView implements ICadastroView {
         System.out.println("(8 dígitos, com no mínimo uma letra maiúscula, minúscula e carácter especial)");
         System.out.println("Crie uma senha:");
         System.out.print("➤ ");
-        return u.lString();
+        return Util.lString();
     }
 
 
@@ -44,7 +42,7 @@ public class CadastroBaseView implements ICadastroView {
         }
         System.out.print("➤ ");
 
-        return u.lInt();
+        return Util.lInt();
     }
 
     @Override
@@ -65,7 +63,7 @@ public class CadastroBaseView implements ICadastroView {
     @Override
     public void sair(String mensagem) {
         System.out.println("Saindo...");
-        u.delay(2000);
+        Util.delay(2000);
     }
 
     @Override

@@ -7,8 +7,6 @@ import java.time.LocalTime;
 import java.util.OptionalInt;
 
 public class ComercianteCriarAgendamentoView implements IComercianteCriarAgendamentoView {
-    private final Util u = new Util();
-
     @Override
     public OptionalInt mostrarTela() {
         System.out.println("             ██████╗██████╗ ██╗ █████╗ ██████╗       █████╗  ██████╗ ███████╗███╗   ██╗██████╗  █████╗ ███╗   ███╗███████╗███╗   ██╗████████╗ ██████╗ ");
@@ -26,18 +24,18 @@ public class ComercianteCriarAgendamentoView implements IComercianteCriarAgendam
         System.out.println("Digite uma observação para os agendamentos");
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
     public LocalTime askAbreAgendamento() {
         System.out.println("Digite as horas que abre o serviço");
         System.out.print("➤ ");
-        int horas = u.lInt();
+        int horas = Util.lInt();
 
         System.out.println("Digite os minutos que abre o serviço");
         System.out.print("➤ ");
-        int minutos = u.lInt();
+        int minutos = Util.lInt();
 
         return LocalTime.of(horas, minutos);
     }
@@ -46,11 +44,11 @@ public class ComercianteCriarAgendamentoView implements IComercianteCriarAgendam
     public LocalTime askFechaAgendamento() {
         System.out.println("Digite as horas que fecha o serviço");
         System.out.print("➤ ");
-        int horas = u.lInt();
+        int horas = Util.lInt();
 
         System.out.println("Digite os minutos que fecha o serviço");
         System.out.print("➤ ");
-        int minutos = u.lInt();
+        int minutos = Util.lInt();
 
         return LocalTime.of(horas, minutos);
     }

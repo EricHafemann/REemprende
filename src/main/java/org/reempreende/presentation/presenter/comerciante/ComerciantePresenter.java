@@ -1,6 +1,5 @@
 package org.reempreende.presentation.presenter.comerciante;
 
-import org.reempreende.presentation.interfaces.icliente.IClienteView;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteView;
 import org.reempreende.presentation.router.AppRouter;
 

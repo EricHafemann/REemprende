@@ -8,8 +8,6 @@ import org.reempreende.presentation.interfaces.icliente.IClienteDeletarView;
 import org.reempreende.presentation.router.AppRouter;
 
 public class ClienteDeletarPresenter {
-    private final Util u = new Util();
-
     private final AppRouter appRouter;
     private final Sessao sessao;
     private final IClienteDeletarView view;
@@ -35,13 +33,13 @@ public class ClienteDeletarPresenter {
                     view.exibirSucesso("Cliente deletado com sucesso!");
                     view.exibirMensagem("Saindo...");
 
-                    u.delay(1500);
+                    Util.delay(1500);
 
                     appRouter.startSystem();
                 } else if (confirmacao.equalsIgnoreCase("SAIR")) {
                     view.exibirMensagem("Saindo...");
 
-                    u.delay(1500);
+                    Util.delay(1500);
                     return;
                 }
             } while (!confirmacao.equals("DELETAR"));

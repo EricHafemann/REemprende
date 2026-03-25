@@ -8,8 +8,6 @@ import java.util.OptionalInt;
 import java.util.OptionalLong;
 
 public class ClienteViewAgendarDisponivel implements IClienteViewAgendarDisponivel {
-    private Util u = new Util();
-
     @Override
     public void exibirHorariosDisponiveis(String mensagem) {
         System.out.println(mensagem);
@@ -20,7 +18,7 @@ public class ClienteViewAgendarDisponivel implements IClienteViewAgendarDisponiv
         System.out.println("Selecione uma das IDs dos agendamentos acima para agendar: ");
         System.out.print("➤ ");
 
-        return OptionalLong.of(u.lLong());
+        return OptionalLong.of(Util.lLong());
 
     }
 
@@ -29,12 +27,12 @@ public class ClienteViewAgendarDisponivel implements IClienteViewAgendarDisponiv
         System.out.println("Digite o ID do servico: ");
         System.out.print("➤ ");
 
-        return OptionalLong.of(u.lLong());
+        return OptionalLong.of(Util.lLong());
     }
 
     @Override
     public OptionalInt mostrarTela() {
-        u.cls(15);
+        Util.cls(15);
         System.out.println("             █████╗  ██████╗ ███████╗███╗   ██╗██████╗  █████╗ ██████╗ ");
         System.out.println("            ██╔══██╗██╔════╝ ██╔════╝████╗  ██║██╔══██╗██╔══██╗██╔══██╗");
         System.out.println("            ███████║██║  ███╗█████╗  ██╔██╗ ██║██║  ██║███████║██████╔╝");

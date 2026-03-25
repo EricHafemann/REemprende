@@ -7,8 +7,6 @@ import java.time.LocalTime;
 import java.util.OptionalInt;
 
 public class ComercianteServicoView implements IComercianteServicoView {
-    private static final Util u = new Util();
-
     @Override
     public OptionalInt mostrarTela() {
         System.out.println("            ███████╗███████╗██████╗ ██╗   ██╗██╗  ██████╗  ██████╗ ");
@@ -28,7 +26,7 @@ public class ComercianteServicoView implements IComercianteServicoView {
         System.out.println("Digite uma descrição para o serviço");
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
@@ -36,7 +34,7 @@ public class ComercianteServicoView implements IComercianteServicoView {
         System.out.println("Digite a duração de cada agendamento (Em horas)");
         System.out.print("➤ ");
 
-        return u.lLong();
+        return Util.lLong();
     }
 
 }

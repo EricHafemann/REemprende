@@ -6,7 +6,6 @@ import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.router.AppRouter;
 
 public class ClienteCadastroPresenter {
-
     private final ICadastroClienteView cadastroView;
     private final ClienteService clienteService;
     private final AppRouter appRouter;

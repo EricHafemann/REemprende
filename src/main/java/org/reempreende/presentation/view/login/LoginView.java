@@ -7,14 +7,12 @@ import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import java.util.OptionalInt;
 
 public class LoginView implements ILoginUsuario {
-    private Util u = new Util();
-
     @Override
     public String askSenha() {
         System.out.println(TextoUtil.transformar("Digite a sua senha:"));
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
@@ -22,7 +20,7 @@ public class LoginView implements ILoginUsuario {
         System.out.println(TextoUtil.transformar("Digite o seu email:"));
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override
@@ -30,7 +28,7 @@ public class LoginView implements ILoginUsuario {
         System.out.println(TextoUtil.transformar("Digite a sua senha de Acesso:"));
         System.out.print("➤ ");
 
-        return u.lString();
+        return Util.lString();
     }
 
     @Override

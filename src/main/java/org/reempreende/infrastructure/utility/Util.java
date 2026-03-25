@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public class Util {
 
-    private Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
 
-    public String lString ()
+    public static String lString ()
     {
         return  sc.nextLine();
     }
 
-    public double lDouble ()
+    public static double lDouble ()
     {
         try
         {
@@ -29,7 +29,7 @@ public class Util {
         return 0;
     }
 
-    public int lInt ()
+    public static int lInt ()
     {
         try
         {
@@ -46,7 +46,7 @@ public class Util {
         return 0;
     }
 
-    public long lLong() {
+    public static long lLong() {
         try
         {
             long num = sc.nextLong();
@@ -62,7 +62,7 @@ public class Util {
         return 0L;
     }
 
-    public void delay (int time)
+    public static void delay (int time)
     {
         try
         {
@@ -73,21 +73,29 @@ public class Util {
         }
     }
 
-    public void cls (int quantityLines)
+    public static void cls (int quantityLines)
     {
         for (int i = 0; i < quantityLines; i++) {
             System.out.println();
         }
     }
 
-    public void cls ()
+    public static void cls ()
     {
         for (int i = 0; i < 30; i++) {
             System.out.println();
         }
     }
 
-    public void next() {
+    public static void next() {
+        sc.nextLine();
+    }
+
+    public static void digiteEnterParaContinuar() {
+        System.out.println("Digite enter para continuar: ");
+        System.out.print("➤ ");
+
+        Scanner sc = new Scanner(System.in);
         sc.nextLine();
     }
 
