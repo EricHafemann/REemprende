@@ -1,6 +1,6 @@
 package org.reempreende.presentation.interfaces.icomerciante;
 
-import org.reempreende.presentation.interfaces.InterfaceView;
+import org.reempreende.presentation.interfaces.interfaceBase.InterfaceView;
 
 import java.time.LocalTime;
 

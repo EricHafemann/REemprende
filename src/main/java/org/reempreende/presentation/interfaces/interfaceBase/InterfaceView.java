@@ -1,4 +1,4 @@
-package org.reempreende.presentation.interfaces;
+package org.reempreende.presentation.interfaces.interfaceBase;
 
 import org.reempreende.infrastructure.utility.Cores;
 import org.reempreende.infrastructure.utility.TextoUtil;

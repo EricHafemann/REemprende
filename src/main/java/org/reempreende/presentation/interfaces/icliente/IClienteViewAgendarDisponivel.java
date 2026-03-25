@@ -1,8 +1,7 @@
 package org.reempreende.presentation.interfaces.icliente;
 
-import org.reempreende.presentation.interfaces.InterfaceView;
+import org.reempreende.presentation.interfaces.interfaceBase.InterfaceView;
 
-import java.util.OptionalInt;
 import java.util.OptionalLong;
 
 public interface IClienteViewAgendarDisponivel extends InterfaceView {

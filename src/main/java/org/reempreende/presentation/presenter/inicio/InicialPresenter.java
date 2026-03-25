@@ -1,4 +1,4 @@
-package org.reempreende.presentation.presenter;
+package org.reempreende.presentation.presenter.inicio;
 
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;

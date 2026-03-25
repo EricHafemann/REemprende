@@ -1,4 +1,4 @@
-package org.reempreende.presentation.presenter;
+package org.reempreende.presentation.presenter.inicio.cadastro;
 
 import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.UsuarioService;

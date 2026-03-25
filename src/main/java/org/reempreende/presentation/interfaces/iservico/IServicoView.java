@@ -1,6 +1,6 @@
 package org.reempreende.presentation.interfaces.iservico;
 
-import org.reempreende.presentation.interfaces.InterfaceView;
+import org.reempreende.presentation.interfaces.interfaceBase.InterfaceView;
 
 public interface IServicoView extends InterfaceView
 {

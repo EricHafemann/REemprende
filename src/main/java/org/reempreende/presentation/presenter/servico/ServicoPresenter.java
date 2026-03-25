@@ -1,4 +1,4 @@
-package org.reempreende.presentation.presenter;
+package org.reempreende.presentation.presenter.servico;
 
 import org.reempreende.application.dto.mapper.UsuarioMapper;
 import org.reempreende.application.dto.request.ServicoRequestDTO;

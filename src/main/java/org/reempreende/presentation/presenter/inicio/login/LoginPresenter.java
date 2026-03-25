@@ -1,11 +1,10 @@
-package org.reempreende.presentation.presenter;
+package org.reempreende.presentation.presenter.inicio.login;
 
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.service.ComercianteService;
 import org.reempreende.application.service.UsuarioService;
 import org.reempreende.infrastructure.sessao.Sessao;
 import org.reempreende.presentation.exception.InvalidFieldException;
-import org.reempreende.presentation.interfaces.icliente.IClienteView;
 import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import org.reempreende.presentation.router.AppRouter;
 

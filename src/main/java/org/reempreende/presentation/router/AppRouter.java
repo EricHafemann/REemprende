@@ -1,7 +1,5 @@
 package org.reempreende.presentation.router;
 
-import org.reempreende.application.dto.request.AgendamentoRequestDTO;
-import org.reempreende.application.dto.request.ServicoRequestDTO;
 import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.dto.response.ServicoResponseDTO;
 import org.reempreende.application.service.*;
@@ -15,12 +13,14 @@ import org.reempreende.presentation.interfaces.icomerciante.IComercianteServicoV
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteView;
 import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
-import org.reempreende.presentation.presenter.*;
 import org.reempreende.presentation.presenter.cliente.*;
 import org.reempreende.presentation.presenter.comerciante.ComercianteCadastroPresenter;
 import org.reempreende.presentation.presenter.comerciante.ComercianteCriarAgendamentoPresenter;
 import org.reempreende.presentation.presenter.comerciante.ComerciantePresenter;
 import org.reempreende.presentation.presenter.comerciante.ComercianteServicoPresenter;
+import org.reempreende.presentation.presenter.inicio.InicialPresenter;
+import org.reempreende.presentation.presenter.inicio.cadastro.CadastrarUsuarioPresenter;
+import org.reempreende.presentation.presenter.inicio.login.LoginPresenter;
 import org.reempreende.presentation.view.cliente.*;
 import org.reempreende.presentation.view.comerciante.CadastroComercianteView;
 import org.reempreende.presentation.view.comerciante.ComercianteCriarAgendamentoView;
