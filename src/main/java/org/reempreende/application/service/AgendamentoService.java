@@ -7,6 +7,7 @@ import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Agendamento;
+import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.entities.ServicoAgendamento;
 import org.reempreende.domain.repository.AgendamentoRepository;
 import org.reempreende.domain.repository.ServicoAgendamentoRepository;
@@ -150,18 +151,31 @@ public class AgendamentoService
         return agendamentoRepository.isAvailable(startTime, endTime);
     }
 
-   public AgendamentoResponseDTO update(Long id, AgendamentoRequestDTO dto)
-   {
-       Optional<Agendamento> agendamentoCaixa = agendamentoRepository.findById(id);
-       Agendamento agendamento = agendamentoCaixa.orElse(null);
+    public AgendamentoResponseDTO update(Long id, AgendamentoRequestDTO dto) {
+        Optional<Agendamento> agendamentoCaixa = agendamentoRepository.findById(id);
+        Agendamento agendamento = agendamentoCaixa.orElseThrow(() -> new BusinessException("Agendamento não encontrado"));
 
-       AgendamentoMapper.updateEntityFromDTO(dto,agendamento,agendamento.getCliente());
+        agendamento.setDataInicio(dto.getDataInicio());
+        agendamento.setDataFim(dto.getDataFim());
+        agendamento.setObservacao(dto.getObservacao());
 
-       agendamentoRepository.update(agendamento);
+        if (dto.getIdCliente() != null && dto.getIdCliente() > 0) {
+            Cliente cliente = new Cliente(
+                    dto.getIdCliente(),
+                    "",
+                    "",
+                    "",
+                    null,
+                    null,
+                    ""
+            );
+            agendamento.setCliente(cliente);
+        }
 
-       return AgendamentoMapper.toResponseDTO(agendamento);
-   }
+        agendamentoRepository.update(agendamento);
 
+        return AgendamentoMapper.toResponseDTO(agendamento);
+    }
    public void delete(long id)
    {
        if(agendamentoRepository.findById(id).isEmpty())

@@ -61,28 +61,33 @@ public class ClienteAgendarPresenter {
         try {
             servicoService.findById(idServico);
 
-            List<AgendamentoResponseDTO> agendamentos =  agendamentoService.findAgendamentosByServicoId(idServico);
+            List<AgendamentoResponseDTO> agendamentos = agendamentoService.findAgendamentosByServicoId(idServico);
 
             for (AgendamentoResponseDTO agendamento : agendamentos) {
                 view.exibirMensagem(agendamento.exibirInfo());
             }
 
             OptionalLong agendamentoCaixa = view.exibirMensagemTela();
-            Long idAgendamento = agendamentoCaixa.orElse(-1);
+            Long idAgendamento = agendamentoCaixa.orElse(-1L);
+
+            if (idAgendamento == -1L) {
+                view.exibirErro("ID inválido!");
+                return;
+            }
 
             AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(idAgendamento);
 
-            if (agendamentoResponseDTO.getIdCliente() == null || idAgendamento != -1L) {
-                agendamentoResponseDTO.setIdCliente(this.sessao.getUsuarioLogado().getId());
-
-                agendamentoService.update(idAgendamento,
-                        AgendamentoMapper.toRequestDTO(agendamentoResponseDTO));
-            } else {
-                view.exibirErro("Agendamento já possui Cliente!");
+            if (agendamentoResponseDTO.getIdCliente() != null && agendamentoResponseDTO.getIdCliente() > 0) {
+                view.exibirErro("Este horário já está agendado!");
+                return;
             }
+
+            agendamentoResponseDTO.setIdCliente(this.sessao.getUsuarioLogado().getId());
+            agendamentoService.update(idAgendamento, AgendamentoMapper.toRequestDTO(agendamentoResponseDTO));
+            view.exibirSucesso("Agendamento realizado com sucesso!");
+
         } catch (Exception e) {
             view.exibirErro(e.getMessage());
         }
     }
-
 }

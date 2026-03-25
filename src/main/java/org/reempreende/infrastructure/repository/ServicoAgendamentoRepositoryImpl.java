@@ -121,7 +121,8 @@ public class ServicoAgendamentoRepositoryImpl implements ServicoAgendamentoRepos
     @Override
     public List<Agendamento> findAgendamentosByServicoId(long idServico) {
         List<Agendamento> agendamentos = new ArrayList<>();
-        String sql = "SELECT a.* FROM Servicos_Agendamentos sa " +
+        String sql = "SELECT a.idAgendamento, a.dataInicio, a.dataFim, a.observacao, a.idCliente " +
+                "FROM Servicos_Agendamentos sa " +
                 "INNER JOIN Agendamentos a ON sa.idAgendamento = a.idAgendamento " +
                 "WHERE sa.idServico = ?";
 
@@ -137,14 +138,14 @@ public class ServicoAgendamentoRepositoryImpl implements ServicoAgendamentoRepos
                             rs.getTimestamp("dataInicio").toLocalDateTime(),
                             rs.getTimestamp("dataFim").toLocalDateTime(),
                             rs.getString("observacao"),
-                            null // Cliente será preenchido depois se necessário
+                            null
                     );
                     agendamentos.add(agendamento);
                 }
             }
 
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao buscar agendamentos do serviço");
+            throw new RepositoryException("Erro ao buscar agendamentos do serviço: " + e.getMessage());
         }
 
         return agendamentos;

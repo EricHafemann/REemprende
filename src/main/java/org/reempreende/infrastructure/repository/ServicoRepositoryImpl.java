@@ -37,20 +37,21 @@ public class ServicoRepositoryImpl implements ServicoRepository {
 
             return servico;
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao inserir serviço");
+            throw new RepositoryException("Erro ao inserir serviço: " + e.getMessage());
         }
     }
 
     @Override
     public Optional<Servico> findById(long id) {
-        String sql = "SELECT s.*, u.*, c.* " +
+        String sql = "SELECT s.idServico, s.avaliacao, s.descricao, s.duracaoHoras, s.idComerciante, " +
+                "u.id, u.email, u.senha, u.nome, u.status, u.tipoUsuario, " +
+                "c.cnpj, c.senhaAcesso " +
                 "FROM Servicos s " +
                 "INNER JOIN Comerciantes c ON s.idComerciante = c.idComerciante " +
                 "INNER JOIN Usuarios u ON c.idComerciante = u.id " +
                 "WHERE s.idServico = ?";
 
-        try (PreparedStatement stmt = ConnectionFactory.getConnection()
-                .prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -59,7 +60,7 @@ public class ServicoRepositoryImpl implements ServicoRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao buscar serviço");
+            throw new RepositoryException("Erro ao buscar serviço por ID: " + e.getMessage());
         }
         return Optional.empty();
     }
@@ -67,7 +68,9 @@ public class ServicoRepositoryImpl implements ServicoRepository {
     @Override
     public List<Servico> findAll() {
         List<Servico> servicos = new ArrayList<>();
-        String sql = "SELECT s.*, u.*, c.* " +
+        String sql = "SELECT s.idServico, s.avaliacao, s.descricao, s.duracaoHoras, s.idComerciante, " +
+                "u.id, u.email, u.senha, u.nome, u.status, u.tipoUsuario, " +
+                "c.cnpj, c.senhaAcesso " +
                 "FROM Servicos s " +
                 "INNER JOIN Comerciantes c ON s.idComerciante = c.idComerciante " +
                 "INNER JOIN Usuarios u ON c.idComerciante = u.id " +
@@ -80,7 +83,7 @@ public class ServicoRepositoryImpl implements ServicoRepository {
                 servicos.add(mapResultSetToServico(rs));
             }
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao buscar serviços");
+            throw new RepositoryException("Erro ao buscar todos os serviços: " + e.getMessage());
         }
         return servicos;
     }
@@ -90,8 +93,7 @@ public class ServicoRepositoryImpl implements ServicoRepository {
         String sql = "UPDATE Servicos SET avaliacao = ?, descricao = ?, duracaoHoras = ?, idComerciante = ? " +
                 "WHERE idServico = ?";
 
-        try (PreparedStatement stmt = ConnectionFactory.getConnection()
-                .prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setString(1, servico.getAvaliacao());
             stmt.setString(2, servico.getDescricao());
             stmt.setDouble(3, servico.getDuracaoHoras());
@@ -100,7 +102,7 @@ public class ServicoRepositoryImpl implements ServicoRepository {
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao atualizar serviço");
+            throw new RepositoryException("Erro ao atualizar serviço: " + e.getMessage());
         }
     }
 
@@ -108,27 +110,27 @@ public class ServicoRepositoryImpl implements ServicoRepository {
     public boolean delete(long id) {
         String sql = "DELETE FROM Servicos WHERE idServico = ?";
 
-        try (PreparedStatement stmt = ConnectionFactory.getConnection()
-                .prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, id);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao deletar serviço");
+            throw new RepositoryException("Erro ao deletar serviço: " + e.getMessage());
         }
     }
 
     @Override
     public List<Servico> findByComercianteId(long comercianteId) {
         List<Servico> servicos = new ArrayList<>();
-        String sql = "SELECT s.*, u.*, c.* " +
+        String sql = "SELECT s.idServico, s.avaliacao, s.descricao, s.duracaoHoras, s.idComerciante, " +
+                "u.id, u.email, u.senha, u.nome, u.status, u.tipoUsuario, " +
+                "c.cnpj, c.senhaAcesso " +
                 "FROM Servicos s " +
                 "INNER JOIN Comerciantes c ON s.idComerciante = c.idComerciante " +
                 "INNER JOIN Usuarios u ON c.idComerciante = u.id " +
                 "WHERE s.idComerciante = ? " +
                 "ORDER BY s.idServico";
 
-        try (PreparedStatement stmt = ConnectionFactory.getConnection()
-                .prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, comercianteId);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -137,7 +139,7 @@ public class ServicoRepositoryImpl implements ServicoRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao buscar serviços do comerciante");
+            throw new RepositoryException("Erro ao buscar serviços do comerciante: " + e.getMessage());
         }
         return servicos;
     }
@@ -146,14 +148,13 @@ public class ServicoRepositoryImpl implements ServicoRepository {
     public long count() {
         String sql = "SELECT COUNT(*) FROM Servicos";
 
-        try (Statement stmt = ConnectionFactory.getConnection()
-                .createStatement();
+        try (Statement stmt = ConnectionFactory.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             if (rs.next()) {
                 return rs.getLong(1);
             }
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao contar serviços");
+            throw new RepositoryException("Erro ao contar serviços: " + e.getMessage());
         }
         return 0;
     }
@@ -162,8 +163,7 @@ public class ServicoRepositoryImpl implements ServicoRepository {
     public long countByComercianteId(long comercianteId) {
         String sql = "SELECT COUNT(*) FROM Servicos WHERE idComerciante = ?";
 
-        try (PreparedStatement stmt = ConnectionFactory.getConnection()
-                .prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, comercianteId);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -172,7 +172,7 @@ public class ServicoRepositoryImpl implements ServicoRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao contar serviços do comerciante");
+            throw new RepositoryException("Erro ao contar serviços do comerciante: " + e.getMessage());
         }
         return 0;
     }
@@ -181,34 +181,41 @@ public class ServicoRepositoryImpl implements ServicoRepository {
     public boolean existsById(long id) {
         String sql = "SELECT 1 FROM Servicos WHERE idServico = ?";
 
-        try (PreparedStatement stmt = ConnectionFactory.getConnection()
-                .prepareStatement(sql)) {
+        try (PreparedStatement stmt = ConnectionFactory.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next();
             }
         } catch (SQLException e) {
-            throw new RepositoryException("Erro ao verificar existência do serviço");
+            throw new RepositoryException("Erro ao verificar existência do serviço: " + e.getMessage());
         }
     }
 
     private Servico mapResultSetToServico(ResultSet rs) throws SQLException {
-        Comerciante comerciante = new Comerciante(
-                rs.getLong("idComerciante"),
-                rs.getString("email"),
-                rs.getString("senha"),
-                rs.getString("nome"),
-                Status.fromCodigo(rs.getInt("status")),
-                TipoUsuario.fromCodigo(rs.getInt("tipoUsuario")),
-                rs.getString("cnpj"),
-                rs.getString("senhaAcesso")
-        );
+        Comerciante comerciante = null;
+
+        long idComerciante = rs.getLong("idComerciante");
+        if (!rs.wasNull()) {
+            int statusCodigo = rs.getInt("status");
+            int tipoUsuarioCodigo = rs.getInt("tipoUsuario");
+
+            comerciante = new Comerciante(
+                    idComerciante,
+                    rs.getString("email") != null ? rs.getString("email") : "",
+                    rs.getString("senha") != null ? rs.getString("senha") : "",
+                    rs.getString("nome") != null ? rs.getString("nome") : "",
+                    Status.fromCodigo(statusCodigo),
+                    TipoUsuario.fromCodigo(tipoUsuarioCodigo),
+                    rs.getString("cnpj") != null ? rs.getString("cnpj") : "",
+                    rs.getString("senhaAcesso") != null ? rs.getString("senhaAcesso") : ""
+            );
+        }
 
         return new Servico(
                 rs.getLong("idServico"),
-                rs.getString("avaliacao"),
-                rs.getString("descricao"),
+                rs.getString("avaliacao") != null ? rs.getString("avaliacao") : "",
+                rs.getString("descricao") != null ? rs.getString("descricao") : "",
                 rs.getDouble("duracaoHoras"),
                 comerciante
         );
