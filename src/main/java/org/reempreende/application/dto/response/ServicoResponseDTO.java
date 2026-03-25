@@ -75,7 +75,6 @@ public class ServicoResponseDTO {
                         "  ➜ Avaliação     : " + avaliacao + "\n" +
                         "  ➜ Descrição     : " + descricao + "\n" +
                         "  ➜ Duração       : " + duracaoHoras + "\n" +
-                        "  ➜ IdComerciante : " + idComerciante + "\n" +
                         "  ──────────────────────────────────\n";
     }
 }

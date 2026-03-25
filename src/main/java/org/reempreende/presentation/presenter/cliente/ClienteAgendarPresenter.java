@@ -3,10 +3,15 @@ package org.reempreende.presentation.presenter.cliente;
 import org.reempreende.application.dto.mapper.AgendamentoMapper;
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
+import org.reempreende.application.dto.response.ServicoResponseDTO;
+import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.application.service.ClienteService;
+import org.reempreende.application.service.ServicoService;
 import org.reempreende.domain.entities.Agendamento;
+import org.reempreende.domain.entities.Cliente;
+import org.reempreende.domain.entities.Servico;
 import org.reempreende.domain.repository.AgendamentoRepository;
 import org.reempreende.domain.repository.ServicoAgendamentoRepository;
 import org.reempreende.domain.repository.ServicoRepository;
@@ -22,68 +27,62 @@ import org.reempreende.presentation.view.cliente.ClienteViewHorarios;
 
 import java.util.List;
 import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 public class ClienteAgendarPresenter {
-    private AppRouter appRouter;
     private IClienteViewAgendarDisponivel view;
+    private ServicoService servicoService;
     private AgendamentoService agendamentoService;
-    private ClienteHorariosPresenter clienteHorariosPresenter;
     private Sessao sessao;
+    private ClienteService clienteService;
 
-    public ClienteAgendarPresenter(AppRouter appRouter, IClienteViewAgendarDisponivel view, AgendamentoService agendamentoService,
-                                   Sessao sessao, ClienteHorariosPresenter clienteHorariosPresenter) {
-        this.appRouter = appRouter;
+    public ClienteAgendarPresenter(IClienteViewAgendarDisponivel view,
+                                   ServicoService servicoService, AgendamentoService agendamentoService,
+                                   Sessao sessao) {
         this.view = view;
+        this.servicoService = servicoService;
         this.agendamentoService = agendamentoService;
         this.sessao = sessao;
-        this.clienteHorariosPresenter = clienteHorariosPresenter;
+        this.clienteService = clienteService;
     }
 
     public void schedule() {
-        clienteHorariosPresenter.showHorarios();
+        view.mostrarTela();
 
-        // Verifica se existem horários disponíveis ANTES de pedir o ID
-        List<AgendamentoResponseDTO> horarios = null;
-        try {
-            horarios = agendamentoService.findAvailable();
-        } catch (BusinessException e) {
-            view.exibirErro(e.getMessage());
-            return;
+        List<ServicoResponseDTO> servicos = servicoService.findAll();
+
+        for (ServicoResponseDTO servico : servicos) {
+            view.exibirMensagem(servico.exibirInfo());
         }
 
-        if (horarios.isEmpty()) {
-            view.exibirErro("Não há horários disponíveis no momento.");
-            return;
-        }
-
-        OptionalInt idCaixa = view.mostrarTela();
-
-        long id = idCaixa.orElse(-1);
+        OptionalLong opcaoCaixa = view.askServico();
+        Long idServico = opcaoCaixa.orElse(-1L);
 
         try {
-            AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(id);
+            servicoService.findById(idServico);
 
-            agendamentoResponseDTO.setIdCliente(sessao.getUsuarioLogado().getId());
-            if (agendamentoResponseDTO.getIdCliente() != null) {
-                agendamentoService.update(agendamentoResponseDTO.getIdAgendamento(),
+            List<AgendamentoResponseDTO> agendamentos =  agendamentoService.findAgendamentosByServicoId(idServico);
+
+            for (AgendamentoResponseDTO agendamento : agendamentos) {
+                view.exibirMensagem(agendamento.exibirInfo());
+            }
+
+            OptionalLong agendamentoCaixa = view.exibirMensagemTela();
+            Long idAgendamento = agendamentoCaixa.orElse(-1);
+
+            AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(idAgendamento);
+
+            if (agendamentoResponseDTO.getIdCliente() == null || idAgendamento != -1L) {
+                agendamentoResponseDTO.setIdCliente(this.sessao.getUsuarioLogado().getId());
+
+                agendamentoService.update(idAgendamento,
                         AgendamentoMapper.toRequestDTO(agendamentoResponseDTO));
-                view.exibirSucesso("Agendamento registrado com sucesso!");
+            } else {
+                view.exibirErro("Agendamento já possui Cliente!");
             }
         } catch (Exception e) {
-            System.out.println(Cores.VERMELHO + e.getMessage() + Cores.RESET);
+            view.exibirErro(e.getMessage());
         }
-    }
-
-    public static void main(String[] args) {
-         IClienteViewHorarios view = new ClienteViewHorarios();
-
-        AgendamentoRepository agendamentoRepository = new AgendamentoRepositoryImpl();
-        ServicoAgendamentoRepository servicoRepository = new ServicoAgendamentoRepositoryImpl();
-
-        AgendamentoService agendamentoService = new AgendamentoService(agendamentoRepository, servicoRepository);
-        ClienteHorariosPresenter clienteHorariosPresenter1 = new ClienteHorariosPresenter(view, agendamentoService);
-
-
     }
 
 }

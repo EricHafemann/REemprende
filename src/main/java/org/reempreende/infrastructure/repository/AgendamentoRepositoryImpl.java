@@ -63,8 +63,8 @@ public class AgendamentoRepositoryImpl implements AgendamentoRepository {
     public Optional<Agendamento> findById(long id) {
         String sql = "SELECT a.*, u.*, c.* " +
                 "FROM Agendamentos a " +
-                "INNER JOIN Clientes c ON a.idCliente = c.idCliente " +
-                "INNER JOIN Usuarios u ON c.idCliente = u.id " +
+                "LEFT JOIN Clientes c ON a.idCliente = c.idCliente " +
+                "LEFT JOIN Usuarios u ON c.idCliente = u.id " +
                 "WHERE a.idAgendamento = ?";
 
         try (PreparedStatement stmt = ConnectionFactory.getConnection()

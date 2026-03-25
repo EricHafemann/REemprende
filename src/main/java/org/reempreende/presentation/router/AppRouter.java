@@ -110,8 +110,8 @@ public class AppRouter {
 
         ClienteHorariosPresenter clienteHorariosPresenter = new ClienteHorariosPresenter(this, clienteViewHorarios, agendamentoService);
 
-        ClienteAgendarPresenter clienteAgendarPresenter = new ClienteAgendarPresenter(this, agendarDisponivelView, agendamentoService,
-                this.sessao, clienteHorariosPresenter);
+        ClienteAgendarPresenter clienteAgendarPresenter = new ClienteAgendarPresenter(
+                agendarDisponivelView, servicoService, agendamentoService, this.sessao);
 
         clienteAgendarPresenter.schedule();
     }
@@ -119,7 +119,8 @@ public class AppRouter {
     public void clientViewHistory() {
         IClienteViewHistorico viewHistorico = new ClienteViewHistorico();
 
-        ClienteHistoricoPresenter clienteHistoricoPresenter = new ClienteHistoricoPresenter(this, viewHistorico, agendamentoService, this.sessao);
+        ClienteHistoricoPresenter clienteHistoricoPresenter = new ClienteHistoricoPresenter(this,
+                viewHistorico, agendamentoService, this.sessao);
 
         clienteHistoricoPresenter.showHistory();
     }

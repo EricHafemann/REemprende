@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -68,8 +69,9 @@ public class AgendamentoService
 
    public AgendamentoResponseDTO findById(long id)
    {
-       Agendamento agendamento = agendamentoRepository.findById(id)
-               .orElseThrow(() -> new BusinessException("Agendamento não encontrado"));
+       Optional<Agendamento> agendamentoCaixa = agendamentoRepository.findById(id);
+       Agendamento agendamento = agendamentoCaixa.orElse(null);
+
        return AgendamentoMapper.toResponseDTO(agendamento);
    }
 
@@ -150,14 +152,14 @@ public class AgendamentoService
 
    public AgendamentoResponseDTO update(Long id, AgendamentoRequestDTO dto)
    {
-        Agendamento agendamento = agendamentoRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Agendamento não encontrado"));
+       Optional<Agendamento> agendamentoCaixa = agendamentoRepository.findById(id);
+       Agendamento agendamento = agendamentoCaixa.orElse(null);
 
-        AgendamentoMapper.updateEntityFromDTO(dto,agendamento,agendamento.getCliente());
+       AgendamentoMapper.updateEntityFromDTO(dto,agendamento,agendamento.getCliente());
 
-        agendamentoRepository.update(agendamento);
+       agendamentoRepository.update(agendamento);
 
-        return AgendamentoMapper.toResponseDTO(agendamento);
+       return AgendamentoMapper.toResponseDTO(agendamento);
    }
 
    public void delete(long id)
