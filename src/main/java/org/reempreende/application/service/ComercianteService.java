@@ -1,5 +1,7 @@
 package org.reempreende.application.service;
 
+import org.reempreende.application.dto.request.UsuarioUpdateDTO;
+import org.reempreende.domain.entities.Cliente;
 import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.domain.repository.ComercianteRepository;
 import org.reempreende.domain.entities.Usuario;
@@ -56,36 +58,64 @@ public class ComercianteService {
         return UsuarioMapper.toResponseDTO(comerciante);
     }
 
-    public UsuarioResponseDTO update(Long id, UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO update(Long id, UsuarioUpdateDTO dto) {
         Comerciante comerciante = comercianteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Comerciante não encontrado"));
 
-        if (!comerciante.getEmail().equals(dto.getEmail())) {
-            if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
-                throw new BusinessException("Email já cadastrado para outro usuário");
+        if (dto.getNome() != null && !dto.getNome().isEmpty()) {
+            if (dto.getNome().length() < 2 || dto.getNome().length() > 100) {
+                throw new BusinessException("Nome deve ter entre 2 e 100 caracteres");
             }
+            comerciante.setNome(dto.getNome());
         }
 
-        if (!comerciante.getCnpj().equals(dto.getCnpj())) {
-            if (comercianteRepository.existsByCnpj(dto.getCnpj())) {
-                throw new BusinessException("CNPJ já cadastrado para outro comerciante");
+        if (dto.getEmail() != null && !dto.getEmail().isEmpty()) {
+            if (!isValidEmail(dto.getEmail())) {
+                throw new BusinessException("Formato de e-mail inválido");
             }
+
+            if (dto.getEmail().length() > 254) {
+                throw new BusinessException("E-mail muito longo (máximo 254 caracteres)");
+            }
+
+            if (dto.getEmail().equals(comerciante.getEmail())) {
+                throw new BusinessException("Troque por um E-mail diferente do atual");
+            }
+
+            if (!comerciante.getEmail().equals(dto.getEmail())) {
+                if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
+                    throw new BusinessException("Email já cadastrado para outro usuário");
+                }
+            }
+            comerciante.setEmail(dto.getEmail());
         }
 
-        comerciante.setEmail(dto.getEmail());
-        comerciante.setNome(dto.getNome());
         if (dto.getSenha() != null && !dto.getSenha().isEmpty()) {
+            if (dto.getSenha().length() < 8) {
+                throw new BusinessException("Senha deve ter no mínimo 8 caracteres");
+            }
+
+            String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d]).+$";
+            if (!dto.getSenha().matches(regex)) {
+                throw new BusinessException("Senha inválida! Deve conter letra maiúscula, minúscula, número e caractere especial");
+            }
+
             comerciante.setSenha(dto.getSenha());
-        }
-        comerciante.setCnpj(dto.getCnpj());
-        if (dto.getSenhaAcesso() != null && !dto.getSenhaAcesso().isEmpty()) {
-            comerciante.setSenhaAcesso(dto.getSenhaAcesso());
         }
 
         usuarioRepository.update(comerciante);
         comercianteRepository.update(comerciante);
 
         return UsuarioMapper.toResponseDTO(comerciante);
+    }
+
+    private boolean isValidEmail(String email) {
+        if (email == null || email.isBlank()) {
+            return false;
+        }
+
+        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(regex);
     }
 
     public void delete(Long id) {
