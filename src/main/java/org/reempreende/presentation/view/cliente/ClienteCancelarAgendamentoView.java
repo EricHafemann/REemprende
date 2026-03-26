@@ -1,0 +1,33 @@
+package org.reempreende.presentation.view.cliente;
+
+import org.reempreende.infrastructure.utility.Util;
+import org.reempreende.presentation.interfaces.icliente.IClienteCancelarAgendamentoView;
+
+import java.util.OptionalInt;
+
+public class ClienteCancelarAgendamentoView implements IClienteCancelarAgendamentoView {
+    @Override
+    public OptionalInt mostrarTela() {
+        System.out.println(" ██████╗  █████╗  ███╗   ██╗  ██████╗ ███████╗ ██╗      █████╗  ██████╗ \n" +
+                "           ██╔════╝ ██╔══██╗ ████╗  ██║ ██╔════╝ ██╔════╝ ██║     ██╔══██╗ ██╔══██╗\n" +
+                "           ██║      ███████║ ██╔██╗ ██║ ██║      █████╗   ██║     ███████║ ██████╔╝\n" +
+                "           ██║      ██╔══██║ ██║╚██╗██║ ██║      ██╔══╝   ██║     ██╔══██║ ██╔══██╗\n" +
+                "           ╚██████╗ ██║  ██║ ██║ ╚████║ ╚██████╗ ███████╗ ███████╗██║  ██║ ██║  ██║\n" +
+                "            ╚═════╝ ╚═╝  ╚═╝ ╚═╝  ╚═══╝  ╚═════╝ ╚══════╝ ╚══════╝╚═╝  ╚═╝ ╚═╝  ╚═╝");
+
+        return OptionalInt.empty();
+    }
+
+    @Override
+    public void exibirHorarioCliente(String mensagem) {
+        System.out.println(mensagem);
+    }
+
+    @Override
+    public long askHorarioId() {
+        System.out.println("Digite um dos IDs dos agendamentos acima para cancelar");
+        System.out.print("➤ ");
+
+        return Util.lLong();
+    }
+}
