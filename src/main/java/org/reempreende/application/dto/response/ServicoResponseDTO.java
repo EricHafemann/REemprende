@@ -72,9 +72,9 @@ public class ServicoResponseDTO {
         return
                 "  ──────────────────────────────────  \n" +
                         "  ➜ ID            : " + idServico + "\n" +
-                        "  ➜ Avaliação     : " + avaliacao + "\n" +
+                        "  ➜ Avaliação    : " + avaliacao + "\n" +
                         "  ➜ Descrição     : " + descricao + "\n" +
-                        "  ➜ Duração       : " + duracaoHoras + "\n" +
+                        "  ➜ Duração      : " + duracaoHoras + "\n" +
                         "  ──────────────────────────────────\n";
     }
 }

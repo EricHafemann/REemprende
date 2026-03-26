@@ -49,7 +49,7 @@ public class AgendamentoResponseDTO {
                 "  ──────────────────────────────────  \n" +
                 "  ➜ ID        : " + idAgendamento + "\n" +
                 "  ➜ Início    : " + dataInicio + "\n" +
-                "  ➜ Fim       : " + dataFim + "\n" +
+                "  ➜ Fim      : " + dataFim + "\n" +
                 "  ➜ Obs       : " + observacao + "\n" +
                 "  ──────────────────────────────────\n";
     }
