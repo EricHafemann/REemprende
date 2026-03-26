@@ -10,7 +10,6 @@ import org.reempreende.domain.entities.Usuario;
 import org.reempreende.domain.repository.ComercianteRepository;
 import org.reempreende.domain.repository.ServicoAgendamentoRepository;
 import org.reempreende.domain.repository.ServicoRepository;
-import org.reempreende.domain.repository.UsuarioRepository;
 import org.reempreende.presentation.exception.InvalidFieldException;
 
 import java.util.List;
@@ -48,9 +47,6 @@ public class ServicoService {
 
         Servico servicoInsert = ServicoMapper.toEntity(dto, comerciante);
 
-        if(servicoInsert.getComerciante() == null) {
-            throw new BusinessException("Comerciante não pode ser nulo !");
-        }
         if(servicoInsert.getDuracaoHoras() <= 0) {
             throw new BusinessException("Duração deve ser maior que zero !");
         }
@@ -82,7 +78,6 @@ public class ServicoService {
         Servico servico = servicoRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Serviço não encontrado com esse Id !"));
 
-
         ServicoMapper.updateEntityFromDTO(dto, servico, servico.getComerciante());
 
         servicoRepository.update(servico);
@@ -92,43 +87,39 @@ public class ServicoService {
 
     public Long countByComercianteId (Long idComerciante)
     {
-        if(idComerciante < 0)
+        if(idComerciante == null || idComerciante <= 0)
         {
-            throw new InvalidFieldException("O ID não pode ser nulo ou menor que 0");
+            throw new InvalidFieldException("ID do comerciante inválido");
         }
 
-        Long countByComercianteId = servicoRepository.countByComercianteId(idComerciante);
-
-        return countByComercianteId;
+        return servicoRepository.countByComercianteId(idComerciante);
     }
 
     public List<ServicoResponseDTO> findByComercianteId (Long idComerciante)
     {
-        if(idComerciante <= 0)
+        if(idComerciante == null || idComerciante <= 0)
         {
-            throw new BusinessException("ID do Comerciante não pode ser menor ou igual a 0");
+            throw new BusinessException("ID do comerciante inválido");
         }
 
         List<Servico> listServicos = servicoRepository.findByComercianteId(idComerciante);
-
         return ServicoMapper.toResponseDTOList(listServicos);
     }
 
     public void deleteServico(Long idServico, Long idAgendamento)
     {
-        if(servicoRepository.existsById(idServico))
+        if(!servicoRepository.existsById(idServico))
         {
             throw new BusinessException("Serviço não encontrado com esse Id !");
         }
 
-        if(agendamentoService.existById(idAgendamento))
+        if(!agendamentoService.existById(idAgendamento))
         {
-            throw new BusinessException("Serviço não encontrado com esse Id !");
+            throw new BusinessException("Agendamento não encontrado com esse Id !");
         }
 
         servicoAgendamentoRepository.deleteByAgendamentoId(idAgendamento);
         agendamentoService.delete(idAgendamento);
-
         servicoRepository.delete(idServico);
     }
 }
