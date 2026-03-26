@@ -24,6 +24,17 @@ O **REemprende** é uma solução para microempreendedores que necessitam de uma
 
 * * * * *
 
+## 📝 Decisões Arquiteturais (ADR)
+
+| Critério | Decisão | Justificativa |
+| :--- | :--- | :--- |
+| **Padrão** | MVP (Model-View-Presenter) | Isolar completamente a View (Console) da lógica, permitindo trocar a interface no futuro sem tocar nas regras de negócio. |
+| **Estilo** | Monolítico | Como é um projeto simples, não há necessidade de utilizar Microserviços. |
+| **Execução** | Client-Server | Estrutura clássica para persistência robusta em MySQL com acesso via JDBC. |
+
+### 📊 Diagrama de Pacotes
+https://lucid.app/lucidchart/10a099ef-23ea-4603-ade5-97ce3d2ce776/edit?viewport_loc=-1589%2C-1257%2C4977%2C2968%2C0_0&invitationId=inv_467dd0da-2036-464a-b5f9-f0c275ebdc81
+
 ✨ Funcionalidades
 -----------------
 
