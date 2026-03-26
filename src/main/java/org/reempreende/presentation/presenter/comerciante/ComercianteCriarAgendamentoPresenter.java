@@ -8,6 +8,7 @@ import org.reempreende.presentation.interfaces.icomerciante.IComercianteCriarAge
 import org.reempreende.presentation.router.AppRouter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ComercianteCriarAgendamentoPresenter {
@@ -31,16 +32,18 @@ public class ComercianteCriarAgendamentoPresenter {
 
         String observacao = view.askObservacao();
 
-        AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
-
         while (abre.isBefore(fecha)) {
+            AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
+
+            LocalTime fechaNovo = abre.plusMinutes((long) (servicoResponseDTO.getDuracaoHoras() * 60));
+
             agendamentoRequestDTO.setDataInicio(abre.atDate(LocalDate.now()));
-            agendamentoRequestDTO.setDataFim(abre.plusMinutes((long) servicoResponseDTO.getDuracaoHoras()).atDate(LocalDate.now()));
+            agendamentoRequestDTO.setDataFim(fechaNovo.atDate(LocalDate.now()));
             agendamentoRequestDTO.setObservacao(observacao);
             agendamentoRequestDTO.setIdCliente(null);
 
             createAgendamento(agendamentoRequestDTO, servicoResponseDTO.getIdServico());
-            abre = abre.plusMinutes((long) servicoResponseDTO.getDuracaoHoras() * 60);
+            abre = abre.plusMinutes((long) (servicoResponseDTO.getDuracaoHoras() * 60));
         }
 
     }
@@ -53,6 +56,6 @@ public class ComercianteCriarAgendamentoPresenter {
             return;
         }
 
-        view.exibirSucesso("Agendamentos criados com sucesso!");
+        view.exibirSucesso("Agendamento criado com sucesso!");
     }
 }

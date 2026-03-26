@@ -8,24 +8,19 @@ import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroClienteView;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
 import org.reempreende.presentation.interfaces.icliente.*;
+import org.reempreende.presentation.interfaces.icomerciante.IComercianteAtualizarView;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteCriarAgendamentoView;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteServicoView;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteView;
 import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.presenter.cliente.*;
-import org.reempreende.presentation.presenter.comerciante.ComercianteCadastroPresenter;
-import org.reempreende.presentation.presenter.comerciante.ComercianteCriarAgendamentoPresenter;
-import org.reempreende.presentation.presenter.comerciante.ComerciantePresenter;
-import org.reempreende.presentation.presenter.comerciante.ComercianteServicoPresenter;
+import org.reempreende.presentation.presenter.comerciante.*;
 import org.reempreende.presentation.presenter.inicio.InicialPresenter;
 import org.reempreende.presentation.presenter.inicio.cadastro.CadastrarUsuarioPresenter;
 import org.reempreende.presentation.presenter.inicio.login.LoginPresenter;
 import org.reempreende.presentation.view.cliente.*;
-import org.reempreende.presentation.view.comerciante.CadastroComercianteView;
-import org.reempreende.presentation.view.comerciante.ComercianteCriarAgendamentoView;
-import org.reempreende.presentation.view.comerciante.ComercianteServicoView;
-import org.reempreende.presentation.view.comerciante.ComercianteView;
+import org.reempreende.presentation.view.comerciante.*;
 import org.reempreende.presentation.view.inicio.InicialView;
 import org.reempreende.presentation.view.cadastro.CadastroBaseView;
 import org.reempreende.presentation.view.login.LoginView;
@@ -167,6 +162,13 @@ public class AppRouter {
                     new ComercianteCriarAgendamentoPresenter(this, this.sessao, agendamentoService, view);
 
         comercianteCriarAgendamentoPresenter.createAgendamentoViaServico(servicoResponseDTO);
+    }
+
+    public void atualizarComerciante() {
+        IComercianteAtualizarView view = new ComercianteAtualizarView();
+
+        ComercianteAtualizarPresenter comercianteAtualizarPresenter = new ComercianteAtualizarPresenter(view, comercianteService, this.sessao);
+        comercianteAtualizarPresenter.atualizarComerciante();
     }
 
     public void logout() {

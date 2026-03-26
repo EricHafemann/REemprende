@@ -23,6 +23,7 @@ public class ComercianteView implements IComercianteView
         System.out.println(Cores.VERDE + "             ╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝" + Cores.RESET);
         System.out.println("\n" + TextoUtil.transformar("Digite a opção desejada!"));
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("1 ➤ Cadastrar serviço") + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("2 ➤ Atualizar seus Dados") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("0 ➤ Sair") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA ^ ") + Cores.RESET);
         System.out.print("➤ ");

@@ -3,7 +3,6 @@ package org.reempreende.presentation.view.comerciante;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteServicoView;
 
-import java.time.LocalTime;
 import java.util.OptionalInt;
 
 public class ComercianteServicoView implements IComercianteServicoView {
@@ -30,11 +29,11 @@ public class ComercianteServicoView implements IComercianteServicoView {
     }
 
     @Override
-    public long askDuracaoDeCadaAgendamento() {
+    public double askDuracaoDeCadaAgendamento() {
         System.out.println("Digite a duração de cada agendamento (Em horas)");
         System.out.print("➤ ");
 
-        return Util.lLong();
+        return Util.lDouble();
     }
 
 }

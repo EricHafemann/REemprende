@@ -2,7 +2,8 @@ package org.reempreende.presentation.interfaces.icomerciante;
 
 import org.reempreende.presentation.interfaces.interfaceBase.InterfaceView;
 
-public interface IComercianteServicoView extends InterfaceView  {
-    String askDescricao();
-    double askDuracaoDeCadaAgendamento();
+public interface IComercianteAtualizarView extends InterfaceView {
+    String newNome();
+    String newEmail();
+    String newPassword();
 }

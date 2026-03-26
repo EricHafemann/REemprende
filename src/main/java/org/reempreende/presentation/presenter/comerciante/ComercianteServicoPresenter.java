@@ -26,7 +26,7 @@ public class ComercianteServicoPresenter {
 
     public void createServico() {
         String descricao = view.askDescricao();
-        long duracao = view.askDuracaoDeCadaAgendamento();
+        double duracao = view.askDuracaoDeCadaAgendamento();
 
         ServicoRequestDTO servicoRequestDTO = new ServicoRequestDTO();
         servicoRequestDTO.setAvaliacao("Não possui avaliações ainda");

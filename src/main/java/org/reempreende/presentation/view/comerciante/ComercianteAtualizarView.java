@@ -1,11 +1,11 @@
-package org.reempreende.presentation.view.cliente;
+package org.reempreende.presentation.view.comerciante;
 
 import org.reempreende.infrastructure.utility.Util;
-import org.reempreende.presentation.interfaces.icliente.IClienteAtualizarView;
+import org.reempreende.presentation.interfaces.icomerciante.IComercianteAtualizarView;
 
 import java.util.OptionalInt;
 
-public class ClienteAtualizarView implements IClienteAtualizarView {
+public class ComercianteAtualizarView implements IComercianteAtualizarView {
     @Override
     public OptionalInt mostrarTela() {
         System.out.println("             █████╗ ████████╗██╗   ██╗ █████╗ ██╗     ██╗███████╗ █████╗ ██████╗ ");
@@ -48,4 +48,5 @@ public class ClienteAtualizarView implements IClienteAtualizarView {
 
         return Util.lString();
     }
+
 }
