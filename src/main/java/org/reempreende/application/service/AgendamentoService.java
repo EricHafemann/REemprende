@@ -142,7 +142,7 @@ public class AgendamentoService
         return dtos;
    }
 
-    public boolean cancelAgendamento(long idAgendamento, AgendamentoRequestDTO agendamentoRequestDTO) {
+    public boolean cancelAgendamento(Long idAgendamento, AgendamentoRequestDTO agendamentoRequestDTO) {
         Optional<Agendamento> agendamentoCaixa = agendamentoRepository.findById(idAgendamento);
         Agendamento agendamento = agendamentoCaixa.orElseThrow(() -> new BusinessException("Agendamento não encontrado"));
 

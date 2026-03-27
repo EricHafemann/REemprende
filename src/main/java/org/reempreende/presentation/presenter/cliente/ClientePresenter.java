@@ -29,7 +29,6 @@ public class ClientePresenter {
                     case 2 -> appRouter.clientAgendarHorarioDisponivel();
                     case 3 -> appRouter.clientViewHistory();
                     case 4 -> appRouter.updateCliente();
-                    case 5 -> appRouter.cancelarAgendamento();
                     case 0 -> {
                         view.exibirMensagem("Saindo...");
                         appRouter.logout();

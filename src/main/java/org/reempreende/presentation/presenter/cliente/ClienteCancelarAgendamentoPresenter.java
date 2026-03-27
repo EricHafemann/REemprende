@@ -43,10 +43,10 @@ public class ClienteCancelarAgendamentoPresenter {
 
             long idAgendamento = view.askIdAgendamento();
 
-            AgendamentoCancelarResponseDTO agendamentoResponseDTO = agendamentoService.findByIdCancelar(idAgendamento);
+            AgendamentoCancelarResponseDTO agendamentoCancelarResponseDTO = agendamentoService.findByIdCancelar(idAgendamento);
 
-            if (!Objects.equals(agendamentoResponseDTO.getIdCliente(), sessao.getUsuarioLogado().getId()) ||
-                    agendamentoResponseDTO.getIdCliente() == null) {
+            if (!Objects.equals(agendamentoCancelarResponseDTO.getIdCliente(), sessao.getUsuarioLogado().getId()) ||
+                    agendamentoCancelarResponseDTO.getIdCliente() == null) {
                     view.exibirErro("Agendamento não é do Cliente!");
                     return;
             }
@@ -54,7 +54,7 @@ public class ClienteCancelarAgendamentoPresenter {
             LocalDateTime agora = LocalDateTime.now();
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-            LocalDateTime dataInicioAgendamento = LocalDateTime.parse(agendamentoResponseDTO.getDataInicio(), formatter);
+            LocalDateTime dataInicioAgendamento = LocalDateTime.parse(agendamentoCancelarResponseDTO.getDataInicio(), formatter);
             dataInicioAgendamento.minusHours(1);
 
             if (dataInicioAgendamento.isBefore(agora)) {
@@ -62,8 +62,8 @@ public class ClienteCancelarAgendamentoPresenter {
 
                 AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
                 agendamentoRequestDTO.setDataInicio(dataInicioAgendamento);
-                agendamentoRequestDTO.setDataFim(LocalDateTime.parse(agendamentoResponseDTO.getDataFim(), formatter));
-                agendamentoRequestDTO.setObservacao(agendamentoResponseDTO.getObservacao());
+                agendamentoRequestDTO.setDataFim(LocalDateTime.parse(agendamentoCancelarResponseDTO.getDataFim(), formatter));
+                agendamentoRequestDTO.setObservacao(agendamentoCancelarResponseDTO.getObservacao());
                 agendamentoRequestDTO.setIdCliente(null);
 
                 boolean deuCerto = agendamentoService.cancelAgendamento(idAgendamento, agendamentoRequestDTO);
