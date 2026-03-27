@@ -58,7 +58,7 @@ https://lucid.app/lucidchart/10a099ef-23ea-4603-ade5-97ce3d2ce776/edit?viewport_
 
     -   Visualização de horários disponíveis em tempo real.
 
-    -   Reserva e cancelamento de serviços com interface intuitiva via console.
+    -   Reserva de serviços com interface intuitiva via console.
 
 * * * * *
 
