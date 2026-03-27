@@ -1,6 +1,7 @@
 package org.reempreende.presentation.presenter.cliente;
 
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
+import org.reempreende.application.dto.response.AgendamentoCancelarResponseDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.infrastructure.repository.AgendamentoRepositoryImpl;
@@ -42,7 +43,7 @@ public class ClienteCancelarAgendamentoPresenter {
 
             long idAgendamento = view.askIdAgendamento();
 
-            AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(idAgendamento);
+            AgendamentoCancelarResponseDTO agendamentoResponseDTO = agendamentoService.findByIdCancelar(idAgendamento);
 
             if (!Objects.equals(agendamentoResponseDTO.getIdCliente(), sessao.getUsuarioLogado().getId()) ||
                     agendamentoResponseDTO.getIdCliente() == null) {

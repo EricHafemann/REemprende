@@ -1,5 +1,6 @@
 package org.reempreende.application.dto.mapper;
 
+import org.reempreende.application.dto.response.AgendamentoCancelarResponseDTO;
 import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.entities.Cliente;
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
@@ -48,6 +49,11 @@ public class AgendamentoMapper {
     public static AgendamentoResponseDTO toResponseDTO(Agendamento agendamento) {
         if (agendamento == null) return null;
         return new AgendamentoResponseDTO(agendamento);
+    }
+
+    public static AgendamentoCancelarResponseDTO toResponseCancelarDTO(Agendamento agendamento) {
+        if (agendamento == null) return null;
+        return new AgendamentoCancelarResponseDTO(agendamento);
     }
 
     public static List<AgendamentoResponseDTO> toResponseDTOList(List<Agendamento> agendamentos) {

@@ -35,6 +35,8 @@ public class ClienteHistoricoPresenter {
             {
                 view.verHistoricoAgendamentos(historico.exibirInfo());
             }
+
+            Util.digiteEnterParaContinuar();
         } catch(Exception e) {
             view.exibirErro(e.getMessage());
             Util.next();

@@ -13,6 +13,7 @@ public class AgendamentoResponseDTO {
     private String dataFim;
     private String observacao;
     private Long idCliente;
+    private String nomeCliente;
 
     public AgendamentoResponseDTO() {}
 
@@ -21,7 +22,8 @@ public class AgendamentoResponseDTO {
         this.dataInicio = agendamento.getDataInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
         this.dataFim = agendamento.getDataFim().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
         this.observacao = agendamento.getObservacao();
-        this.idCliente = agendamento.getCliente().getId();
+        this.nomeCliente = null;
+        this.idCliente = null;
     }
 
     public Long getIdAgendamento() { return idAgendamento; }
@@ -38,6 +40,9 @@ public class AgendamentoResponseDTO {
 
     public Long getIdCliente() { return idCliente; }
     public void setIdCliente(Long idCliente) { this.idCliente = idCliente; }
+
+    public String getNomeCliente() { return nomeCliente; }
+    public void setNomeCliente(String nomeCliente) { this.nomeCliente = nomeCliente; }
 
     public String exibirInfo() {
         return

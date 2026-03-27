@@ -2,6 +2,7 @@ package org.reempreende.application.service;
 
 import org.reempreende.application.dto.mapper.AgendamentoMapper;
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
+import org.reempreende.application.dto.response.AgendamentoCancelarResponseDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Agendamento;
@@ -69,6 +70,14 @@ public class AgendamentoService
 
        return AgendamentoMapper.toResponseDTO(agendamento);
    }
+
+    public AgendamentoCancelarResponseDTO findByIdCancelar(long id)
+    {
+        Optional<Agendamento> agendamentoCaixa = agendamentoRepository.findById(id);
+        Agendamento agendamento = agendamentoCaixa.orElse(null);
+
+        return AgendamentoMapper.toResponseCancelarDTO(agendamento);
+    }
 
    public List<AgendamentoResponseDTO> findAgendamentosByServicoId (Long idServico)
    {
