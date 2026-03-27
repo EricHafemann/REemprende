@@ -3,6 +3,7 @@ package org.reempreende.presentation.presenter.cliente;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.application.service.AgendamentoService;
+import org.reempreende.infrastructure.utility.Cores;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewHorarios;
 import org.reempreende.presentation.router.AppRouter;
@@ -20,24 +21,23 @@ public class ClienteHorariosPresenter {
         this.agendamentoService = agendamentoService;
     }
 
-    public ClienteHorariosPresenter(IClienteViewHorarios view, AgendamentoService agendamentoService) {
-        this.view = view;
-        this.agendamentoService = agendamentoService;
-    }
-
     public void showHorarios() {
         view.mostrarTela();
+
+        long idServico = view.askIdServico();
 
         List<AgendamentoResponseDTO> agendamentos = null;
 
         try {
-            agendamentos = agendamentoService.findAvailable();
+            agendamentos = agendamentoService.findAgendamentosByServicoId(idServico);
         } catch(BusinessException e) {
             view.exibirErro(e.getMessage());
+            Util.next();
             Util.digiteEnterParaContinuar();
             return;
         } catch(Exception e) {
             view.exibirErro("Erro ao buscar horários: " + e.getMessage());
+            Util.next();
             Util.digiteEnterParaContinuar();
             return;
         }
@@ -49,7 +49,15 @@ public class ClienteHorariosPresenter {
         }
 
         for (AgendamentoResponseDTO agendamento : agendamentos) {
-            view.exibirHorarios(agendamento.exibirInfo(), true);
+            if (agendamento.getIdCliente() == null) {
+                String mensagem = Cores.VERDE + agendamento.exibirInfo() + Cores.RESET;
+
+                view.exibirHorarios(mensagem);
+            } else {
+                String mensagem = Cores.VERMELHO + agendamento.exibirInfo() + Cores.RESET;
+
+                view.exibirHorarios(mensagem);
+            }
         }
 
         Util.digiteEnterParaContinuar();

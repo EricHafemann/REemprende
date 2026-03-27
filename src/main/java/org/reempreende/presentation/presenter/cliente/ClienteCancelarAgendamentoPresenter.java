@@ -14,6 +14,7 @@ import org.reempreende.presentation.view.cliente.ClienteCancelarAgendamentoView;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 public class ClienteCancelarAgendamentoPresenter {
     private AppRouter appRouter;
@@ -33,58 +34,19 @@ public class ClienteCancelarAgendamentoPresenter {
         List<AgendamentoResponseDTO> agendamentos = agendamentoService.findByClientId(sessao.getUsuarioLogado().getId());
 
         for (AgendamentoResponseDTO agendamentoResponseDTO : agendamentos) {
-            view.exibirHorarioCliente(agendamentos.toString());
+            view.exibirHorarioCliente(agendamentoResponseDTO.toString());
         }
 
-        long idAgendamento = view.askIdAgendamento();
-
         try {
+            long idAgendamento = view.askIdAgendamento();
+
             AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(idAgendamento);
 
-            if (agendamentoResponseDTO.getIdCliente() != sessao.getUsuarioLogado().getId() ||
+            if (!Objects.equals(agendamentoResponseDTO.getIdCliente(), sessao.getUsuarioLogado().getId()) ||
                     agendamentoResponseDTO.getIdCliente() == null) {
                     view.exibirErro("Agendamento não é do Cliente!");
                     return;
             }
-
-            LocalDateTime agora = LocalDateTime.now();
-            LocalDateTime dataInicioAgendamento = LocalDateTime.parse(agendamentoResponseDTO.getDataInicio());
-            dataInicioAgendamento.minusHours(1);
-
-            if (dataInicioAgendamento.isBefore(agora)) {
-                dataInicioAgendamento.plusHours(1);
-
-                AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
-                agendamentoRequestDTO.setDataInicio(dataInicioAgendamento);
-                agendamentoRequestDTO.setDataFim(LocalDateTime.parse(agendamentoResponseDTO.getDataFim()));
-                agendamentoRequestDTO.setObservacao(agendamentoResponseDTO.getObservacao());
-                agendamentoRequestDTO.setIdCliente(null);
-
-                agendamentoService.update(idAgendamento, agendamentoRequestDTO);
-                view.exibirSucesso("Agendamento cancelado com sucesso!");
-            }
-        } catch (Exception e) {
-            view.exibirErro(e.getMessage());
-            Util.digiteEnterParaContinuar();
-        }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(LocalDateTime.now());
-        try {
-            AgendamentoService agendamentoService1 = new AgendamentoService(new AgendamentoRepositoryImpl(), new ServicoAgendamentoRepositoryImpl());
-            List<AgendamentoResponseDTO> agendamentos = agendamentoService1.findByClientId(1);
-
-            for (AgendamentoResponseDTO agendamentoResponseDTO : agendamentos) {
-               System.out.println(agendamentoResponseDTO.exibirInfo());
-            }
-
-            IClienteCancelarAgendamentoView view123 =  new ClienteCancelarAgendamentoView();
-            long idAgendamento = view123.askIdAgendamento();
-
-            AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService1.findById(1);
-
-            System.out.println(agendamentoResponseDTO.getDataInicio());
 
             LocalDateTime agora = LocalDateTime.now();
 
@@ -101,18 +63,12 @@ public class ClienteCancelarAgendamentoPresenter {
                 agendamentoRequestDTO.setObservacao(agendamentoResponseDTO.getObservacao());
                 agendamentoRequestDTO.setIdCliente(null);
 
-                boolean deuCerto = agendamentoService1.cancelAgendamento(1L, agendamentoRequestDTO);
-
-                if (deuCerto) {
-                    System.out.println("Agendamento cancelado com sucesso!");
-                } else {
-                    System.out.println("ERRO");
-                }
-
-
+                agendamentoService.update(idAgendamento, agendamentoRequestDTO);
+                view.exibirSucesso("Agendamento cancelado com sucesso!");
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            view.exibirErro(e.getMessage());
+            Util.next();
             Util.digiteEnterParaContinuar();
         }
     }

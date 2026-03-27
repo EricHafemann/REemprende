@@ -171,6 +171,16 @@ public class AppRouter {
         comercianteAtualizarPresenter.atualizarComerciante();
     }
 
+    public void cancelarAgendamento() {
+        IClienteCancelarAgendamentoView view = new ClienteCancelarAgendamentoView();
+
+        ClienteCancelarAgendamentoPresenter clienteCancelarAgendamentoPresenter =
+                new ClienteCancelarAgendamentoPresenter(this, this.sessao,
+                        agendamentoService, view);
+
+        clienteCancelarAgendamentoPresenter.cancelarAgendamento();
+    }
+
     public void logout() {
         this.sessao.logout();
     }

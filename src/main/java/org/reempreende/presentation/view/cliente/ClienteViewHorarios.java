@@ -9,13 +9,16 @@ import java.util.OptionalInt;
 
 public class ClienteViewHorarios implements IClienteViewHorarios {
     @Override
-    public void exibirHorarios(String mensagem, boolean isDisponivel) {
-        if (isDisponivel) {
-            System.out.println(Cores.VERDE + "\n" + mensagem + Cores.RESET);
-        } else {
-            System.out.println(Cores.VERMELHO + "\n" + mensagem + Cores.RESET);
-        }
+    public void exibirHorarios(String mensagem) {
+        System.out.println(mensagem);
+    }
 
+    @Override
+    public long askIdServico() {
+        System.out.println("Digite o ID de serviço");
+        System.out.print("➤ ");
+
+        return Util.lLong();
     }
 
     @Override
