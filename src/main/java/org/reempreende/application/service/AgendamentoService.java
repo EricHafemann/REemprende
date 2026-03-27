@@ -1,25 +1,19 @@
 package org.reempreende.application.service;
 
 import org.reempreende.application.dto.mapper.AgendamentoMapper;
-import org.reempreende.application.dto.mapper.UsuarioMapper;
 import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
-import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.exception.BusinessException;
 import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.entities.Cliente;
-import org.reempreende.domain.entities.ServicoAgendamento;
 import org.reempreende.domain.repository.AgendamentoRepository;
 import org.reempreende.domain.repository.ServicoAgendamentoRepository;
 import org.reempreende.infrastructure.exception.RepositoryException;
-import org.reempreende.infrastructure.exception.UsuarioNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 public class AgendamentoService
@@ -138,6 +132,18 @@ public class AgendamentoService
 
         return dtos;
    }
+
+    public boolean cancelAgendamento(long idAgendamento, AgendamentoRequestDTO agendamentoRequestDTO) {
+        Optional<Agendamento> agendamentoCaixa = agendamentoRepository.findById(idAgendamento);
+        Agendamento agendamento = agendamentoCaixa.orElseThrow(() -> new BusinessException("Agendamento não encontrado"));
+
+        agendamento.setDataInicio(agendamentoRequestDTO.getDataInicio());
+        agendamento.setDataFim(agendamentoRequestDTO.getDataFim());
+        agendamento.setObservacao(agendamentoRequestDTO.getObservacao());
+        agendamento.setCliente(null);
+
+        return agendamentoRepository.update(agendamento);
+    }
 
     public boolean isAvailable(LocalDateTime startTime, LocalDateTime endTime) {
         if (startTime == null || endTime == null) {

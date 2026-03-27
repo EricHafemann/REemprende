@@ -4,5 +4,5 @@ import org.reempreende.presentation.interfaces.interfaceBase.InterfaceView;
 
 public interface IClienteCancelarAgendamentoView extends InterfaceView {
     void exibirHorarioCliente(String mensagem);
-    long askHorarioId();
+    long askIdAgendamento();
 }

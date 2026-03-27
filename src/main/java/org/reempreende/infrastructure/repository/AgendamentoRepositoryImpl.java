@@ -1,5 +1,6 @@
 package org.reempreende.infrastructure.repository;
 
+import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.domain.repository.AgendamentoRepository;
 import org.reempreende.domain.entities.Agendamento;
 import org.reempreende.domain.entities.Cliente;

@@ -1,11 +1,18 @@
 package org.reempreende.presentation.presenter.cliente;
 
+import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.service.AgendamentoService;
+import org.reempreende.infrastructure.repository.AgendamentoRepositoryImpl;
+import org.reempreende.infrastructure.repository.ServicoAgendamentoRepositoryImpl;
 import org.reempreende.infrastructure.sessao.Sessao;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icliente.IClienteCancelarAgendamentoView;
 import org.reempreende.presentation.router.AppRouter;
+import org.reempreende.presentation.view.cliente.ClienteCancelarAgendamentoView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ClienteCancelarAgendamentoPresenter {
@@ -29,17 +36,84 @@ public class ClienteCancelarAgendamentoPresenter {
             view.exibirHorarioCliente(agendamentos.toString());
         }
 
-        long idAgendamento = view.askHorarioId();
+        long idAgendamento = view.askIdAgendamento();
 
         try {
             AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(idAgendamento);
 
             if (agendamentoResponseDTO.getIdCliente() != sessao.getUsuarioLogado().getId() ||
                     agendamentoResponseDTO.getIdCliente() == null) {
+                    view.exibirErro("Agendamento não é do Cliente!");
+                    return;
+            }
 
+            LocalDateTime agora = LocalDateTime.now();
+            LocalDateTime dataInicioAgendamento = LocalDateTime.parse(agendamentoResponseDTO.getDataInicio());
+            dataInicioAgendamento.minusHours(1);
+
+            if (dataInicioAgendamento.isBefore(agora)) {
+                dataInicioAgendamento.plusHours(1);
+
+                AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
+                agendamentoRequestDTO.setDataInicio(dataInicioAgendamento);
+                agendamentoRequestDTO.setDataFim(LocalDateTime.parse(agendamentoResponseDTO.getDataFim()));
+                agendamentoRequestDTO.setObservacao(agendamentoResponseDTO.getObservacao());
+                agendamentoRequestDTO.setIdCliente(null);
+
+                agendamentoService.update(idAgendamento, agendamentoRequestDTO);
+                view.exibirSucesso("Agendamento cancelado com sucesso!");
             }
         } catch (Exception e) {
             view.exibirErro(e.getMessage());
+            Util.digiteEnterParaContinuar();
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(LocalDateTime.now());
+        try {
+            AgendamentoService agendamentoService1 = new AgendamentoService(new AgendamentoRepositoryImpl(), new ServicoAgendamentoRepositoryImpl());
+            List<AgendamentoResponseDTO> agendamentos = agendamentoService1.findByClientId(1);
+
+            for (AgendamentoResponseDTO agendamentoResponseDTO : agendamentos) {
+               System.out.println(agendamentoResponseDTO.exibirInfo());
+            }
+
+            IClienteCancelarAgendamentoView view123 =  new ClienteCancelarAgendamentoView();
+            long idAgendamento = view123.askIdAgendamento();
+
+            AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService1.findById(1);
+
+            System.out.println(agendamentoResponseDTO.getDataInicio());
+
+            LocalDateTime agora = LocalDateTime.now();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            LocalDateTime dataInicioAgendamento = LocalDateTime.parse(agendamentoResponseDTO.getDataInicio(), formatter);
+            dataInicioAgendamento.minusHours(1);
+
+            if (dataInicioAgendamento.isBefore(agora)) {
+                dataInicioAgendamento.plusHours(1);
+
+                AgendamentoRequestDTO agendamentoRequestDTO = new AgendamentoRequestDTO();
+                agendamentoRequestDTO.setDataInicio(dataInicioAgendamento);
+                agendamentoRequestDTO.setDataFim(LocalDateTime.parse(agendamentoResponseDTO.getDataFim(), formatter));
+                agendamentoRequestDTO.setObservacao(agendamentoResponseDTO.getObservacao());
+                agendamentoRequestDTO.setIdCliente(null);
+
+                boolean deuCerto = agendamentoService1.cancelAgendamento(1L, agendamentoRequestDTO);
+
+                if (deuCerto) {
+                    System.out.println("Agendamento cancelado com sucesso!");
+                } else {
+                    System.out.println("ERRO");
+                }
+
+
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            Util.digiteEnterParaContinuar();
         }
     }
 

@@ -24,7 +24,7 @@ public class ClienteCancelarAgendamentoView implements IClienteCancelarAgendamen
     }
 
     @Override
-    public long askHorarioId() {
+    public long askIdAgendamento() {
         System.out.println("Digite um dos IDs dos agendamentos acima para cancelar");
         System.out.print("➤ ");
 
