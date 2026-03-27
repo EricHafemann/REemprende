@@ -89,7 +89,7 @@ src/main/java/org/reempreende/
     ├── repository/                 # Implementações JDBC (UsuarioRepositoryImpl)
     ├── persistence/                # Gestão de conexões (ConnectionFactory)
     └── utility/                    # Helpers: Cores, TextoUtil e Formatação
-
+    └── sessao/                     # Armazena dados do usuário logado
 ```
 
 * * * * *
