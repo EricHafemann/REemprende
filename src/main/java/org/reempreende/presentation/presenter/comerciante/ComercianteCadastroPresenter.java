@@ -2,6 +2,7 @@ package org.reempreende.presentation.presenter.comerciante;
 
 import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.ComercianteService;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icadastro.ICadastroComercianteView;
 import org.reempreende.presentation.router.AppRouter;
 
@@ -18,13 +19,20 @@ public class ComercianteCadastroPresenter {
     }
 
     public void registerComerciante(UsuarioRequestDTO usuarioDTO) {
-        String cnpj = cadastroComercianteView.pedirCNPJ();
-        String senhaAcesso = cadastroComercianteView.pedirSenhaAcesso();
+        try {
+            String cnpj = cadastroComercianteView.pedirCNPJ();
+            String senhaAcesso = cadastroComercianteView.pedirSenhaAcesso();
 
-        usuarioDTO.setCnpj(cnpj);
-        usuarioDTO.setSenhaAcesso(senhaAcesso);
+            usuarioDTO.setCnpj(cnpj);
+            usuarioDTO.setSenhaAcesso(senhaAcesso);
 
-        comercianteService.insert(usuarioDTO);
-        cadastroComercianteView.exibirSucesso("Comerciante cadastrado com sucesso!");
+            comercianteService.insert(usuarioDTO);
+            cadastroComercianteView.exibirSucesso("Comerciante cadastrado com sucesso!");
+        } catch (Exception e) {
+            cadastroComercianteView.exibirErro(e.getMessage());
+            Util.next();
+            Util.digiteEnterParaContinuar();
+        }
+
     }
 }

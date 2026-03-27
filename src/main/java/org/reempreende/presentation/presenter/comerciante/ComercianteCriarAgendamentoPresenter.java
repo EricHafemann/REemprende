@@ -54,6 +54,7 @@ public class ComercianteCriarAgendamentoPresenter {
             agendamentoService.insertAgendamento(agendamentoRequestDTO, idServico);
         } catch (Exception e) {
             view.exibirErro(e.getMessage());
+            Util.next();
             Util.digiteEnterParaContinuar();
             return;
         }

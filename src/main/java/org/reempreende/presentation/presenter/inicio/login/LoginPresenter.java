@@ -4,6 +4,7 @@ import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.service.ComercianteService;
 import org.reempreende.application.service.UsuarioService;
 import org.reempreende.infrastructure.sessao.Sessao;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.interfaces.ilogin.ILoginUsuario;
 import org.reempreende.presentation.router.AppRouter;
@@ -42,13 +43,15 @@ public class LoginPresenter {
                     appRouter.startComercianteView();
                 } else {
                     loginUsuario.exibirErro("E-mail ou senha inválido!");
+                    Util.digiteEnterParaContinuar();
                 }
             } else if (usuarioResponseDTO.getTipoUsuario().equals("CLIENTE")) {
                 sessao.startSession(usuarioResponseDTO);
                 appRouter.startClientView();
             }
-        } catch (InvalidFieldException e) {
+        } catch (Exception e) {
            loginUsuario.exibirErro(e.getMessage());
+           Util.digiteEnterParaContinuar();
         }
     }
 

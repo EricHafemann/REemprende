@@ -4,6 +4,7 @@ import org.reempreende.application.dto.request.UsuarioRequestDTO;
 import org.reempreende.application.service.UsuarioService;
 import org.reempreende.domain.entities.enums.Status;
 import org.reempreende.domain.entities.enums.TipoUsuario;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.exception.InvalidFieldException;
 import org.reempreende.presentation.exception.InvalidPasswordException;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
@@ -29,29 +30,37 @@ public class CadastrarUsuarioPresenter {
     }
 
     public void collectInfo() {
-        int tipoUsuario = inicialView.selecionarTipoUsuario();
+        try {
+            int tipoUsuario = inicialView.selecionarTipoUsuario();
 
-        if (tipoUsuario < 1 || tipoUsuario > 2) {
-            inicialView.exibirErro("Opção de Tipo de Usuário inválido!");
-            return;
-        }
-
-        String nome = cadastroBaseView.pedirNome();
-        String email = cadastroBaseView.pedirEmail();
-        String senha = cadastroBaseView.pedirSenha();
-
-        registerUserDto(nome, email, senha, TipoUsuario.fromCodigo(tipoUsuario), Status.ATIVO.getCodigo());
-
-        switch (tipoUsuario) {
-            case 0 -> {
-                appRouter.registerClient(usuarioRequestDTO);
+            if (tipoUsuario < 0 || tipoUsuario > 1) {
+                inicialView.exibirErro("Opção de Tipo de Usuário inválido!");
+                Util.digiteEnterParaContinuar();
+                return;
             }
-            case 1 -> {
-                appRouter.registerComerciante(usuarioRequestDTO);
+
+            String nome = cadastroBaseView.pedirNome();
+            String email = cadastroBaseView.pedirEmail();
+            String senha = cadastroBaseView.pedirSenha();
+
+            registerUserDto(nome, email, senha, TipoUsuario.fromCodigo(tipoUsuario), Status.ATIVO.getCodigo());
+
+            switch (tipoUsuario) {
+                case 0 -> {
+                    appRouter.registerClient(usuarioRequestDTO);
+                }
+                case 1 -> {
+                    appRouter.registerComerciante(usuarioRequestDTO);
+                }
+                default -> {
+                    inicialView.exibirErro("Opção inválida! Tente novamente:");
+                    Util.digiteEnterParaContinuar();
+                }
             }
-            default -> {
-                inicialView.exibirErro("Opção inválida! Tente novamente:");
-            }
+        } catch (Exception e) {
+            inicialView.exibirErro(e.getMessage());
+            Util.next();
+            Util.digiteEnterParaContinuar();
         }
 
     }
