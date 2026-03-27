@@ -9,6 +9,7 @@ import java.util.OptionalInt;
 public class ComercianteServicoView implements IComercianteServicoView {
     @Override
     public OptionalInt mostrarTela() {
+        Util.cls(15);
         System.out.println(Cores.VERDE +"            ███████╗███████╗██████╗ ██╗   ██╗██╗  ██████╗  ██████╗ " + Cores.RESET);
         System.out.println(Cores.VERDE +"            ██╔════╝██╔════╝██╔══██╗██║   ██║██║ ██╔════╝ ██╔═══██╗" + Cores.RESET);
         System.out.println(Cores.VERDE +"            ███████╗█████╗  ██████╔╝██║   ██║██║ ██║      ██║   ██║" + Cores.RESET);

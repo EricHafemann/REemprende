@@ -24,6 +24,7 @@ public class ClienteView implements IClienteView {
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("2 ➤ Agendar Horário Disponível") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("3 ➤ Ver Histórico de Agendamentos") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("4 ➤ Atualizar informações") + Cores.RESET);
+        System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("5 ➤ Cancelar Agendamento") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("0 ➤ Sair") + Cores.RESET);
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("SELECIONE UMA DAS OPÇÕES ACIMA ^ ") + Cores.RESET);
         System.out.print("➤ ");

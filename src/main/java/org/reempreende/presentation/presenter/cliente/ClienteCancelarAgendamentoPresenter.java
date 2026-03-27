@@ -31,13 +31,15 @@ public class ClienteCancelarAgendamentoPresenter {
     }
 
     public void cancelarAgendamento() {
-        List<AgendamentoResponseDTO> agendamentos = agendamentoService.findByClientId(sessao.getUsuarioLogado().getId());
-
-        for (AgendamentoResponseDTO agendamentoResponseDTO : agendamentos) {
-            view.exibirHorarioCliente(agendamentoResponseDTO.toString());
-        }
+        view.mostrarTela();
 
         try {
+            List<AgendamentoResponseDTO> agendamentos = agendamentoService.findByClientId(sessao.getUsuarioLogado().getId());
+
+            for (AgendamentoResponseDTO agendamentoResponseDTO : agendamentos) {
+              view.exibirHorarioCliente(agendamentoResponseDTO.exibirInfo());
+            }
+
             long idAgendamento = view.askIdAgendamento();
 
             AgendamentoResponseDTO agendamentoResponseDTO = agendamentoService.findById(idAgendamento);
@@ -63,12 +65,18 @@ public class ClienteCancelarAgendamentoPresenter {
                 agendamentoRequestDTO.setObservacao(agendamentoResponseDTO.getObservacao());
                 agendamentoRequestDTO.setIdCliente(null);
 
-                agendamentoService.update(idAgendamento, agendamentoRequestDTO);
-                view.exibirSucesso("Agendamento cancelado com sucesso!");
+                boolean deuCerto = agendamentoService.cancelAgendamento(idAgendamento, agendamentoRequestDTO);
+
+                if (deuCerto) {
+                    view.exibirSucesso("Agendamento cancelado com sucesso!");
+                } else {
+                    view.exibirErro("Agendamento não foi cancelado!");
+                }
+
+                Util.digiteEnterParaContinuar();
             }
         } catch (Exception e) {
             view.exibirErro(e.getMessage());
-            Util.next();
             Util.digiteEnterParaContinuar();
         }
     }
