@@ -1,5 +1,6 @@
 package org.reempreende.presentation.presenter.inicio;
 
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.inicial.IInicialView;
 import org.reempreende.presentation.router.AppRouter;
 
@@ -18,29 +19,37 @@ public class InicialPresenter {
         boolean continuar = true;
 
         while (continuar) {
-            OptionalInt opcaoCaixa = inicialView.mostrarTela();
+          try {
+                OptionalInt opcaoCaixa = inicialView.mostrarTela();
 
-            if (opcaoCaixa.isEmpty()) {
-                continue;
-            }
+                if (opcaoCaixa.isEmpty()) {
+                    continue;
+                }
 
-            int opcao = opcaoCaixa.getAsInt();
+                int opcao = opcaoCaixa.orElse(-1);
 
-            switch (opcao) {
-                case 1 -> {
-                    appRouter.registerUser();
+                switch (opcao) {
+                    case 1 -> {
+                        appRouter.registerUser();
+                    }
+                    case 2 -> {
+                        appRouter.login();
+                    }
+                    case 0 -> {
+                        inicialView.sair("Saindo do sistema...");
+                        System.exit(0);
+                    }
+                    default -> {
+                        inicialView.exibirErro("Opção inválida! Tente novamente:");
+                        Util.digiteEnterParaContinuar();
+                    }
                 }
-                case 2 -> {
-                    appRouter.login();
-                }
-                case 0 -> {
-                    inicialView.sair("Saindo do sistema...");
-                    System.exit(0);
-                }
-                default -> {
-                    inicialView.exibirErro("Opção inválida! Tente novamente:");
-                }
+            } catch (Exception e) {
+              inicialView.exibirErro("Opção inválida! Tente novamente:");
+              Util.next();
+              Util.digiteEnterParaContinuar();
             }
         }
+
     }
 }

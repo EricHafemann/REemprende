@@ -12,12 +12,12 @@ public class ClienteView implements IClienteView {
     public OptionalInt mostrarTela() {
         Util.cls(15);
 
-        System.out.println("            ███████╗ ██╗     ██╗███████╗███╗   ██ ████████╗███████╗");
-        System.out.println("            ██╔════╝ ██║     ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝");
-        System.out.println("            ██║      ██║     ██║█████╗  ██╔██╗ ██║   ██║   █████╗ ");
-        System.out.println("            ██║      ██║     ██║██╔══╝  ██║╚██╗██║   ██║   ██╔══╝  ");
-        System.out.println("            ███████╗ ███████╗██║███████╗██║ ╚████║   ██║   ███████╗");
-        System.out.println("            ╚══════╝ ╚══════╝╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝");
+        System.out.println(Cores.VERDE + "            ███████╗ ██╗     ██╗███████╗███╗   ██ ████████╗███████╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██╔════╝ ██║     ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║      ██║     ██║█████╗  ██╔██╗ ██║   ██║   █████╗ " + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║      ██║     ██║██╔══╝  ██║╚██╗██║   ██║   ██╔══╝  " + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ███████╗ ███████╗██║███████╗██║ ╚████║   ██║   ███████╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ╚══════╝ ╚══════╝╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝" + Cores.RESET);
 
         System.out.println("\n" + TextoUtil.transformar("Digite a opção desejada!"));
         System.out.println("\n" + Cores.NEGRITO + TextoUtil.transformar("1 ➤ Visualizar Horários") + Cores.RESET);

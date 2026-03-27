@@ -79,6 +79,7 @@ public class ComercianteAtualizarPresenter {
             } catch (Exception e) {
                 view.exibirErro(e.getMessage());
                 Util.digiteEnterParaContinuar();
+                Util.digiteEnterParaContinuar();
             }
         }
     }

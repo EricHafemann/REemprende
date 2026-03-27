@@ -1,5 +1,6 @@
 package org.reempreende.presentation.view.cliente;
 
+import org.reempreende.infrastructure.utility.Cores;
 import org.reempreende.infrastructure.utility.TextoUtil;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewHistorico;
@@ -15,12 +16,12 @@ public class ClienteViewHistorico implements IClienteViewHistorico {
     @Override
     public OptionalInt mostrarTela() {
         Util.cls(15);
-        System.out.println("            ██╗  ██╗██╗███████╗ ███████╗ ██████╗ ██████╗ ██╗ ██████╗  ██████╗ ");
-        System.out.println("            ██║  ██║██║██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗██║██╔════╝ ██╔═══██╗");
-        System.out.println("            ███████║██║███████╗   ██║   ██║   ██║██████╔╝██║██║      ██║   ██║");
-        System.out.println("            ██╔══██║██║╚════██║   ██║   ██║   ██║██╔══██╗██║██║      ██║   ██║");
-        System.out.println("            ██║  ██║██║███████║   ██║   ╚██████╔╝██║  ██║██║╚██████╗ ╚██████╔╝");
-        System.out.println("            ╚═╝  ╚═╝╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝  ╚═════╝ ");
+        System.out.println(Cores.VERDE + "            ██╗  ██╗██╗███████╗ ███████╗ ██████╗ ██████╗ ██╗ ██████╗  ██████╗ " + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║  ██║██║██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗██║██╔════╝ ██╔═══██╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ███████║██║███████╗   ██║   ██║   ██║██████╔╝██║██║      ██║   ██║" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██╔══██║██║╚════██║   ██║   ██║   ██║██╔══██╗██║██║      ██║   ██║" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║  ██║██║███████║   ██║   ╚██████╔╝██║  ██║██║╚██████╗ ╚██████╔╝" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ╚═╝  ╚═╝╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝  ╚═════╝ " + Cores.RESET);
 
         return OptionalInt.empty();
     }

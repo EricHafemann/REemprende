@@ -23,58 +23,69 @@ public class ClienteAtualizarPresenter {
     }
 
     public void update() {
-        try {
-            OptionalInt opcaoCaixa = view.mostrarTela();
+        boolean continuar = true;
 
-            int opcao = opcaoCaixa.orElse(-1);
+        while(continuar) {
+            try {
+                OptionalInt opcaoCaixa = view.mostrarTela();
 
-            switch (opcao) {
-                case 1 -> {
-                    String nome = view.newNome();
+                int opcao = opcaoCaixa.orElse(-1);
 
-                    if (nome == null || nome.length() < 2 || nome.length() > 100) {
-                        view.exibirErro("Nome inválido! Deve ter entre 2 e 100 caracteres.");
-                        update();
-                        return;
+                switch (opcao) {
+                    case 1 -> {
+                        String nome = view.newNome();
+
+                        if (nome == null || nome.length() < 2 || nome.length() > 100) {
+                            view.exibirErro("Nome inválido! Deve ter entre 2 e 100 caracteres.");
+                            Util.digiteEnterParaContinuar();
+                            return;
+                        }
+
+                        UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
+                        dto.setNome(nome);
+
+                        clienteService.update(sessao.getUsuarioLogado().getId(), dto);
+                        view.exibirSucesso("Nome atualizado com sucesso!");
+
+                        Util.digiteEnterParaContinuar();
                     }
+                    case 2 -> {
+                        String email = view.newEmail();
 
-                    UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
-                    dto.setNome(nome);
+                        UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
+                        dto.setEmail(email);
 
-                    clienteService.update(sessao.getUsuarioLogado().getId(), dto);
-                    view.exibirSucesso("Nome atualizado com sucesso!");
+                        clienteService.update(sessao.getUsuarioLogado().getId(), dto);
+                        view.exibirSucesso("E-mail atualizado com sucesso!");
+                        Util.digiteEnterParaContinuar();
+                    }
+                    case 3 -> {
+                        String senha = view.newPassword();
+
+                        UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
+                        dto.setSenha(senha);
+
+                        clienteService.update(sessao.getUsuarioLogado().getId(), dto);
+                        view.exibirSucesso("Senha atualizada com sucesso!");
+                        Util.digiteEnterParaContinuar();
+                    }
+                    case 0 -> {
+                        view.exibirMensagem("Voltando...");
+                        Util.cls();
+                        Util.delay(1500);
+                        continuar = false;
+                    }
+                    default -> {
+                        view.exibirErro("Opção inválida! Tente novamente:");
+                        Util.digiteEnterParaContinuar();
+                    }
                 }
-                case 2 -> {
-                    String email = view.newEmail();
-
-                    UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
-                    dto.setEmail(email);
-
-                    clienteService.update(sessao.getUsuarioLogado().getId(), dto);
-                    view.exibirSucesso("E-mail atualizado com sucesso!");
-                }
-                case 3 -> {
-                    String senha = view.newPassword();
-
-                    UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
-                    dto.setSenha(senha);
-
-                    clienteService.update(sessao.getUsuarioLogado().getId(), dto);
-                    view.exibirSucesso("Senha atualizada com sucesso!");
-                }
-                case 0 -> {
-                    view.exibirMensagem("Voltando...");
-                    Util.cls();
-                    Util.delay(1500);
-                }
-                default -> {
-                    view.exibirErro("Opção inválida! Tente novamente:");
-                    update();
-                }
+            } catch (Exception e) {
+                view.exibirErro(e.getMessage());
+                Util.next();
+                Util.digiteEnterParaContinuar();
             }
-        } catch (Exception e) {
-            view.exibirErro(e.getMessage());
-            update();
         }
+
     }
 }

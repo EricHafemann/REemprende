@@ -39,6 +39,7 @@ public class ComerciantePresenter {
                 }
             } catch (Exception e) {
                 System.out.println("Opção inválida! Tente novamente:");
+                Util.next();
                 Util.digiteEnterParaContinuar();
             }
 

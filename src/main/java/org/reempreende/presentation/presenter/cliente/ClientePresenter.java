@@ -1,5 +1,6 @@
 package org.reempreende.presentation.presenter.cliente;
 
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icliente.IClienteView;
 import org.reempreende.presentation.router.AppRouter;
 
@@ -18,23 +19,30 @@ public class ClientePresenter {
         boolean continuar = true;
 
         while (continuar) {
-            OptionalInt opcaoCaixa = view.mostrarTela();
+            try {
+                OptionalInt opcaoCaixa = view.mostrarTela();
 
-            int opcao =  opcaoCaixa.orElse(-1);
+                int opcao =  opcaoCaixa.orElse(-1);
 
-            switch (opcao) {
-                case 1 -> appRouter.clientViewHorarios();
-                case 2 -> appRouter.clientAgendarHorarioDisponivel();
-                case 3 -> appRouter.clientViewHistory();
-                case 4 -> appRouter.updateCliente();
-                case 0 -> {
-                    view.exibirMensagem("Saindo...");
-                    appRouter.logout();
-                    continuar = false;
+                switch (opcao) {
+                    case 1 -> appRouter.clientViewHorarios();
+                    case 2 -> appRouter.clientAgendarHorarioDisponivel();
+                    case 3 -> appRouter.clientViewHistory();
+                    case 4 -> appRouter.updateCliente();
+                    case 0 -> {
+                        view.exibirMensagem("Saindo...");
+                        appRouter.logout();
+                        continuar = false;
+                    }
+                    default -> {
+                        view.exibirErro("Opção inválida! Tente novamente:");
+                        Util.digiteEnterParaContinuar();
+                    }
                 }
-                default -> {
-                    view.exibirErro("Opção inválida! Tente novamente:");
-                }
+            } catch (Exception e) {
+                view.exibirErro("Opção inválida! Tente novamente:");
+                Util.next();
+                Util.digiteEnterParaContinuar();
             }
         }
 

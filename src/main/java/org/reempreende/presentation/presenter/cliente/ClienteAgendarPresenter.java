@@ -8,6 +8,7 @@ import org.reempreende.application.service.ClienteService;
 import org.reempreende.application.service.ServicoService;
 import org.reempreende.infrastructure.repository.*;
 import org.reempreende.infrastructure.sessao.Sessao;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewAgendarDisponivel;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class ClienteAgendarPresenter {
 
             if (idAgendamento == -1L) {
                 view.exibirErro("ID inválido!");
+                Util.digiteEnterParaContinuar();
                 return;
             }
 
@@ -63,15 +65,19 @@ public class ClienteAgendarPresenter {
 
             if (agendamentoResponseDTO.getIdCliente() != null && agendamentoResponseDTO.getIdCliente() > 0) {
                 view.exibirErro("Este horário já está agendado!");
+                Util.digiteEnterParaContinuar();
                 return;
             }
 
             agendamentoResponseDTO.setIdCliente(this.sessao.getUsuarioLogado().getId());
             agendamentoService.update(idAgendamento, AgendamentoMapper.toRequestDTO(agendamentoResponseDTO));
             view.exibirSucesso("Agendamento realizado com sucesso!");
+            Util.digiteEnterParaContinuar();
 
         } catch (Exception e) {
             view.exibirErro(e.getMessage());
+            Util.next();
+            Util.digiteEnterParaContinuar();
         }
     }
 }

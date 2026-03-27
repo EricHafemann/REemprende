@@ -14,52 +14,31 @@ public class Util {
 
     public static double lDouble ()
     {
-        try
-        {
-            double num = sc.nextDouble();
+        double num = sc.nextDouble();
 
-            next();
+        next();
 
-            return num;
-        }catch (InputMismatchException e)
-        {
-            System.err.println("Digite apenas números !");
-            next();
-        }
-        return 0;
+        return num;
+
     }
 
     public static int lInt ()
     {
-        try
-        {
-            int num = sc.nextInt();
+        int num = sc.nextInt();
 
-            next();
+        next();
 
-            return num;
-        }catch (InputMismatchException e)
-        {
-            System.err.println("Digite apenas números !");
-            next();
-        }
-        return 0;
+        return num;
+
     }
 
     public static long lLong() {
-        try
-        {
-            long num = sc.nextLong();
 
-            next();
+        long num = sc.nextLong();
 
-            return num;
-        }catch (InputMismatchException e)
-        {
-            System.err.println("Digite apenas números!");
-            next();
-        }
-        return 0L;
+        next();
+
+        return num;
     }
 
     public static void delay (int time)

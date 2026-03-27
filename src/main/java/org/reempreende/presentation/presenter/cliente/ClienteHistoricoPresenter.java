@@ -4,6 +4,7 @@ import org.reempreende.application.dto.response.AgendamentoResponseDTO;
 import org.reempreende.application.dto.response.UsuarioResponseDTO;
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.infrastructure.sessao.Sessao;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icliente.IClienteViewHistorico;
 import org.reempreende.presentation.router.AppRouter;
 
@@ -36,6 +37,8 @@ public class ClienteHistoricoPresenter {
             }
         } catch(Exception e) {
             view.exibirErro(e.getMessage());
+            Util.next();
+            Util.digiteEnterParaContinuar();
         }
     }
 

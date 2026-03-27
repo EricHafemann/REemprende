@@ -4,6 +4,7 @@ import org.reempreende.application.dto.request.AgendamentoRequestDTO;
 import org.reempreende.application.dto.response.ServicoResponseDTO;
 import org.reempreende.application.service.AgendamentoService;
 import org.reempreende.infrastructure.sessao.Sessao;
+import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteCriarAgendamentoView;
 import org.reempreende.presentation.router.AppRouter;
 
@@ -53,6 +54,7 @@ public class ComercianteCriarAgendamentoPresenter {
             agendamentoService.insertAgendamento(agendamentoRequestDTO, idServico);
         } catch (Exception e) {
             view.exibirErro(e.getMessage());
+            Util.digiteEnterParaContinuar();
             return;
         }
 

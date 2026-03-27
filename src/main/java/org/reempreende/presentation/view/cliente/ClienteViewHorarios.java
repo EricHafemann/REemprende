@@ -21,12 +21,12 @@ public class ClienteViewHorarios implements IClienteViewHorarios {
     @Override
     public OptionalInt mostrarTela() {
         Util.cls(15);
-        System.out.println("            ██╗  ██╗ ██████╗ ██████╗  █████╗ ██████╗ ██╗ ██████╗ ███████╗");
-        System.out.println("            ██║  ██║██╔═══██╗██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗██╔════╝");
-        System.out.println("            ███████║██║   ██║██████╔╝███████║██████╔╝██║██║   ██║███████╗");
-        System.out.println("            ██╔══██║██║   ██║██╔══██╗██╔══██║██╔══██╗██║██║   ██║╚════██║");
-        System.out.println("            ██║  ██║╚██████╔╝██║  ██║██║  ██║██║  ██║██║╚██████╔╝███████║");
-        System.out.println("            ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚══════╝");
+        System.out.println(Cores.VERDE + "            ██╗  ██╗ ██████╗ ██████╗  █████╗ ██████╗ ██╗ ██████╗ ███████╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║  ██║██╔═══██╗██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗██╔════╝" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ███████║██║   ██║██████╔╝███████║██████╔╝██║██║   ██║███████╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██╔══██║██║   ██║██╔══██╗██╔══██║██╔══██╗██║██║   ██║╚════██║" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║  ██║╚██████╔╝██║  ██║██║  ██║██║  ██║██║╚██████╔╝███████║" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚══════╝" + Cores.RESET);
 
         return OptionalInt.empty();
     }

@@ -45,6 +45,8 @@ public class ClienteDeletarPresenter {
             } while (!confirmacao.equals("DELETAR"));
         } catch (InvalidFieldException e) {
             view.exibirErro(e.getMessage());
+            Util.next();
+            Util.digiteEnterParaContinuar();
         }
     }
 

@@ -34,14 +34,17 @@ public class ClienteHorariosPresenter {
             agendamentos = agendamentoService.findAvailable();
         } catch(BusinessException e) {
             view.exibirErro(e.getMessage());
+            Util.digiteEnterParaContinuar();
             return;
         } catch(Exception e) {
             view.exibirErro("Erro ao buscar horários: " + e.getMessage());
+            Util.digiteEnterParaContinuar();
             return;
         }
 
         if (agendamentos.isEmpty()) {
             view.exibirErro("Não há horários disponíveis no momento.");
+            Util.digiteEnterParaContinuar();
             return;
         }
 

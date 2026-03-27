@@ -1,5 +1,6 @@
 package org.reempreende.presentation.view.comerciante;
 
+import org.reempreende.infrastructure.utility.Cores;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteCriarAgendamentoView;
 
@@ -9,12 +10,12 @@ import java.util.OptionalInt;
 public class ComercianteCriarAgendamentoView implements IComercianteCriarAgendamentoView {
     @Override
     public OptionalInt mostrarTela() {
-        System.out.println("             ██████╗██████╗ ██╗ █████╗ ██████╗       █████╗  ██████╗ ███████╗███╗   ██╗██████╗  █████╗ ███╗   ███╗███████╗███╗   ██╗████████╗ ██████╗ ");
-        System.out.println("            ██╔════╝██╔══██╗██║██╔══██╗██╔══██╗     ██╔══██╗██╔════╝ ██╔════╝████╗  ██║██╔══██╗██╔══██╗████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔═══██╗");
-        System.out.println("            ██║     ██████╔╝██║███████║██████╔╝     ███████║██║  ███╗█████╗  ██╔██╗ ██║██║  ██║███████║██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ██║   ██║");
-        System.out.println("            ██║     ██╔══██╗██║██╔══██║██╔══██╗     ██╔══██║██║   ██║██╔══╝  ██║╚██╗██║██║  ██║██╔══██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ██║   ██║");
-        System.out.println("            ╚██████╗██║  ██║██║██║  ██║██║  ██║     ██║  ██║╚██████╔╝███████╗██║ ╚████║██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ╚██████╔╝");
-        System.out.println("             ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ");
+        System.out.println(Cores.VERDE + "             ██████╗██████╗ ██╗ █████╗ ██████╗       █████╗  ██████╗ ███████╗███╗   ██╗██████╗  █████╗ ███╗   ███╗███████╗███╗   ██╗████████╗ ██████╗ " + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██╔════╝██╔══██╗██║██╔══██╗██╔══██╗     ██╔══██╗██╔════╝ ██╔════╝████╗  ██║██╔══██╗██╔══██╗████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔═══██╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║     ██████╔╝██║███████║██████╔╝     ███████║██║  ███╗█████╗  ██╔██╗ ██║██║  ██║███████║██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ██║   ██║" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║     ██╔══██╗██║██╔══██║██╔══██╗     ██╔══██║██║   ██║██╔══╝  ██║╚██╗██║██║  ██║██╔══██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ██║   ██║" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ╚██████╗██║  ██║██║██║  ██║██║  ██║     ██║  ██║╚██████╔╝███████╗██║ ╚████║██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ╚██████╔╝" + Cores.RESET);
+        System.out.println(Cores.VERDE + "             ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ " + Cores.RESET);
 
         return OptionalInt.empty();
     }

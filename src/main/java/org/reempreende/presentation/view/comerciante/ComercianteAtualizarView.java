@@ -1,5 +1,6 @@
 package org.reempreende.presentation.view.comerciante;
 
+import org.reempreende.infrastructure.utility.Cores;
 import org.reempreende.infrastructure.utility.Util;
 import org.reempreende.presentation.interfaces.icomerciante.IComercianteAtualizarView;
 
@@ -8,12 +9,12 @@ import java.util.OptionalInt;
 public class ComercianteAtualizarView implements IComercianteAtualizarView {
     @Override
     public OptionalInt mostrarTela() {
-        System.out.println("             █████╗ ████████╗██╗   ██╗ █████╗ ██╗     ██╗███████╗ █████╗ ██████╗ ");
-        System.out.println("            ██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██║     ██║╚══███╔╝██╔══██╗██╔══██╗");
-        System.out.println("            ███████║   ██║   ██║   ██║███████║██║     ██║  ███╔╝ ███████║██████╔╝");
-        System.out.println("            ██╔══██║   ██║   ██║   ██║██╔══██║██║     ██║ ███╔╝  ██╔══██║██╔══██╗");
-        System.out.println("            ██║  ██║   ██║   ╚██████╔╝██║  ██║███████╗██║███████╗██║  ██║██║  ██║");
-        System.out.println("            ╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝");
+        System.out.println(Cores.VERDE + "             █████╗ ████████╗██╗   ██╗ █████╗ ██╗     ██╗███████╗ █████╗ ██████╗ " + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██║     ██║╚══███╔╝██╔══██╗██╔══██╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ███████║   ██║   ██║   ██║███████║██║     ██║  ███╔╝ ███████║██████╔╝" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██╔══██║   ██║   ██║   ██║██╔══██║██║     ██║ ███╔╝  ██╔══██║██╔══██╗" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ██║  ██║   ██║   ╚██████╔╝██║  ██║███████╗██║███████╗██║  ██║██║  ██║" + Cores.RESET);
+        System.out.println(Cores.VERDE + "            ╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝" + Cores.RESET);
 
         System.out.println("1 - Nome");
         System.out.println("2 - E-mail");
