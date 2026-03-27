@@ -118,7 +118,7 @@ O projeto utiliza **Herança** para tratar a especialização de usuários, gara
 | **MySQL** | 8.3.0 | Armazenamento de dados persistentes |
 | **Maven** | 3.x | Build tool e gestão de dependências |
 | **JDBC** | - | Acesso nativo a dados relacionais |
-| **IntelliJ IDEA** | 2025.3.3 | Ambiente de Desenvolvimento Integrado |
+| **IntelliJ IDEA** | 2025.3.4 | Ambiente de Desenvolvimento Integrado |
 
 * * * * *
 
